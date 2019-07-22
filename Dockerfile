@@ -17,7 +17,7 @@ ENV TZ Europe/Amsterdam
 # CMD while true; do sleep 60; done
 
 
-FROM php:7.2-cli
+FROM php
 RUN mkdir /var/www/html
 COPY gisportal/. /var/www/html
 WORKDIR /var/www/html

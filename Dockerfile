@@ -15,7 +15,7 @@ ENV TZ Europe/Amsterdam
 
 RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 RUN yum install -y lighttpd
-EXPOSE 80
+EXPOSE 8008
 
 # kopieer de configuratiefile naar de root
 COPY lighttpd.conf /lighttpd.conf

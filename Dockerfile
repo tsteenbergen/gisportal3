@@ -16,11 +16,11 @@ ENV TZ Europe/Amsterdam
 RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 RUN yum install -y lighttpd
 
-RUN mkdir /var/www/htdocs
-COPY gisportal/index.html /var/www/htdocs
+RUN mkdir /var/www/html
+COPY gisportal/index.html /var/www/html
 
 EXPOSE 8008
 
-# kopieer de configuratiefile naar de root
 COPY lighttpd.conf /lighttpd.conf
+
 CMD ["lighttpd", "-D", "-f", "/lighttpd.conf"]

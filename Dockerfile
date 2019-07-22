@@ -9,5 +9,6 @@ ENV TZ Europe/Amsterdam
 # RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 
 RUN yum install -y httpd
-RUN systemctl start httpd.service
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+EXPOSE 80
 # CMD while true; do sleep 60; done

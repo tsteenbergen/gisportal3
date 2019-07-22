@@ -1,4 +1,7 @@
-FROM centos
+# FROM centos
+
+
+
 
 LABEL maintainer="rob.beffers@rivm.nl"
 ENV TZ Europe/Amsterdam
@@ -13,11 +16,15 @@ ENV TZ Europe/Amsterdam
 # EXPOSE 80
 # CMD while true; do sleep 60; done
 
+
+FROM php:7.2-cli
+RUN mkdir /var/www/html
+COPY gisportal/. /var/www/html
+WORKDIR /var/www/html
+CMD [ "php", "./your-script.php" ]
+
 RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 RUN yum install -y lighttpd
-
-RUN mkdir /var/www/html
-COPY gisportal/index.html /var/www/html
 
 EXPOSE 8008
 

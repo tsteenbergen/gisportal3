@@ -28,4 +28,5 @@ EXPOSE 8008
 
 COPY lighttpd.conf /lighttpd.conf
 
-CMD ["lighttpd", "-D", "-f", "/lighttpd.conf"]
+CMD while true; do sleep 60; done
+# CMD ["lighttpd", "-D", "-f", "/lighttpd.conf"]

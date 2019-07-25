@@ -1,7 +1,7 @@
 # FROM centos
 
 FROM php
-RUN mkdir /var/www/html
+# RUN mkdir /var/www/html
 COPY gisportal/. /var/www/html
 WORKDIR /var/www/html
 

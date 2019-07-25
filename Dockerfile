@@ -1,6 +1,9 @@
 # FROM centos
 
-
+FROM php
+RUN mkdir /var/www/html
+COPY gisportal/. /var/www/html
+WORKDIR /var/www/html
 
 
 LABEL maintainer="rob.beffers@rivm.nl"
@@ -16,11 +19,6 @@ ENV TZ Europe/Amsterdam
 # EXPOSE 80
 # CMD while true; do sleep 60; done
 
-
-FROM php
-RUN mkdir /var/www/html
-COPY gisportal/. /var/www/html
-WORKDIR /var/www/html
 CMD [ "php", "./index.php" ]
 
 RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm

@@ -20,7 +20,7 @@ ENV TZ Europe/Amsterdam
 # EXPOSE 80
 # CMD while true; do sleep 60; done
 
-# CMD [ "php", "./index.php" ]
+CMD [ "php", "./index.php" ]
 
 RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 RUN yum install -y lighttpd
@@ -29,5 +29,5 @@ EXPOSE 8008
 
 COPY lighttpd.conf /lighttpd.conf
 
-CMD while true; do sleep 60; done
-# CMD ["lighttpd", "-D", "-f", "/lighttpd.conf"]
+# CMD while true; do sleep 60; done
+CMD ["lighttpd", "-D", "-f", "/lighttpd.conf"]

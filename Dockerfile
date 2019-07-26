@@ -10,8 +10,8 @@ ENV TZ Europe/Amsterdam
 
 RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 RUN yum install -y lighttpd
-RUN yum install -y php
-RUN yum -y install php-fpm lighttpd-fastcgi
+RUN yum install -y php php-mysqli php-fpm
+RUN yum install -y lighttpd-fastcgi
 
 COPY php.ini /etc/php.ini
 COPY www.conf /etc/php-fpm.d/www.conf

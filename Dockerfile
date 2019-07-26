@@ -20,10 +20,11 @@ ENV TZ Europe/Amsterdam
 # EXPOSE 80
 # CMD while true; do sleep 60; done
 
-CMD [ "php", "./index.php" ]
-
 RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 RUN yum install -y lighttpd
+RUN yum install -y php
+
+CMD [ "php", "./index.php" ]
 
 EXPOSE 8008
 

@@ -39,3 +39,6 @@ COPY lighttpd.conf /lighttpd.conf
 
 # CMD while true; do sleep 60; done
 CMD ["lighttpd", "-D", "-f", "/lighttpd.conf"]
+
+CMD [ "systemctl", "restart", "php-fpm"]
+CMD [ "systemctl", "restart", "lighttpd"]

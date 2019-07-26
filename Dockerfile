@@ -30,8 +30,8 @@ COPY www.conf /etc/php-fpm.d/www.conf
 COPY modules.conf /etc/lighttpd/modules.conf
 
 CMD [ "php", "./index.php" ]
-CMD [ "systemctl", "start", "php-fpm"]
 CMD [ "systemctl", "enable", "php-fpm"]
+CMD [ "systemctl", "start", "php-fpm"]
 
 EXPOSE 8008
 
@@ -39,6 +39,3 @@ COPY lighttpd.conf /lighttpd.conf
 
 # CMD while true; do sleep 60; done
 CMD ["lighttpd", "-D", "-f", "/lighttpd.conf"]
-
-CMD [ "systemctl", "restart", "php-fpm"]
-CMD [ "systemctl", "restart", "lighttpd"]

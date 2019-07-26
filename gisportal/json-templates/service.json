@@ -1,0 +1,26 @@
+{
+    "kind": "Service",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "service-$name",
+        "namespace": "$namespace"
+    },
+    "spec": {
+        "selector": {
+            "name": "$name"
+        },
+        "sessionAffinity": "None",
+        "type": "ClusterIP",
+        "ports": [
+            {
+                "name": "$name",
+                "port": 8080,
+                "protocol": "TCP",
+                "targetPort": 8080
+            }
+        ]
+    },
+    "status": {
+        "loadBalancer": {}
+    }
+}

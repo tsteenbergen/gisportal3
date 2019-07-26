@@ -1,0 +1,82 @@
+{
+    "kind": "DeploymentConfig",
+    "apiVersion": "v1",
+    "metadata": {
+        "labels": {
+            "app": "gisportal-dc"
+        },
+        "name": "$name"
+    },
+    "spec": {
+        "replicas": 1,
+        "selector": {
+            "name": "$name"
+        },
+        "template": {
+            "metadata": {
+                "labels": {
+                    "name": "$name"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "name": "$name",
+                        "image": "$namespace/$image",
+                        "ports": [
+                            {
+                                "containerPort": 8080,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "resources": {},
+                        "imagePullPolicy": "Always",
+                        "capabilities": {},
+                        "securityContext": {
+                            "capabilities": {},
+                            "privileged": false
+                        },
+                        "volumeMounts": [
+                            {
+                                "name": "geo-map",
+                                "mountPath": "/geo-map",
+                                "subPath": "geo-packages/$name"
+                            }
+                        ]
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "geo-map",
+                        "persistentVolumeClaim": {
+                            "claimName": "$storage"
+                        }
+                    }
+                ],
+                "restartPolicy": "Always",
+                "serviceAccount": ""
+            }
+        },
+        "triggers": [
+            {
+                "type": "ConfigChange"
+            },
+            {
+                "type": "ImageChange",
+                "imageChangeParams": {
+                    "automatic": true,
+                    "containerNames": [
+                        "$name"
+                    ],
+                    "from": {
+                        "kind": "ImageStreamTag",
+                        "name": "$image:$version"
+                    }
+                }
+            }
+        ],
+        "strategy": {
+            "type": "Rolling"
+        }
+    }
+}

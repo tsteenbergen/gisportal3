@@ -1,0 +1,19 @@
+{
+    "kind": "Route",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "route-$name",
+        "namespace": "$namespace"
+    },
+    "spec": {
+		"path": "$map-name",
+        "port": {
+			"targetPort": "$name"
+		},
+        "to": {
+			"kind": "Service",
+			"name": "service-$name"
+		},
+		"wildcardPolicy": "None"
+    }
+}

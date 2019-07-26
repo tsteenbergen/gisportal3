@@ -23,8 +23,11 @@ ENV TZ Europe/Amsterdam
 RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 RUN yum install -y lighttpd
 RUN yum install -y php
+RUN yum -y install php-fpm lighttpd-fastcgi
 
 CMD [ "php", "./index.php" ]
+CMD [ "systemctl", "start", "php-fpm"]
+CMD [ "systemctl", "enable", "php-fpm"]
 
 EXPOSE 8008
 

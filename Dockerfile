@@ -1,6 +1,6 @@
-# FROM centos
+FROM centos
 
-FROM rhel-minimal
+# FROM rhel-minimal
 
 # RUN mkdir /var/www/html
 COPY gisportal/. /var/www/html

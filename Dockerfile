@@ -13,8 +13,8 @@ RUN yum install -y lighttpd
 RUN yum install -y php
 RUN yum -y install php-fpm lighttpd-fastcgi
 
-# COPY php.ini /etc/php.ini
-# COPY www.conf /etc/php-fpm.d/www.conf
+COPY php.ini /etc/php.ini
+COPY www.conf /etc/php-fpm.d/www.conf
 # COPY modules.conf /etc/lighttpd/modules.conf
 
 # CMD [ "systemctl", "enable", "php-fpm"]

@@ -1,6 +1,7 @@
 # FROM centos
 
-FROM php
+FROM rhel-minimal
+
 # RUN mkdir /var/www/html
 COPY gisportal/. /var/www/html
 WORKDIR /var/www/html
@@ -22,7 +23,7 @@ ENV TZ Europe/Amsterdam
 CMD [ "php", "./index.php" ]
 
 # RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-# RUN yum install -y lighttpd
+RUN yum install -y lighttpd
 
 EXPOSE 8008
 

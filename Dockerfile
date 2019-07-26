@@ -17,8 +17,8 @@ COPY php.ini /etc/php.ini
 COPY www.conf /etc/php-fpm.d/www.conf
 COPY modules.conf /etc/lighttpd/modules.conf
 
-CMD [ "systemctl", "enable", "php-fpm"]
-CMD [ "systemctl", "start", "php-fpm"]
+# CMD [ "systemctl", "enable", "php-fpm"]
+# CMD [ "systemctl", "start", "php-fpm"]
 
 EXPOSE 8008
 

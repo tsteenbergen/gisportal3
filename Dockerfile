@@ -15,7 +15,7 @@ RUN yum install -y lighttpd
 RUN yum install -y lighttpd-fastcgi
 RUN yum-config-manager --enable remi-php72
 RUN yum update -y
-RUN yum install -y php72 php-mysqli php-fpm
+RUN yum install -y php php-mysqli php-fpm
 
 COPY php.ini /etc/php.ini
 COPY www.conf /etc/php-fpm.d/www.conf

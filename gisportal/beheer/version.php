@@ -1,5 +1,5 @@
 <?php
-require('basicPage.php');
+require('../basicPage.php');
 
 $title='Beheer version';
 $r='';

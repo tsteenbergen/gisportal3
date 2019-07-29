@@ -1,5 +1,5 @@
 <?php
-require('basicPage.php');
+require('../basicPage.php');
 
 if ($loggedIn && ($is_admin || $is_afd_admin)){
 	$tabA='';

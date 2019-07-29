@@ -1,6 +1,6 @@
 <?php
-require('basicPage.php');
-require('openshift-api.php');
+require('../basicPage.php');
+require('../openshift-api.php');
 
 $title='Beheer geopackage';
 $r='';

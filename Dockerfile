@@ -20,7 +20,7 @@ ENV TZ Europe/Amsterdam
 RUN yum install -y epel-release
 RUN yum-config-manager --enable remi-php72
 RUN yum update -y
-RUN yum install -y php php-mysqli php-fpm
+RUN yum install -y php72 php-mysqli php-fpm
 RUN yum install -y lighttpd
 RUN yum install -y lighttpd-fastcgi
 

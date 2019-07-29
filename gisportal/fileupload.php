@@ -29,7 +29,7 @@ if ($loggedIn){
 			if (!file_exists($path)) {mkdir($path);}
 			switch ($uploadtype) {
 				case 'geo-package':
-					$valid_extensions = array('sqlite','gpkg'); 
+					$valid_extensions = array('sqlite-1','gpkg'); 
 					$filename2 = $path.'/tmp-'.$_SESSION['user'].'.sqlite'; 
 					break;
 				case 'sld':

@@ -139,7 +139,7 @@ if ($loggedIn){
 				}
 				$tab1.='<tr><td>Soort:</td><td>'.$basicPage->getSelect('soort',$g['soort'],array('Raster','Vector')).'</td></tr>';
 				$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
-				$tab1.='<tr><td>Sqlite file:</td><td><span id="brongeopackage1" style="margin-right: 20px;">'.htmlspecialchars($g['brongeopackage']).'</span><input type="hidden" id="brongeopackage" name="brongeopackage" value="'.$g['brongeopackage'].'"><a id="geo-package-file-button" class="small-button" style="float: right;" uploadFile="geo-package,'.$g['id'].'">Upload geo-package</a></td></tr>';
+				$tab1.='<tr><td>Sqlite file (TIJDELIJK MOET JE -1 ACHTER DE EXTENSIE ZETTEN OMDAT PHP DE FILE ANDERS NIET UPLOAD!!:</td><td><span id="brongeopackage1" style="margin-right: 20px;">'.htmlspecialchars($g['brongeopackage']).'</span><input type="hidden" id="brongeopackage" name="brongeopackage" value="'.$g['brongeopackage'].'"><a id="geo-package-file-button" class="small-button" style="float: right;" uploadFile="geo-package,'.$g['id'].'">Upload geo-package</a></td></tr>';
 				$tab1.='<tr><td>qgs file:</td><td><span id="opmaak1" style="margin-right: 20px;">'.htmlspecialchars($g['opmaak']).'</span><input type="hidden" id="opmaak-file" name="opmaak" value="'.$g['opmaak'].'"><a id="opmaak-file-button" class="small-button" style="float: right;" uploadFile="sld,'.$g['id'].'">Upload file</a></td></tr>';
 				$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
 				if (file_exists('indata.data')) {

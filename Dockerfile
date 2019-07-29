@@ -13,7 +13,7 @@ RUN yum install -y http://rpms.remirepo.net/enterprise/remi-release-7.rpm
 RUN yum install -y yum-utils
 RUN yum-config-manager --enable remi-php72
 RUN yum update -y
-RUN yum install -y php72 php-mysqli php72-php-fpm
+RUN yum install -y php72 php72-php-fpm php72-php-mysqlnd php72-php-xml php72-php-json
 
 # Instaleren van lighttpd
 RUN yum install -y lighttpd

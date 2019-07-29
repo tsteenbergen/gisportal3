@@ -1,5 +1,4 @@
 FROM centos
-# FROM rhel-minimal
 
 # RUN mkdir /var/www/html
 COPY gisportal/. /var/www/html
@@ -8,21 +7,15 @@ WORKDIR /var/www/html
 LABEL maintainer="rob.beffers@rivm.nl"
 ENV TZ Europe/Amsterdam
 
-# # RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-# RUN yum install -y epel-release
-# RUN yum install -y lighttpd
-# # RUN yum install -y php php-mysqli php-fpm
-# RUN yum install -y lighttpd-fastcgi
-# RUN yum-config-manager --enable remi-php72
-# RUN yum update -y
-# RUN yum install -y php php-mysqli php-fpm
-
+# Instaleren van php 7.2 en Mysql
 RUN yum install -y epel-release
 RUN yum install -y http://rpms.remirepo.net/enterprise/remi-release-7.rpm
 RUN yum install -y yum-utils
 RUN yum-config-manager --enable remi-php72
 RUN yum update -y
-RUN yum install -y php72 php-mysqli
+RUN yum install -y php72 php-mysqli php-fpm
+
+# Instaleren van lighttpd
 RUN yum install -y lighttpd
 RUN yum install -y lighttpd-fastcgi
 

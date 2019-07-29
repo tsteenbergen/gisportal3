@@ -8,10 +8,14 @@ WORKDIR /var/www/html
 LABEL maintainer="rob.beffers@rivm.nl"
 ENV TZ Europe/Amsterdam
 
-RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+# RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+RUN yum install -y epel-release
 RUN yum install -y lighttpd
-RUN yum install -y php php-mysqli php-fpm
+# RUN yum install -y php php-mysqli php-fpm
 RUN yum install -y lighttpd-fastcgi
+RUN yum-config-manager --enable remi-php72
+RUN yum update -y
+RUN yum install -y php php-mysqli php-fpm
 
 COPY php.ini /etc/php.ini
 COPY www.conf /etc/php-fpm.d/www.conf

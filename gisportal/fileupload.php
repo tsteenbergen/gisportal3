@@ -13,6 +13,7 @@ Werking upload en indeling geo-mappen:
 
 require('basicPage.php');
 
+$basicPage->writeLog(var_export($_FILES,true));
 $r=array('error'=>true,'msg'=>'Unauthorised action');
 if ($loggedIn){
 	if ($_FILES['uploadfile']) {

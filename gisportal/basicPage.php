@@ -376,7 +376,7 @@ class basicPage {
 		$r.='$(document).ready(function() {meldFormFouten();initFileuploads();'.$this->js_ready.'});';
 		$r.='</script>';
 		$r.='<body>';
-		$r.='<div class="max-width logo"><img alt="Logo SSC-Campus" src="/css/beeldmerk-rijksoverheid.svg"></div>';
+		$r.='<div class="max-width logo"><img alt="Logo SSC-Campus" src="/css/beeldmerk-rijksoverheid.png"></div>';
 		$r.='<div class="menu1"><div class="max-width menu1_"><div class="menu1-title">GIS portaal</div>'.($loggedIn?'<a href="/mijn.php" class="inuitloggen">Mijn &hellip;</a>'.($loggedInViaWindowsUser?'':'<a href="/logout.php" class="inuitloggen">Uitloggen</a>'):'<a href="/login.php" class="inuitloggen">Inloggen</a>').'</div></div>';
 		$r.='<div class="menu2"><div class="max-width menu2_">'.$this->getMenu().'</div></div>';
 		$r.='<div class="max-width"><div class="content">';

@@ -6,6 +6,9 @@ if ($loggedIn && $is_admin){
 		case 'log':
 			$r.=file_get_contents($basicPage->getConfig('logfile'));
 			break;
+		case 'phpinfo':
+			$r.=phpinfo();
+			break;
 		case 'apicall':
 			if (isset($_GET['go'])) {$apicall=explode('|',$_GET['go']); $api=$apicall[0]; $apisub=$apicall[2]; $apicall=$apicall[1];} else {$apicall='';}
 			$r.='<p>Api call: <select id="api"><option'.($api=='api'?' selected="selected"':'').'>api</option><option'.($api=='oapi'?' selected="selected"':'').'>oapi</option></select><input id="apicall" style="width: calc(100% - 250px);" value="'.$apicall.'"><select id="apisub"><option value="false"'.($apisub=='false'?' selected="selected"':'').'>(false)</option><option'.($apisub=='POST'?' selected="selected"':'').'>POST</option><option'.($apisub=='PUT'?' selected="selected"':'').'>PUT</option><option'.($apisub=='DELETE'?' selected="selected"':'').'>DELETE</option></select><a onclick="document.location=\'admin.php?func=apicall&go=\'+$(\'#api\').val()+\'|\'+$(\'#apicall\').val()+\'|\'+$(\'#apisub\').val();" class="small-button" style="margin-left: 12px;">Go</a></p>';
@@ -35,6 +38,7 @@ if ($loggedIn && $is_admin){
 			break;
 		default:
 			$r.='<p style="margin-bottom: 20px;"><button onclick="document.location=\'admin.php?func=log\';">Logs bekijken</button>';
+			$r.='<p style="margin-bottom: 20px;"><button onclick="document.location=\'admin.php?func=phpinfo\';">PHP info</button>';
 			$r.='<p style="margin-bottom: 20px;"><button onclick="document.location=\'admin.php?func=apicall\';">API calls uitvoeren</button>';
 			$r.='<p style="margin-bottom: 20px;"><button onclick="document.location=\'admin.php?func=dbdump\';">Database dump</button>';
 			break;

@@ -33,4 +33,5 @@ COPY lighttpd.conf /lighttpd.conf
 # CMD while true; do sleep 60; done
 # CMD ["lighttpd", "-D", "-f", "/lighttpd.conf"]
 COPY umask-geo-mappen.sh /umask-geo-mappen.sh
+RUN chmod +x /umask-geo-mappen.sh
 CMD /umask-geo-mappen.sh

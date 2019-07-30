@@ -23,8 +23,8 @@ RUN yum install -y php72 php72-php-fpm php72-php-mysqlnd php72-php-xml php72-php
 RUN yum install -y lighttpd
 RUN yum install -y lighttpd-fastcgi
 
-# lighttpd werkt op poort 8008 (zie ook lighttpd.conf)
-EXPOSE 80
+# lighttpd werkt op poort 8080 (zie ook lighttpd.conf)
+EXPOSE 8080
 
 # KOPIEREN VAN FILES
 # de files uit de map gisportal moeten naar de root van lighttpd worden gekopieerd

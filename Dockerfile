@@ -24,7 +24,7 @@ RUN yum install -y lighttpd
 RUN yum install -y lighttpd-fastcgi
 
 # lighttpd werkt op poort 8008 (zie ook lighttpd.conf)
-EXPOSE 8008
+EXPOSE 80
 
 # KOPIEREN VAN FILES
 # de files uit de map gisportal moeten naar de root van lighttpd worden gekopieerd

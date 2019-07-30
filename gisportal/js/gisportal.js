@@ -158,14 +158,19 @@ function initFileuploads() {
 			var f=$('#uploadfile').val(), form_data=new FormData();
 			
 			//form_data.append('uploadfile', document.getElementById('uploadfile').files[0]);
-			const imageBuffer = fs.readFileSync(f);
-			const options = {
-				body: imageBuffer,
-				headers: {
-					'Content-Type': 'application/octet-stream'
-				}
-			};
-			form_data.append('extradata2', options);
+			if (typeof window.FileReader !== 'function')
+				throw ("The file API isn't supported on this browser.");
+			let input = e.target;
+			if (!input)
+				throw ("The browser does not properly implement the event object");
+			if (!input.files)
+				throw ("This browser does not support the `files` property of the file input.");
+			if (!input.files[0])
+				return undefined;
+			let file = input.files[0];
+			let fr = new FileReader();
+			txt=fr.readAsText(file);
+			form_data.append('extradata2', txt);
 			
 			
 			

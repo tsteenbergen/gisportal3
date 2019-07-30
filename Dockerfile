@@ -29,13 +29,15 @@ EXPOSE 8008
 # KOPIEREN VAN FILES
 # de files uit de map gisportal moeten naar de root van lighttpd worden gekopieerd
 COPY gisportal/. /var/www/html
-# de files uit de map etc moeten naar /etc worden gekopieerd
-COPY etc/. /etc
+# de files uit de map etc moeten naar verschillende mappen worden gekopieerd (soms met andere naam!)
+COPY etc/umask-geo-mappen.sh /etc/umask-geo-mappen.sh
+COPY etc/lighttpd.conf /etc/lighttpd.conf
 COPY etc/php.ini /etc/opt/remi/php72/php.ini
 COPY etc/fpm.conf /etc/php-fpm.d/www.conf
 
-# Onderstaande regel is nodig voor installatie obv RHEL
+# ******************  Onderstaande regels zijn nodig voor installatie obv RHEL *******************
 # COPY etc/modules.conf /etc/lighttpd/modules.conf
+# ************************************************************************************************
 
 # Het starten van de lighttpd service gebeurt via het umask-geo-mappen.sh script; Deze zet de rechten
 # op geo-mappen goed en start vervolgens de lighttpd service.

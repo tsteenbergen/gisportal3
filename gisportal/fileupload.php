@@ -13,9 +13,9 @@ Werking upload en indeling geo-mappen:
 
 require('basicPage.php');
 
-$basicPage->writeLog(var_export('$_FILES='.$_FILES,true));
-$basicPage->writeLog(var_export('$_POST='.$_POST,true));
-$basicPage->writeLog(var_export('$_GET='.$_GET,true));
+$basicPage->writeLog('$_FILES='.var_export($_FILES,true));
+$basicPage->writeLog('$_POST='.var_export($_POST,true));
+$basicPage->writeLog('$_GET='.var_export($_GET,true));
 $r=array('error'=>true,'msg'=>'Unauthorised action');
 if ($loggedIn){
 	if ($_FILES['uploadfile']) {

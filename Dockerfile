@@ -4,15 +4,6 @@
 # Onderstaande regel is nodig voor installatie obv CENTOS
 FROM centos
 
-# KOPIEREN VAN FILES
-# de files uit de map gisportal moeten naar de root van lighttpd worden gekopieerd
-COPY gisportal/. /var/www/html
-# de files uit de map etc moeten naar /etc worden gekopieerd
-COPY etc/. /etc
-
-# Onderstaande regel is nodig voor installatie obv RHEL
-# COPY etc/modules.conf /etc/lighttpd/modules.conf
-
 WORKDIR /var/www/html
 LABEL maintainer="rob.beffers@rivm.nl"
 ENV TZ Europe/Amsterdam
@@ -34,6 +25,15 @@ RUN yum install -y lighttpd-fastcgi
 
 # lighttpd werkt op poort 8008 (zie ook lighttpd.conf)
 EXPOSE 8008
+
+# KOPIEREN VAN FILES
+# de files uit de map gisportal moeten naar de root van lighttpd worden gekopieerd
+COPY gisportal/. /var/www/html
+# de files uit de map etc moeten naarcd ,.. /etc worden gekopieerd
+COPY etc/. /etc
+
+# Onderstaande regel is nodig voor installatie obv RHEL
+# COPY etc/modules.conf /etc/lighttpd/modules.conf
 
 # Het starten van de lighttpd service gebeurt via het umask-geo-mappen.sh script; Deze zet de rechten
 # op geo-mappen goed en start vervolgens de lighttpd service.

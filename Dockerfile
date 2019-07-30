@@ -1,10 +1,10 @@
-# Onderstaande regel is nodig voor installatie obv RHEL
-# FROM rhel
-
-# Onderstaande regel is nodig voor installatie obv CENTOS
+# ******************  Onderstaande regel is nodig voor installatie obv Centos ********************
 FROM centos
+# ************************************************************************************************
+# ******************  Onderstaande regel is nodig voor installatie obv RHEL **********************
+# FROM rhel
+# ************************************************************************************************
 
-WORKDIR /var/www/html
 LABEL maintainer="rob.beffers@rivm.nl"
 ENV TZ Europe/Amsterdam
 
@@ -16,7 +16,7 @@ RUN yum install -y yum-utils
 RUN yum-config-manager --enable remi-php72
 RUN yum update -y
 RUN yum install -y php72 php72-php-fpm php72-php-mysqlnd php72-php-xml php72-php-json
-# Onderstaande regels zijn nodig voor installatie obv CENTOS
+# Onderstaande regels zijn nodig voor installatie obv RHEL
 # ...
 
 # Instaleren van lighttpd
@@ -29,7 +29,7 @@ EXPOSE 8008
 # KOPIEREN VAN FILES
 # de files uit de map gisportal moeten naar de root van lighttpd worden gekopieerd
 COPY gisportal/. /var/www/html
-# de files uit de map etc moeten naarcd ,.. /etc worden gekopieerd
+# de files uit de map etc moeten naar /etc worden gekopieerd
 COPY etc/. /etc
 COPY etc/fpm.conf /etc/php-fpm.d/www.conf
 

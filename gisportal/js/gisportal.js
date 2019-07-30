@@ -156,24 +156,7 @@ function initFileuploads() {
 		$('body').append('<form id="fileUploadForm" method="post" enctype="multipart/form-data" style="position: absolute; top: -1000;"><input id="extradata"><input id="fileupload_no"><input id="uploadfile" type="file" name="uploadfile" /></form>');
 		$('#uploadfile').change(function(e) {
 			var f=$('#uploadfile').val(), form_data=new FormData();
-			
-			//form_data.append('uploadfile', document.getElementById('uploadfile').files[0]);
-			if (typeof window.FileReader !== 'function')
-				throw ("The file API isn't supported on this browser.");
-			let input = e.target;
-			if (!input)
-				throw ("The browser does not properly implement the event object");
-			if (!input.files)
-				throw ("This browser does not support the `files` property of the file input.");
-			if (!input.files[0])
-				return undefined;
-			let file = input.files[0];
-			let fr = new FileReader();
-			txt=fr.readAsText(file);
-			form_data.append('extradata2', txt);
-			
-			
-			
+			form_data.append('uploadfile', document.getElementById('uploadfile').files[0]);
 			form_data.append('extradata', $('#extradata').val());
 			if (f!='') {
 				$.ajax({

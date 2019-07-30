@@ -156,7 +156,19 @@ function initFileuploads() {
 		$('body').append('<form id="fileUploadForm" method="post" enctype="multipart/form-data" style="position: absolute; top: -1000;"><input id="extradata"><input id="fileupload_no"><input id="uploadfile" type="file" name="uploadfile" /></form>');
 		$('#uploadfile').change(function(e) {
 			var f=$('#uploadfile').val(), form_data=new FormData();
-			form_data.append('uploadfile', document.getElementById('uploadfile').files[0]);
+			
+			//form_data.append('uploadfile', document.getElementById('uploadfile').files[0]);
+			const imageBuffer = fs.readFileSync(f);
+			const options = {
+				body: imageBuffer,
+				headers: {
+					'Content-Type': 'application/octet-stream'
+				}
+			};
+			form_data.append('extradata2', options);
+			
+			
+			
 			form_data.append('extradata', $('#extradata').val());
 			if (f!='') {
 				$.ajax({

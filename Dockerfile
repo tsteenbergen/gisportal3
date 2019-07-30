@@ -31,6 +31,7 @@ EXPOSE 8008
 COPY gisportal/. /var/www/html
 # de files uit de map etc moeten naar /etc worden gekopieerd
 COPY etc/. /etc
+COPY etc/php.ini /etc/opt/remi/php72/php.ini
 COPY etc/fpm.conf /etc/php-fpm.d/www.conf
 
 # Onderstaande regel is nodig voor installatie obv RHEL

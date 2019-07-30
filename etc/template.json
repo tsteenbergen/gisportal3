@@ -26,7 +26,7 @@
 					"name": "gisportal",
 					"port": 8080,
 					"protocol": "TCP",
-					"targetPort": 8008
+					"targetPort": 8080
 				}
 			]
 		},

@@ -15,7 +15,7 @@ require('basicPage.php');
 
 $basicPage->writeLog(var_export('$_FILES='.$_FILES,true));
 $basicPage->writeLog(var_export('$_POST='.$_POST,true));
-$basicPage->writeLog(var_export(''$_GET=.$_GET,true));
+$basicPage->writeLog(var_export('$_GET='.$_GET,true));
 $r=array('error'=>true,'msg'=>'Unauthorised action');
 if ($loggedIn){
 	if ($_FILES['uploadfile']) {

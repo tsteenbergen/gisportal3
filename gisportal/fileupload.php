@@ -42,7 +42,7 @@ if ($loggedIn){
 			if ($valid_extensions) {
 				$tmp = $_FILES['uploadfile']['tmp_name'];
 				$ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-				if (in_array($ext, $valid_extensions)) {
+				if (true) { //if (in_array($ext, $valid_extensions)) {
 					$basicPage->writeLog('Van '.$tmp.' naar '.$filename2);
 					if(move_uploaded_file($tmp,$filename2)) {
 						$r['error']=false;

@@ -25,6 +25,7 @@ if ($loggedIn){
 		$r['uploadtype']=$uploadtype;
 		$r['id']=$id;
 		$filename = $_FILES['uploadfile']['name'];
+		$ext=$filename; $ext=substr($ext,strripos($ext,'.'));
 		$path = $basicPage->getConfig('geo-mappen');
 		if (file_exists($path)) {
 			$path.='/geo-packages'; // upload directory
@@ -32,17 +33,17 @@ if ($loggedIn){
 			switch ($uploadtype) {
 				case 'geo-package':
 					$valid_extensions = array('sqlite','gpkg'); 
-					$filename2 = $path.'/tmp-'.$_SESSION['user'].'.sqlite'; 
+					$filename2 = $path.'/tmp-'.$_SESSION['user'].$ext; 
 					break;
 				case 'sld':
-					$valid_extensions = array('qgs'); 
-					$filename2 = $path.'/tmp-'.$_SESSION['user'].'.qgs'; 
+					$valid_extensions = array('qgs','map'); 
+					$filename2 = $path.'/tmp-'.$_SESSION['user'].$ext; 
 					break;
 			}
 			if ($valid_extensions) {
 				$tmp = $_FILES['uploadfile']['tmp_name'];
 				$ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-				if (true) { //if (in_array($ext, $valid_extensions)) {
+				if (in_array($ext, $valid_extensions)) {
 					$basicPage->writeLog('Van '.$tmp.' naar '.$filename2);
 					if(move_uploaded_file($tmp,$filename2)) {
 						$r['error']=false;

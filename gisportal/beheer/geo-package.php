@@ -29,7 +29,7 @@ if ($loggedIn){
 				$fname=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'];
 				if (file_exists($fname)) {rmdir($fname);}
 				$openshift_api->deleteDeploymentConfig('../',$g['id']);
-				$basicPage->redirect('/geo-packages.php',true,'Verwijderen','Geopackage is verwijderd.');
+				$basicPage->redirect('/geo/portal/geo-packages.php',true,'Verwijderen','Geopackage is verwijderd.');
 			} else {
 				$basicPage->fout('Internal error','Geopackage niet gevonden.');
 			}
@@ -78,9 +78,9 @@ if ($loggedIn){
 						$fname=$basicPage->getConfig('geo-mappen').'/geo-packages/tmp-'.$_SESSION['user'].'.map';
 						if (file_exists) {rename($fname,$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/source.map');}
 						if ($func=='opslaan') {
-							$basicPage->redirect('/geo-packages.php',false,'Opslaan','De geopackage is opgeslagen.');
+							$basicPage->redirect('/geo/portal/geo-packages.php',false,'Opslaan','De geopackage is opgeslagen.');
 						} else {
-							$basicPage->redirect('/beheer/geo-package.php?id='.$g['id'],false,'Opslaan','De geopackage is opgeslagen.');
+							$basicPage->redirect('/geo/portal/beheer/geo-package.php?id='.$g['id'],false,'Opslaan','De geopackage is opgeslagen.');
 						}
 					} else {
 						$basicPage->add_js_inline('var foutmeldingen='.json_encode($db->foutMeldingen).';');

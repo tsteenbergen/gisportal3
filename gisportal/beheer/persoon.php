@@ -19,7 +19,7 @@ if ($loggedIn && ($is_afd_admin || $is_admin)){
 			if ($per['id']>=1) {
 				if ($per['id']>1) {
 					$db->delete('personen','id='.$per['id']);
-					$basicPage->redirect('/beheer/index.php',false,'Verwijderen','De persoon is verwijderd.');
+					$basicPage->redirect('/geo/portal/beheer/index.php',false,'Verwijderen','De persoon is verwijderd.');
 				} else {
 					$basicPage->fout('Internal error','Superadmin kan niet worden verwijderd.');
 				}
@@ -43,7 +43,7 @@ if ($loggedIn && ($is_afd_admin || $is_admin)){
 						} else {
 							$db->update('personen',$a,'id='.$per['id']);
 						}
-						$basicPage->redirect('/beheer/index.php',false,'Opslaan','De persoon is opgeslagen.');
+						$basicPage->redirect('/geo/portal/beheer/index.php',false,'Opslaan','De persoon is opgeslagen.');
 					} else {
 						$basicPage->add_js_inline('var foutmeldingen='.json_encode($db->foutMeldingen).';');
 						// zorg dat de POST waarden weer worden getoond

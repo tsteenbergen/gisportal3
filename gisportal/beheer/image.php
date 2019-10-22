@@ -21,7 +21,7 @@ if ($loggedIn && $is_admin){
 				if ($img['deflt']!='J') {
 					$db->delete('images','id='.$img['id']);
 					$db->delete('versions','image='.$img['id']);
-					$basicPage->redirect('/beheer/index.php?tab=3',false,'Verwijderen','Het image is verwijderd.');
+					$basicPage->redirect('/geo/portal/beheer/index.php?tab=3',false,'Verwijderen','Het image is verwijderd.');
 				} else {
 					$basicPage->fout('Verwijderen','De image kan niet worden verwijderd omdat het de default image is.');
 				}
@@ -51,7 +51,7 @@ if ($loggedIn && $is_admin){
 						} else {
 							$db->update('images',$a,'id='.$img['id']);
 						}
-						$basicPage->redirect('/beheer/index.php?tab=3',false,'Opslaan','Het image is opgeslagen.');
+						$basicPage->redirect('/geo/portal/beheer/index.php?tab=3',false,'Opslaan','Het image is opgeslagen.');
 					} else {
 						$basicPage->add_js_inline('var foutmeldingen='.json_encode($db->foutMeldingen).';');
 						// zorg dat de POST waarden weer worden getoond

@@ -22,7 +22,7 @@ if ($loggedIn && $is_admin){
 				if ($afd['id']>=1) {
 					if ($afd['id']>1) {
 						$db->delete('afdelingen','id='.$afd['id']);
-						$basicPage->redirect('/beheer/index.php?tab=2',false,'Verwijderen','De afdeling is verwijderd.');
+						$basicPage->redirect('/geo/portal/beheer/index.php?tab=2',false,'Verwijderen','De afdeling is verwijderd.');
 					} else {
 						$basicPage->fout('Internal error','Afdeling van superadmin kan niet worden verwijderd.');
 					}
@@ -30,7 +30,7 @@ if ($loggedIn && $is_admin){
 					$basicPage->fout('Internal error','Afdeling niet gevonden.');
 				}
 			} else {
-				$basicPage->redirect('/beheer/index.php?tab=2',true,'Verwijderen','Er zijn nog personen aan deze afdeling gekoppeld. Verwijder deze eerst.');
+				$basicPage->redirect('/geo/portal/beheer/index.php?tab=2',true,'Verwijderen','Er zijn nog personen aan deze afdeling gekoppeld. Verwijder deze eerst.');
 			}
 		} else {
 			if ($afd) {
@@ -42,7 +42,7 @@ if ($loggedIn && $is_admin){
 						} else {
 							$db->update('afdelingen',$a,'id='.$afd['id']);
 						}
-						$basicPage->redirect('/beheer/index.php?tab=2',false,'Opslaan','De afdeling is opgeslagen.');
+						$basicPage->redirect('/geo/portal/beheer/index.php?tab=2',false,'Opslaan','De afdeling is opgeslagen.');
 					} else {
 						$basicPage->add_js_inline('var foutmeldingen='.json_encode($db->foutMeldingen).';');
 						// zorg dat de POST waarden weer worden getoond

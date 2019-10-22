@@ -20,12 +20,12 @@ if ($loggedIn && ($is_afd_admin || $is_admin)){
 			if (!$a) {
 				if ($ond['id']>=1) {
 					$db->delete('onderwerpen','id='.$ond['id']);
-					$basicPage->redirect('/beheer/index.php?tab=1',false,'Verwijderen','Het onderwerp is verwijderd.');
+					$basicPage->redirect('/geo/portal/beheer/index.php?tab=1',false,'Verwijderen','Het onderwerp is verwijderd.');
 				} else {
 					$basicPage->fout('Internal error','Onderwerp niet gevonden.');
 				}
 			} else {
-				$basicPage->redirect('/beheer/index.php?tab=1',true,'Verwijderen','Er zijn nog geopackages aan dit onderwerp gekoppeld. Verwijder deze eerst.');
+				$basicPage->redirect('/geo/portal/beheer/index.php?tab=1',true,'Verwijderen','Er zijn nog geopackages aan dit onderwerp gekoppeld. Verwijder deze eerst.');
 			}
 		} else {
 			if ($ond) {
@@ -42,7 +42,7 @@ if ($loggedIn && ($is_afd_admin || $is_admin)){
 						} else {
 							$db->update('onderwerpen',$a,'id='.$ond['id']);
 						}
-						$basicPage->redirect('/beheer/index.php?tab=1',false,'Opslaan','Het onderwerp is opgeslagen.');
+						$basicPage->redirect('/geo/portal/beheer/index.php?tab=1',false,'Opslaan','Het onderwerp is opgeslagen.');
 					} else {
 						$basicPage->add_js_inline('var foutmeldingen='.json_encode($db->foutMeldingen).';');
 						// zorg dat de POST waarden weer worden getoond

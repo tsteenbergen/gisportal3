@@ -20,7 +20,7 @@ if ($loggedIn && $is_admin){
 			if ($ver['id']>=1) {
 				if ($ver['deflt']!='J') {
 					$db->delete('versions','id='.$ver['id']);
-					$basicPage->redirect('/beheer/index.php?tab=3',false,'Verwijderen','De versie is verwijderd.');
+					$basicPage->redirect('/geo/portal/beheer/index.php?tab=3',false,'Verwijderen','De versie is verwijderd.');
 				} else {
 					$basicPage->fout('Verwijderen','De versie kan niet worden verwijderd omdat het de default versie is.');
 				}
@@ -49,7 +49,7 @@ if ($loggedIn && $is_admin){
 						} else {
 							$db->update('versions',$a,'id='.$ver['id']);
 						}
-						$basicPage->redirect('/beheer/index.php?tab=3',false,'Opslaan','De versie is opgeslagen.');
+						$basicPage->redirect('/geo/portal/beheer/index.php?tab=3',false,'Opslaan','De versie is opgeslagen.');
 					} else {
 						$basicPage->add_js_inline('var foutmeldingen='.json_encode($db->foutMeldingen).';');
 						// zorg dat de POST waarden weer worden getoond

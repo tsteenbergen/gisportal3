@@ -43,7 +43,7 @@ if ($loggedIn && ($is_afd_admin || $is_admin)){
 						} else {
 							$db->update('personen',$a,'id='.$per['id']);
 						}
-						$basicPage->redirect('/geo/portal/beheer/index.php',false,'Opslaan','De persoon is opgeslagen.');
+						$basicPage->redirect('/geo/portal/beheer/index.php',false,'Opslaan','De persoon is opgeslagen.'.var_export($a,true));
 					} else {
 						$basicPage->add_js_inline('var foutmeldingen='.json_encode($db->foutMeldingen).';');
 						// zorg dat de POST waarden weer worden getoond

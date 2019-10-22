@@ -4,7 +4,7 @@ require('basicPage.php');
 
 if ($loggedIn){
 	
-	$r.='<div style="background-image: url(css/99669.png); background-repeat: no-repeat; float: right; z-index: -1; margin-top: -64px; width: 450px; height: 300px;"></div><div style="text-align: right; max-width: 500px; margin-top: -52px; margin-bottom: 20px;"><a class="small-button" href="/beheer/geo-package.php?id=0">Nieuw geopackage</a></div>';
+	$r.='<div style="background-image: url(css/99669.png); background-repeat: no-repeat; float: right; z-index: -1; margin-top: -64px; width: 450px; height: 300px;"></div><div style="text-align: right; max-width: 500px; margin-top: -52px; margin-bottom: 20px;"><a class="small-button" href="/geo/portal/beheer/geo-package.php?id=0">Nieuw geopackage</a></div>';
 	$basicPage->add_js_ready('$(\'.content\').css(\'min-height\',\'320px\');');
 	
 	if ($is_admin) {
@@ -38,7 +38,7 @@ if ($loggedIn){
 	$r.='<tr class="header"><td>Afdeling</td><td>Onderwerp</td><td>Naam</td><td></td></tr>';
 	if ($gs) {
 		foreach ($gs as $g) {
-			$r.='<tr><td>'.htmlspecialchars($g['afd_naam']).'</td><td>'.htmlspecialchars($g['afkorting']).'</td><td>'.htmlspecialchars($g['naam']).'</td><td><a class="small-button" href="/beheer/geo-package.php?id='.$g['id'].'&back='.$back.'">Bewerk</a><a class="small-button" style="margin-left: 20px;" href="monitor-geo-package.php?id='.$g['id'].'&back='.$back.'">Monitor</a><a class="small-button" style="margin-left: 20px;" href="kaart.php?id='.$g['id'].'&back='.$back.'">Kaart</a></td></tr>';
+			$r.='<tr><td>'.htmlspecialchars($g['afd_naam']).'</td><td>'.htmlspecialchars($g['afkorting']).'</td><td>'.htmlspecialchars($g['naam']).'</td><td><a class="small-button" href="/geo/portal/beheer/geo-package.php?id='.$g['id'].'&back='.$back.'">Bewerk</a><a class="small-button" style="margin-left: 20px;" href="monitor-geo-package.php?id='.$g['id'].'&back='.$back.'">Monitor</a><a class="small-button" style="margin-left: 20px;" href="kaart.php?id='.$g['id'].'&back='.$back.'">Kaart</a></td></tr>';
 		}
 	}
 	$r.='</table>';

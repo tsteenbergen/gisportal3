@@ -160,7 +160,7 @@ function initFileuploads() {
 			form_data.append('extradata', $('#extradata').val());
 			if (f!='') {
 				$.ajax({
-					url: "/fileupload.php",
+					url: "/geo/portal/fileupload.php",
 					type: "POST",
 					data:  form_data,
 					context: document.getElementById('progress_'+$('#fileupload_no').val()),

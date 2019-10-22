@@ -56,7 +56,7 @@ if ($loggedIn && ($is_afd_admin || $is_admin)){
 				if ($a) {foreach ($a as $b) {$afds[]=$b['id'].'='.htmlspecialchars($b['naam']);}}
 				$r.='<form id="form" method="POST"><input type="hidden" name="id" value="'.$id.'"><input type="hidden" name="func" id="func"><table>';
 				if ($id>=1) {
-					$r.='<tr><td colspan="2" class="button-top"><a class="small-button" style="float: left;" href="/beheer/index.php?tab=1">Annuleren</a><a class="small-button" onclick="areYouSure(\'Verwijderen\',\'Dit onderwerp verwijderen?<br><br>NB: Dit kan niet ongedaan worden gemaakt.\',function () {$(\'#func\').val(\'delete\'); $(\'#form\').submit();});">Verwijderen</a></td></tr>';
+					$r.='<tr><td colspan="2" class="button-top"><a class="small-button" style="float: left;" href="/geo/portal/beheer/index.php?tab=1">Annuleren</a><a class="small-button" onclick="areYouSure(\'Verwijderen\',\'Dit onderwerp verwijderen?<br><br>NB: Dit kan niet ongedaan worden gemaakt.\',function () {$(\'#func\').val(\'delete\'); $(\'#form\').submit();});">Verwijderen</a></td></tr>';
 				}
 				$r.='<tr><td>Naam:</td><td><input name="naam" value="'.htmlspecialchars($ond['naam']).'" size="32"></td></tr>';
 				$r.='<tr><td>Afkorting:</td><td><input name="afkorting" value="'.htmlspecialchars($ond['afkorting']).'" size="8"></td></tr>';

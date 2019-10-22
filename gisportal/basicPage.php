@@ -377,7 +377,7 @@ class basicPage {
 		$r.='</script>';
 		$r.='<body>';
 		$r.='<div class="max-width logo"><img alt="Logo SSC-Campus" src="/geo/portal/css/beeldmerk-rijksoverheid.png"></div>';
-		$r.='<div class="menu1"><div class="max-width menu1_"><div class="menu1-title">GIS portaal</div>'.($loggedIn?'<a href="/mijn.php" class="inuitloggen">Mijn &hellip;</a>'.($loggedInViaWindowsUser?'':'<a href="/geo/portal/logout.php" class="inuitloggen">Uitloggen</a>'):'<a href="/geo/portal/login.php" class="inuitloggen">Inloggen</a>').'</div></div>';
+		$r.='<div class="menu1"><div class="max-width menu1_"><div class="menu1-title">GIS portaal</div>'.($loggedIn?'<a href="/geo/portal/mijn.php" class="inuitloggen">Mijn &hellip;</a>'.($loggedInViaWindowsUser?'':'<a href="/geo/portal/logout.php" class="inuitloggen">Uitloggen</a>'):'<a href="/geo/portal/login.php" class="inuitloggen">Inloggen</a>').'</div></div>';
 		$r.='<div class="menu2"><div class="max-width menu2_">'.$this->getMenu().'</div></div>';
 		$r.='<div class="max-width"><div class="content">';
 		foreach ($this->meldingen as $melding) {

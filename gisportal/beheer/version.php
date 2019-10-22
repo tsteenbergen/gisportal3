@@ -59,7 +59,7 @@ if ($loggedIn && $is_admin){
 				}
 				$r.='<form id="form" method="POST"><input type="hidden" name="id" value="'.$id.'"><input type="hidden" name="func" id="func"><table>';
 				if ($id>=1) {
-					$r.='<tr><td colspan="2" class="button-top"><a class="small-button" style="float: left;" href="/beheer/index.php?tab=3">Annuleren</a><a class="small-button" onclick="areYouSure(\'Verwijderen\',\'Deze versie verwijderen?\',function () {$(\'#func\').val(\'delete\'); $(\'#form\').submit();});">Verwijderen</a></td></tr>';
+					$r.='<tr><td colspan="2" class="button-top"><a class="small-button" style="float: left;" href="/geo/portal/beheer/index.php?tab=3">Annuleren</a><a class="small-button" onclick="areYouSure(\'Verwijderen\',\'Deze versie verwijderen?\',function () {$(\'#func\').val(\'delete\'); $(\'#form\').submit();});">Verwijderen</a></td></tr>';
 				}
 				$r.='<tr><td>Versie:</td><td><input name="version" value="'.htmlspecialchars($ver['version']).'" size="32"></td></tr>';
 				$r.='<tr><td></td><td><input id="deflt" name="deflt" value="J" type="checkbox"'.($ver['deflt']=='J'?' checked="checked"':'').'><label for="deflt"> Default</label></td></tr>';

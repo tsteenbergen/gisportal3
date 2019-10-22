@@ -293,13 +293,13 @@ class basicPage {
 		global $is_afd_admin;
 		global $is_admin;
 		
-		$r.='<a href="/index.php" class="mainmenu-item">Home</a>';
+		$r.='<a href="/geo/portal/index.php" class="mainmenu-item">Home</a>';
 		if ($loggedIn) {
-			$r.='<a href="/geo-packages.php" class="mainmenu-item">GEO-packages</a>';
+			$r.='<a href="/geo/portal/geo-packages.php" class="mainmenu-item">GEO-packages</a>';
 			if ($is_admin || $is_afd_admin) {
-				$r.='<a href="/beheer/index.php" class="mainmenu-item">Beheer</a>';
+				$r.='<a href="/geo/portal/beheer/index.php" class="mainmenu-item">Beheer</a>';
 				if ($is_admin) {
-					$r.='<a href="/admin.php" class="mainmenu-item">Admin functions</a>';
+					$r.='<a href="/geo/portal/admin.php" class="mainmenu-item">Admin functions</a>';
 				}
 			}
 		}
@@ -365,19 +365,19 @@ class basicPage {
 		
 		$r='<html>';
 		$r.='<head>';
-		$r.='<script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>';
-		$r.='<script type="text/javascript" src="/js/jquery-ui-1.9.2.custom.min.js"></script>';
-		$r.='<script type="text/javascript" src="/js/gisportal.js"></script>';
-		$r.='<link href="/css/gisportal.css" type="text/css" rel="stylesheet">';
-		$r.='<link href="/css/jquery.ui.dialog.css" type="text/css" rel="stylesheet">';
-		$r.='<link href="/css/jquery.ui.tabs.css" type="text/css" rel="stylesheet">';
+		$r.='<script type="text/javascript" src="/geo/portal/js/jquery-1.10.2.min.js"></script>';
+		$r.='<script type="text/javascript" src="/geo/portal/js/jquery-ui-1.9.2.custom.min.js"></script>';
+		$r.='<script type="text/javascript" src="/geo/portal/js/gisportal.js"></script>';
+		$r.='<link href="/geo/portal/css/gisportal.css" type="text/css" rel="stylesheet">';
+		$r.='<link href="/geo/portal/css/jquery.ui.dialog.css" type="text/css" rel="stylesheet">';
+		$r.='<link href="/geo/portal/css/jquery.ui.tabs.css" type="text/css" rel="stylesheet">';
 		$r.='</head>';
 		$r.='<script type="text/javascript">'.$this->js_inline;
 		$r.='$(document).ready(function() {meldFormFouten();initFileuploads();'.$this->js_ready.'});';
 		$r.='</script>';
 		$r.='<body>';
-		$r.='<div class="max-width logo"><img alt="Logo SSC-Campus" src="/css/beeldmerk-rijksoverheid.png"></div>';
-		$r.='<div class="menu1"><div class="max-width menu1_"><div class="menu1-title">GIS portaal</div>'.($loggedIn?'<a href="/mijn.php" class="inuitloggen">Mijn &hellip;</a>'.($loggedInViaWindowsUser?'':'<a href="/logout.php" class="inuitloggen">Uitloggen</a>'):'<a href="/login.php" class="inuitloggen">Inloggen</a>').'</div></div>';
+		$r.='<div class="max-width logo"><img alt="Logo SSC-Campus" src="/geo/portal/css/beeldmerk-rijksoverheid.png"></div>';
+		$r.='<div class="menu1"><div class="max-width menu1_"><div class="menu1-title">GIS portaal</div>'.($loggedIn?'<a href="/mijn.php" class="inuitloggen">Mijn &hellip;</a>'.($loggedInViaWindowsUser?'':'<a href="/geo/portal/logout.php" class="inuitloggen">Uitloggen</a>'):'<a href="/geo/portal/login.php" class="inuitloggen">Inloggen</a>').'</div></div>';
 		$r.='<div class="menu2"><div class="max-width menu2_">'.$this->getMenu().'</div></div>';
 		$r.='<div class="max-width"><div class="content">';
 		foreach ($this->meldingen as $melding) {

@@ -60,9 +60,10 @@ if ($loggedIn){
 					$a['Qopmaak']=$db->validateString($_POST['opmaak'],'opmaak',0,255,'Er is geen filenaam opgegeven','De filenaam is te lang (max 255 tekens).');
 					if (!$db->foutMeldingen) {
 						$version=$db->selectOne('versions AS a LEFT JOIN images AS b ON b.id=a.image','b.image,a.version','a.id='.$a['version']);
+						$theme=$db->selectOne('onderwerpen','naam','id='.$a['onderwerp']);
 						if ($g['id']==0) {
 							$g['id']=$db->insert('geopackages',$a);
-							$openshift_api->createDeploymentConfig('../',$g['id'],$a['Qkaartnaam'],$version['image'],$version['version']);
+							$openshift_api->createDeploymentConfig('../',$g['id'],$theme['naam'],$a['Qkaartnaam'],$version['image'],$version['version']);
 						} else {
 							$db->update('geopackages',$a,'id='.$g['id']);
 							$openshift_api->updateDeploymentConfig('../',$g['id'],$a['Qkaartnaam'],$version['image'],$version['version']);
@@ -109,7 +110,7 @@ if ($loggedIn){
 				
 				$back=explode(chr(1),base64_decode($_GET['back']));
 				if (count($back)==3) {$back='?a='.$back[0].'&ond='.$back[1].'&naam='.$back[2];} else {$back='';}
-				$r.='<button onclick="location.href=\'/geo/geo-packages.php'.$back.'\';" style="margin-bottom: 40px;">Terug</button>';
+				$r.='<button onclick="location.href=\'/geo/portal/geo-packages.php'.$back.'\';" style="margin-bottom: 40px;">Terug</button>';
 				
 				// eerste div
 				$tab1.='<div id="tabs-1" style="vertical-align: top;">';

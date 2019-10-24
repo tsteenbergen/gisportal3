@@ -6,7 +6,8 @@
         "namespace": "$namespace"
     },
     "spec": {
-		"path": "$map-name",
+		"host": "$host",
+		"path": "/geo/$map-theme/$map-name",
         "port": {
 			"targetPort": "$name"
 		},

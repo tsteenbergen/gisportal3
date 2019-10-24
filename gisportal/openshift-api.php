@@ -96,7 +96,7 @@ class openshift_api_ {
 //		$this->command('api','pods/gpid-'.$gpid,'DELETE');
 //	}
 
-	function createDeploymentConfig($subpath,$id, $kaartnaam, $image, $version) {
+	function createDeploymentConfig($subpath,$id, $theme, $kaartnaam, $image, $version) {
 		global $basicPage;
 		$jsonString = file_get_contents($subpath.'json-templates/deploymentconfig.json');
 		$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
@@ -113,6 +113,8 @@ class openshift_api_ {
 		$jsonString = str_replace('$map-name','/'.$kaartnaam,$jsonString);
 		$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
 		$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
+		$jsonString = str_replace('$host','acceptatie-data.rivm.nl',$jsonString);
+		$jsonString = str_replace('$map-theme',$theme,$jsonString);
 		$this->command('oapi','routes','POST',$jsonString);
 	}
 	function updateDeploymentConfig($subpath,$id, $kaartnaam, $image, $version) {

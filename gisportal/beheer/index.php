@@ -60,6 +60,8 @@ if ($loggedIn && ($is_admin || $is_afd_admin)){
 	}
 	$tabP.='</table></div>';
 	$tabP.=var_export($db->query('describe personen'),true);
+	$tabP.=var_export($db->select('audit_trail','*','id>1','id DESC'),true);
+	
 	
 	$r.='<div id="tabs">';
 	$r.='<ul><li><a href="#tabs-P">Personen</a></li><li><a href="#tabs-O">Onderwerpen</a></li>';

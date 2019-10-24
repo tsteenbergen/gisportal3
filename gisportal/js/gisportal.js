@@ -93,7 +93,7 @@ function filter_geo_package_change() {
 	v=$('#filter-naam').val();
 	if (v!='') {s+=(s==''?'':'&')+'naam='+v;}
 	
-	location.href='/geo-packages.php'+(s==''?'':'?')+s;
+	location.href='/geo/geo-packages.php'+(s==''?'':'?')+s;
 }
 
 function autoForm(form,start_enabled,form_edit,form_show,form_hide) {

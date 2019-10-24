@@ -10,7 +10,7 @@ if ($loggedIn){
 		if ($id>=1) {
 			$back=explode(chr(1),base64_decode($_GET['back']));
 			if (count($back)==3) {$back='?a='.$back[0].'&ond='.$back[1].'&naam='.$back[2];} else {$back='';}
-			$r.='<button onclick="location.href=\'/geo-packages.php'.$back.'\';" style="margin-bottom: 40px;">Terug</button>';
+			$r.='<button onclick="location.href=\'/geo/geo-packages.php'.$back.'\';" style="margin-bottom: 40px;">Terug</button>';
 			
 			$openshift_api->command('oapi','routes/route-gpid-'.$id);
 			if ($openshift_api->response->kind=='Route') {

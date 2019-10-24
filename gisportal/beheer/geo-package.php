@@ -44,7 +44,7 @@ if ($loggedIn){
 						'Qnaam'=>$db->validateString($_POST['naam'],'naam',1,64,'Er is geen naam opgegeven','De naam is te lang (max 64 tekens).'),
 						'Qkaartnaam'=>$db->validateString($_POST['kaartnaam'],'kaartnaam',1,64,'Er is geen naam opgegeven','De naam is te lang (max 64 tekens).'),
 						'afdeling'=>($is_admin?$_POST['afdeling']:$my_afd),
-						'onderwerp'=>$db->validateString($_POST['onderwerp'],'onderwerp',1,255,'Er is geen onderwerp opgegeven','Het onderwerp is te lang (max 255 tekens).'),
+						'onderwerp'=>$_POST['onderwerp'],
 						'Qsoort'=>$_POST['soort'],
 						'Qindatalink'=>$db->validateString($_POST['indatalink'],'indatalink',0,255,'Er is geen link opgegeven','De link is te lang (max 255 tekens).'),
 						'Qdatalink'=>$db->validateString($_POST['datalink'],'datalink',0,255,'Er is geen link opgegeven','De link is te lang (max 255 tekens).'),
@@ -54,16 +54,17 @@ if ($loggedIn){
 						'Qwmts'=>$db->validateCheckbox($_POST['wmts']),
 						'version'=>$_POST['version'],
 					);
+					if (!($a['onderwerp']>=1)) {$db->foutMeldingen[]=['onderwerp','Er is geen onderwerop gekozen'];}
 					//file_put_contents('qqq',file_get_contents('qqq').'<br>'.var_export($_POST,true));
 					// velden die niet gespooft mogen worden
 					$a['Qbrongeopackage']=$db->validateString($_POST['brongeopackage'],'brongeopackage',0,255,'Er is geen filenaam opgegeven','De filenaam is te lang (max 255 tekens).');
 					$a['Qopmaak']=$db->validateString($_POST['opmaak'],'opmaak',0,255,'Er is geen filenaam opgegeven','De filenaam is te lang (max 255 tekens).');
 					if (!$db->foutMeldingen) {
 						$version=$db->selectOne('versions AS a LEFT JOIN images AS b ON b.id=a.image','b.image,a.version','a.id='.$a['version']);
-						$theme=$db->selectOne('onderwerpen','naam','id='.$a['onderwerp']);
+						$theme=$db->selectOne('onderwerpen','afkorting','id='.$a['onderwerp']);
 						if ($g['id']==0) {
 							$g['id']=$db->insert('geopackages',$a);
-							$openshift_api->createDeploymentConfig('../',$g['id'],$theme['naam'],$a['Qkaartnaam'],$version['image'],$version['version']);
+							$openshift_api->createDeploymentConfig('../',$g['id'],$theme['afkorting'],$a['Qkaartnaam'],$version['image'],$version['version']);
 						} else {
 							$db->update('geopackages',$a,'id='.$g['id']);
 							$openshift_api->updateDeploymentConfig('../',$g['id'],$a['Qkaartnaam'],$version['image'],$version['version']);

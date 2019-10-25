@@ -151,7 +151,7 @@ if ($loggedIn){
 					$ext=explode(chr(13),$ext);
 					$exts='<table>';
 					foreach ($ext as $e) {
-						$pos=stripos($e,' '); $es=trim(substr($e,0,$pos)); $prms=trim(substr($e,$pos)); $opt=(stripos($prms,'O')!==false);  $krt=(stripos($prms,'K')!==false);
+						$e=trim($e); $pos=stripos($e,' '); if ($pos>=1) {$es=trim(substr($e,0,$pos)); $prms=trim(substr($e,$pos)); $opt=(stripos($prms,'O')!==false); $krt=(stripos($prms,'K')!==false);} else {$es=$e; $prms=''; $opt=fals; $krt=false;}
 						$exts.='<tr><td>'.$es.'</td><td>'.($opt?'':'O').($krt?'':'K').'</td><td>';
 						if ($krt) {
 							$exist=false;

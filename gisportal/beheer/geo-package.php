@@ -119,7 +119,7 @@ if ($loggedIn){
 				$afds=[];
 				if ($a) {foreach ($a as $b) {$afds[]=$b['id'].'='.htmlspecialchars($b['naam']);}}
 				$tab1.='<form id="form" method="POST"><input type="hidden" name="id" value="'.$id.'"><input type="hidden" name="func" id="func"><table style="margin-bottom: 20px;">';
-				$basicPage->add_js_ready('autoForm(\'form\','.($g['id']==0?'true':'false').',\'#form-edit\',\'#form-delete\',\'#form-save,#geo-package-file-button,#opmaak-file-button,#helpindata,#helpdata\');');
+				$basicPage->add_js_ready('autoForm(\'form\','.($g['id']==0?'true':'false').',\'#form-edit\',\'#form-delete\',\'#form-save,#opmaak-file-button,#helpindata,#helpdata\');');
 //				if ($id>=1) {
 					$tab1.='<tr><td colspan="2"><a class="small-button" id="form-save" onclick="$(\'#func\').val(\'opslaan\'); $(\'#form\').submit();" style="margin-right: 20px;">Opslaan</a><a id="form-edit" class="small-button">Bewerken</a><a id="form-delete" style="float: right;" class="small-button" onclick="areYouSure(\'Verwijderen\',\'Dit geopackage verwijderen?<br><br>NB: Dit kan niet ongedaan worden gemaakt.\',function () {$(\'[name=id]\').removeAttr(\'disabled\'); $(\'#func\').removeAttr(\'disabled\').val(\'delete\'); $(\'#form\').submit();});">Verwijderen</a></td></tr>';
 					$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
@@ -141,7 +141,7 @@ if ($loggedIn){
 				}
 				$tab1.='<tr><td>Soort:</td><td>'.$basicPage->getSelect('soort',$g['soort'],array('Raster','Vector')).'</td></tr>';
 				$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
-				$tab1.='<tr><td>Upload een file:</td><td><span id="brongeopackage1" style="margin-right: 20px;">'.htmlspecialchars($g['brongeopackage']).'</span><input type="hidden" id="brongeopackage" name="brongeopackage" value="'.$g['brongeopackage'].'"><a id="geo-package-file-button" class="small-button" style="float: right;" uploadFile="geo-package,'.$g['id'].'">Upload geo-package</a></td></tr>';
+				$tab1.='<tr><td>Upload een file:</td><td><span id="brongeopackage1" style="margin-right: 20px;"></span><input type="hidden" id="brongeopackage" name="brongeopackage" value=""><a class="small-button" style="float: right;" uploadFile="geo-package,'.$g['id'].'">Upload file</a></td></tr>';
 //				$tab1.='<tr><td>qgs file:</td><td><span id="opmaak1" style="margin-right: 20px;">'.htmlspecialchars($g['opmaak']).'</span><input type="hidden" id="opmaak-file" name="opmaak" value="'.$g['opmaak'].'"><a id="opmaak-file-button" class="small-button" style="float: right;" uploadFile="sld,'.$g['id'].'">Upload file</a></td></tr>';
 				$ext=$db->selectOne('versions','extensions','id='.$g['version']);
 				$exts='';
@@ -348,7 +348,16 @@ if ($loggedIn){
 						}
 					}
 					$tab2.='</table>';
+					
+					$files=glob($basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/*.*');
+					if ($files) {
+						foreach ($files as $file) {
+							$tab2.=$file.'<br>';
+						}
+					}
+					
 					$tab2.='</div>';
+					
 				} else {
 					$tab2=false;
 				}

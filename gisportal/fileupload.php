@@ -30,7 +30,7 @@ if ($loggedIn){
 		if (file_exists($path)) {
 			$path.='/geo-packages'; // upload directory
 			if (!file_exists($path)) {mkdir($path);}
-			switch ($uploadtype) {
+/*			switch ($uploadtype) {
 				case 'geo-package':
 					$valid_extensions = array('sqlite','gpkg'); 
 					$filename2 = $path.'/tmp-'.$_SESSION['user'].$ext; 
@@ -39,7 +39,8 @@ if ($loggedIn){
 					$valid_extensions = array('qgs','map'); 
 					$filename2 = $path.'/tmp-'.$_SESSION['user'].$ext; 
 					break;
-			}
+			}*/
+			$valid_extensions = array('sqlite','gpkg','map','qgs','qgz','png');
 			if ($valid_extensions) {
 				$tmp = $_FILES['uploadfile']['tmp_name'];
 				$ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));

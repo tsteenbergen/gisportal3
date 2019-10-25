@@ -20,8 +20,15 @@ if ($loggedIn && $is_admin){
 			break;
 		case 'dbdump':
 			//$ts=$db->select('information_schema.tables','table_name','table_type=\'base table\' AND table_schema=\'gisportal\'');
-			$ts=$db->query('show tables');
-			$r.=var_export($ts,true);
+			$ts=[]
+				['table_name'=>'database_version'],
+				['table_name'=>'afdelingen'],
+				['table_name'=>'personen'],
+				['table_name'=>'onderwerpen'],
+				['table_name'=>'images'],
+				['table_name'=>'versions'],
+				['table_name'=>'geopackages'],
+			];
 			if ($ts) {
 				foreach ($ts as $t) {
 					$r.='Table: '.$t['table_name'].'<br>';

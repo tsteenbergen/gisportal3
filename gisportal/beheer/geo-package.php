@@ -151,8 +151,8 @@ if ($loggedIn){
 					$ext=explode(chr(13),$ext);
 					$exts='<table>';
 					foreach ($ext as $e) {
-						$exts.='<tr><td>'.$e.'</td><td>';
 						$pos=stripos($e,' '); $es=trim(substr($e,0,$pos)); $prms=trim(substr($e,$pos)); $opt=(stripos($prms,'O')!==false);  $krt=(stripos($prms,'K')!==false);
+						$exts.='<tr><td>'.$es.'</td><td>'.($opt?'':'O').($krt?'':'K').'</td><td>';
 						if ($krt) {
 							$exist=false;
 							foreach (explode('/',$es) as $e1) {
@@ -164,10 +164,11 @@ if ($loggedIn){
 								}
 							}
 							if (!$exist) {
+								$es=explode('/',$es);
 								if ($opt) {
-									$exts.='Bestaat niet (optioneel)';
+									$exts.=$g['kaartnaam'].'.'.$es[0].' bestaat niet (optioneel)';
 								} else {
-									$exts.='Fout: Bestaat niet';
+									$exts.='Fout: '.$g['kaartnaam'].'.'.$es[0].' bestaat niet';
 								}
 							}
 						} else {
@@ -182,10 +183,11 @@ if ($loggedIn){
 								}
 							}
 							if (!$exist) {
+								$es=explode('/',$es);
 								if ($opt) {
-									$exts.='Bestaat niet (optioneel)';
+									$exts.='.'.$es[0].' bestaat niet (optioneel)';
 								} else {
-									$exts.='Fout: Bestaat niet';
+									$exts.='Fout: .'.$es[0].' bestaat niet';
 								}
 							}
 						}

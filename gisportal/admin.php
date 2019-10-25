@@ -32,10 +32,11 @@ if ($loggedIn && $is_admin){
 			if ($ts) {
 				foreach ($ts as $t) {
 					$r.='Table: '.$t['table_name'].'<br>';
-					$cs=$db->select('information_schema.columns','column_name,column_type,extra','table_schema=\'gisportal\' AND table_name=\''.$t['table_name'].'\'');
+					$cs=$db->query('SHOW COLUMNS FROM '.$t['table_name']);
+					$r.=var_export($cs);
 					if ($cs) {
 						foreach ($cs as $c) {
-							$r.='&nbsp;&nbsp;Field: '.$c['column_name'].' '.$c['column_type'].' '.$c['extra'].'<br>';
+							$r.='&nbsp;&nbsp;Field: '.$c['Field'].' '.$c['column_Type'].' '.$c['Extra'].'<br>';
 						}
 					} else {
 						$r.='&nbsp;&nbsp;Error: No fields found.<br>';

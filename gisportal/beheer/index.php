@@ -17,22 +17,25 @@ if ($loggedIn && ($is_admin || $is_afd_admin)){
 		$tabA.='</table></div>';
 
 		$tabA.='<div id="tabs-A1" style="vertical-align: top;">';
-		$imgs=$db->select('images','id,image,repo,extensions,deflt','id>=1','image');
+		$imgs=$db->select('images','id,image,repo,deflt','id>=1','image');
 		$tabA.='<table class="colored">';
 		$tabA.='<tr class="top-button"><td colspan="4"><a class="small-button" href="/geo/portal/beheer/image.php?id=0">Nieuw image</a></td></tr>';
-		$tabA.='<tr class="header"><td></td><td style="min-width: 160px;">Image</td><td>Repo</td><td>Upload files</td><td></td><td style="width: 20px;"></td><td>Versions</td></tr>';
+		$tabA.='<tr class="header"><td></td><td style="min-width: 160px;">Image</td><td>Repo</td><td></td><td style="width: 20px;"></td><td>Versions</td></tr>';
 		if ($imgs) {
 			foreach ($imgs as $img) {
-				$vs=$db->select('versions','id,version,deflt','image='.$img['id']);
+				$vs=$db->select('versions','id,version,extensions,deflt','image='.$img['id']);
 				$versions='<table>';
 				if ($vs) foreach ($vs as $v) {
-					$versions.='<tr><td>'.($v['deflt']=='J'?'Default':'').'</td><td>'.$v['version'].'</td><td><a class="small-button" href="/geo/portal/beheer/version.php?id='.$v['id'].'&iid='.$img['id'].'">Bewerk</a></td></tr>';
+					$ext=str_replace(chr(13).chr(10),chr(13),htmlspecialchars($img['extensions']));
+					$ext=str_replace(chr(10),chr(13),$ext);
+					$ext=str_replace(chr(13),'<br>',$ext);
+					$ext=str_replace('OPTIONAL','O',$ext);
+					$ext=str_replace('USE_KAART','K',$ext);
+					$ext=str_replace('  ',' ',$ext);
+					$versions.='<tr><td>'.($v['deflt']=='J'?'Default':'').'</td><td>'.$v['version'].'</td><td>'.$ext.'</td><td><a class="small-button" href="/geo/portal/beheer/version.php?id='.$v['id'].'&iid='.$img['id'].'">Bewerk</a></td></tr>';
 				}
 				$versions.='</table>';
-				$ext=str_replace(chr(13).chr(10),chr(13),htmlspecialchars($img['extensions']));
-				$ext=str_replace(chr(10),chr(13),$ext);
-				$ext=str_replace(chr(13),'<br>',$ext);
-				$tabA.='<tr><td>'.($img['deflt']=='J'?'Default':'').'</td><td>'.htmlspecialchars($img['image']).'</td><td>'.htmlspecialchars($img['repo']).'</td><td>'.$ext.'</td><td><a class="small-button" href="/geo/portal/beheer/image.php?id='.$img['id'].'">Bewerk image</a><a class="small-button" style="margin-left: 20px;" href="/geo/portal/beheer/version.php?id=0&iid='.$img['id'].'">Nieuwe versie</a></td><td></td><td>'.$versions.'</td></tr>';
+				$tabA.='<tr><td>'.($img['deflt']=='J'?'Default':'').'</td><td>'.htmlspecialchars($img['image']).'</td><td>'.htmlspecialchars($img['repo']).'</td><td><a class="small-button" href="/geo/portal/beheer/image.php?id='.$img['id'].'">Bewerk image</a><a class="small-button" style="margin-left: 20px;" href="/geo/portal/beheer/version.php?id=0&iid='.$img['id'].'">Nieuwe versie</a></td><td></td><td>'.$versions.'</td></tr>';
 			}
 		}
 		$tabA.='</table></div>';

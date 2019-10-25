@@ -28,7 +28,7 @@ class extention {
 				} else {
 					$exts=$de;
 				}
-				$this->defs[]=[explode('/',$exts),$opt,$file==''?$krt,false,$file];
+				$this->defs[]=array(explode('/',$exts),$opt,($file==''?$krt:false),$file);
 			}
 		}
 		if ($checkFilePath) { // Kijk ook of de files bestaan of niet
@@ -37,7 +37,7 @@ class extention {
 			$checkFilePath=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$gpid.'/';
 			$t=0;
 			$files=glob($checkFilePath.'*.*');
-			foreach ($defs as $def) {
+			foreach ($this->defs as $def) {
 				// $def[0] bevat alle mogelijke extenties op deze regel
 				// $def[1] bevat boolean; Is file optioneel
 				// $def[2] bevat boolean; Moet je de kaartnaam gebruiken
@@ -71,13 +71,14 @@ class extention {
 		
 		$pad=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$this->gpid.'/';
 		$r='<table>';
+		$t=0;
 		foreach ($this->defs as $def) {
 			$r.='<tr><td>'.implode('/',$def[0]).'</td><td>';
 			$ext='';
 			foreach ($def[0] as $d) {
 				if (file_exists($pad.$this->files[$t].'.'.$d)) {$ext=$d;}
 			}
-			if ($d[1]) { // file is optioneel
+			if ($def[1]) { // file is optioneel
 				if ($ext=='' || $this->files[$t]=='') {
 					$r.='File niet geupload (optioneel).';
 				} else {
@@ -91,6 +92,7 @@ class extention {
 				}
 			}
 			$r.='</td></tr>';
+			$t++;
 		}
 		$r.='<table>';
 		return $r;

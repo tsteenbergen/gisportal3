@@ -1,7 +1,7 @@
 <?php
 require('../basicPage.php');
 require('../openshift-api.php');
-//require ('./beheer/extention.php');
+require ('./extention.php');
 
 $title='Beheer geopackage';
 $r='';

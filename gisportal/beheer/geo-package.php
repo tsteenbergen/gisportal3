@@ -1,6 +1,7 @@
 <?php
 require('../basicPage.php');
 require('../openshift-api.php');
+require ('./beheer/extention.php');
 
 $title='Beheer geopackage';
 $r='';
@@ -143,59 +144,8 @@ if ($loggedIn){
 				$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
 				$tab1.='<tr><td>Upload een file:</td><td><span id="brongeopackage1" style="margin-right: 20px;"></span><input type="hidden" id="brongeopackage" name="brongeopackage" value=""><a class="small-button" style="float: right;" uploadFile="geo-package,'.$g['id'].'">Upload file</a></td></tr>';
 //				$tab1.='<tr><td>qgs file:</td><td><span id="opmaak1" style="margin-right: 20px;">'.htmlspecialchars($g['opmaak']).'</span><input type="hidden" id="opmaak-file" name="opmaak" value="'.$g['opmaak'].'"><a id="opmaak-file-button" class="small-button" style="float: right;" uploadFile="sld,'.$g['id'].'">Upload file</a></td></tr>';
-				$ext=$db->selectOne('versions','extensions','id='.$g['version']);
-				$exts='';
-				if ($ext) {
-					$ext=str_replace(chr(13).chr(10),chr(13),$ext['extensions']);
-					$ext=str_replace(chr(10),chr(13),$ext);
-					$ext=explode(chr(13),$ext);
-					$exts='<table>';
-					foreach ($ext as $e) {
-						$e=trim($e); $pos=stripos($e,' '); if ($pos>=1) {$es=trim(substr($e,0,$pos)); $prms=trim(substr($e,$pos)); $opt=(stripos($prms,'O')!==false); $krt=(stripos($prms,'K')!==false);} else {$es=$e; $prms=''; $opt=fals; $krt=false;}
-						$exts.='<tr><td>'.$es.'</td><td>'.($opt?'':'O').($krt?'':'K').'</td><td>';
-						if ($krt) {
-							$exist=false;
-							foreach (explode('/',$es) as $e1) {
-								if (!$exist) {
-									$exist=file_exists($basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/'.$g['kaartnaam'].'.'.$e1);
-									if ($exist) {
-										$exts.='Bestaat: '.$g['kaartnaam'].'.'.$e1.'<br>';
-									}
-								}
-							}
-							if (!$exist) {
-								$es=explode('/',$es);
-								if ($opt) {
-									$exts.=$g['kaartnaam'].'.'.$es[0].' bestaat niet (optioneel)';
-								} else {
-									$exts.='Fout: '.$g['kaartnaam'].'.'.$es[0].' bestaat niet';
-								}
-							}
-						} else {
-							$exist=false;
-							foreach (explode('/',$es) as $e1) {
-								$files=glob($basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/*'.'.'.$e1);
-								if ($files) {
-									foreach ($files as $file) {
-										$exts.='Bestaat: '.$file.'<br>';
-									}
-									$exist=true;
-								}
-							}
-							if (!$exist) {
-								$es=explode('/',$es);
-								if ($opt) {
-									$exts.='.'.$es[0].' bestaat niet (optioneel)';
-								} else {
-									$exts.='Fout: .'.$es[0].' bestaat niet';
-								}
-							}
-						}
-						$exts.='</td></tr>';
-					}
-					$exts.='</table>';
-				}
-				$tab1.='<tr><td>Files:</td><td>'.$exts.'</td></tr>';
+				$ext=new extention($g['id'],true);
+				$tab1.='<tr><td>Files:</td><td>'.$ext->tabel().'</td></tr>';
 				$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
 				if (file_exists('indata.data')) {
 					if (time()-filemtime('indata.data')>60*60) {unlink('indata.data');} // gooi weg als ouder dan een uur

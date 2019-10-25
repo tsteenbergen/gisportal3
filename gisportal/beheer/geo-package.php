@@ -144,8 +144,8 @@ if ($loggedIn){
 				$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
 				$tab1.='<tr><td>Upload een file:</td><td><span id="brongeopackage1" style="margin-right: 20px;"></span><input type="hidden" id="brongeopackage" name="brongeopackage" value=""><a class="small-button" style="float: right;" uploadFile="geo-package,'.$g['id'].'">Upload file</a></td></tr>';
 //				$tab1.='<tr><td>qgs file:</td><td><span id="opmaak1" style="margin-right: 20px;">'.htmlspecialchars($g['opmaak']).'</span><input type="hidden" id="opmaak-file" name="opmaak" value="'.$g['opmaak'].'"><a id="opmaak-file-button" class="small-button" style="float: right;" uploadFile="sld,'.$g['id'].'">Upload file</a></td></tr>';
-//				$ext=new extention($g['id'],true);
-//				$tab1.='<tr><td>Files:</td><td>'.$ext->tabel().'</td></tr>';
+				$ext=new extention($g['id'],true);
+				$tab1.='<tr><td>Files:</td><td>'.$ext->tabel().'</td></tr>';
 				$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
 				if (file_exists('indata.data')) {
 					if (time()-filemtime('indata.data')>60*60) {unlink('indata.data');} // gooi weg als ouder dan een uur

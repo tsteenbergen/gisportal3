@@ -34,9 +34,24 @@ if ($loggedIn && $is_admin){
 					$r.='Table: '.$t['table_name'].'<br>';
 					$cs=$db->query('SHOW COLUMNS FROM '.$t['table_name']);
 					if ($cs) {
+						$r.='<table><tr>';
+						$fl='';
 						foreach ($cs as $c) {
-							$r.='&nbsp;&nbsp;Field: '.$c['Field'].' '.$c['Type'].' '.$c['Extra'].'<br>';
+							$r.='<td>'.$c['Field'].'<br>'.$c['Type'].'<br>'.$c['Extra'].'</td>';
+							$fl.=($fl==''?'':',').$c['Field'];
 						}
+						$r.='</tr>';
+						$ft=$db->select($t['table_name'],$fl,'id>=1');
+						if ($ft) {
+							foreach ($ft as $f) {
+								$r.='<tr>';
+								foreach ($cs as $c) {
+									$r.='<td>'.$f[$c['Field']].'</td>';
+								}
+								$r.='</tr>';
+							}
+						}
+						$r.='</table>';
 					} else {
 						$r.='&nbsp;&nbsp;Error: No fields found.<br>';
 					}

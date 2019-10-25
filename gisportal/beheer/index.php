@@ -26,11 +26,9 @@ if ($loggedIn && ($is_admin || $is_afd_admin)){
 				$vs=$db->select('versions','id,version,extensions,deflt','image='.$img['id']);
 				$versions='<table>';
 				if ($vs) foreach ($vs as $v) {
-					$ext=str_replace(chr(13).chr(10),chr(13),htmlspecialchars($img['extensions']));
+					$ext=str_replace(chr(13).chr(10),chr(13),htmlspecialchars($v['extensions']));
 					$ext=str_replace(chr(10),chr(13),$ext);
 					$ext=str_replace(chr(13),'<br>',$ext);
-					$ext=str_replace('OPTIONAL','O',$ext);
-					$ext=str_replace('USE_KAART','K',$ext);
 					$ext=str_replace('  ',' ',$ext);
 					$versions.='<tr><td>'.($v['deflt']=='J'?'Default':'').'</td><td>'.$v['version'].'</td><td>'.$ext.'</td><td><a class="small-button" href="/geo/portal/beheer/version.php?id='.$v['id'].'&iid='.$img['id'].'">Bewerk</a></td></tr>';
 				}

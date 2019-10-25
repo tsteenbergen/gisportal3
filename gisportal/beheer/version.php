@@ -63,7 +63,7 @@ if ($loggedIn && $is_admin){
 					$r.='<tr><td colspan="2" class="button-top"><a class="small-button" style="float: left;" href="/geo/portal/beheer/index.php?tab=3">Annuleren</a><a class="small-button" onclick="areYouSure(\'Verwijderen\',\'Deze versie verwijderen?\',function () {$(\'#func\').val(\'delete\'); $(\'#form\').submit();});">Verwijderen</a></td></tr>';
 				}
 				$r.='<tr><td>Versie:</td><td><input name="version" value="'.htmlspecialchars($ver['version']).'" size="32"></td></tr>';
-				$r.='<tr><td>Upload files:</td><td><textarea name="extensions" rows="6" cols="32">'.$img['extensions'].'</textarea><br>Per regel: ext[/ext[/ext...]] [OPTIONAL] [USE_KAARTNAAM]<br>ext/ext betekent dat de ene of de andere extentie mag<br>OPTIONAL betekent dat de file niet verplicht is<br>USE_KAARTNAAM betekent dat na upload de kaartnaam voor de file wordt gebruikt (de extentie blijft gelijk)</td></tr>';
+				$r.='<tr><td>Upload files:</td><td><textarea name="extensions" rows="6" cols="32">'.$ver['extensions'].'</textarea><br>Per regel: ext[/ext[/ext...]] [O][K]<br>ext/ext betekent dat de ene of de andere extentie mag<br>O betekent dat de file niet verplicht is (OPTIONAL)<br>K betekent dat na upload de KAARTNAAM voor de file wordt gebruikt (de extentie blijft gelijk)</td></tr>';
 				$r.='<tr><td></td><td><input id="deflt" name="deflt" value="J" type="checkbox"'.($ver['deflt']=='J'?' checked="checked"':'').'><label for="deflt"> Default</label></td></tr>';
 				$r.='<tr><td colspan="2" class="button-below"><button onclick="$(\'#func\').val(\'opslaan\'); $(\'#form\').submit();">Opslaan</button></td></tr>';
 				$r.='</table></form>';

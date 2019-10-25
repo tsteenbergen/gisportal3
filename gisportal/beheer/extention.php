@@ -8,7 +8,6 @@ class extention {
 		global $db;
 		
 		$this->gpid=$gpid;
-		/*
 		$definition=$db->selectOne('geopackages AS a LEFT JOIN versions AS b on b.id=a.version','b.extensions','a.id='.$gpid);
 		$definition=$definition['extensions'];
 		$d=str_ireplace(chr(13).chr(10),$definition);
@@ -64,7 +63,7 @@ class extention {
 				$this->files[]=$filenaam;
 				$t++;
 			}
-		}*/
+		}
     }
 	
 	function tabel() {
@@ -72,7 +71,6 @@ class extention {
 		
 		$pad=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$this->gpid.'/';
 		$r='<table>';
-		/*
 		foreach ($this->defs as $def) {
 			$r.='<tr><td>'.implode('/',$def[0]).'</td><td>';
 			$ext='';
@@ -93,7 +91,7 @@ class extention {
 				}
 			}
 			$r.='</td></tr>';
-		}*/
+		}
 		$r.='<table>';
 		return $r;
 	}

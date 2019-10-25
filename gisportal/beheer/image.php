@@ -7,7 +7,7 @@ if ($loggedIn && $is_admin){
 	if (isset($_GET['id'])) {
 		$func=$_POST['func'];
 		$id=$_GET['id'];
-		$velden='id,image,repo,deflt';
+		$velden='id,image,repo,extensions,deflt';
 		if ($id>=1) {
 			$img=$db->selectOne('images',$velden,'id='.$id);
 			$r='<h2>Beheer image</h2>';
@@ -34,6 +34,7 @@ if ($loggedIn && $is_admin){
 					$a=array(
 						'Qimage'=>$db->validateString($_POST['image'],'image',1,32,'Er is geen image opgegeven','Het image is te lang (max 32 tekens)',array('images','image=\''.$_POST['image'].'\' AND id<>'.$img['id'],'Dit image komt al in de database voor')),
 						'Qrepo'=>$db->validateString($_POST['repo'],'repo',1,128,'Er is geen repo opgegeven','De repo is te lang (max 128 tekens)',array('images','repo=\''.$_POST['repo'].'\' AND id<>'.$img['id'],'Deze repo komt al in de database voor')),
+						'Qextensions'=>$db->validateString($_POST['extensions'],'extensions',1,128,'Er zijn geen extensions opgegeven','De extensions zijn te lang (max 4096 tekens)'),
 						'Qdeflt'=>($_POST['deflt']=='J'?'J':'N'),
 					);
 					if ($a['Qdeflt']=='J') {
@@ -66,6 +67,7 @@ if ($loggedIn && $is_admin){
 				}
 				$r.='<tr><td>Image:</td><td><input name="image" value="'.htmlspecialchars($img['image']).'" size="32"></td></tr>';
 				$r.='<tr><td>Repo:</td><td><input name="repo" value="'.htmlspecialchars($img['repo']).'" size="64"></td></tr>';
+				$r.='<tr><td>Upload files:</td><td><textarea name="extensions" rows="6" cols="32">'.$img['extensions'].'</textarea><br>Per regel: ext[/ext[/ext...]] [OPTIONAL] [USE_KAARTNAAM]<br>ext/ext betekent dat de ene of de andere extentie mag<br>OPTIONAL betekent dat de file niet verplicht is<br>USE_KAARTNAAM betekent dat na upload de kaartnaam voor de file wordt gebruikt (de extentie blijft gelijk)</td></tr>';
 				$r.='<tr><td></td><td><input id="deflt" name="deflt" value="J" type="checkbox"'.($img['deflt']=='J'?' checked="checked"':'').'><label for="deflt"> Default</label></td></tr>';
 				$r.='<tr><td colspan="2" class="button-below"><button onclick="$(\'#func\').val(\'opslaan\'); $(\'#form\').submit();">Opslaan</button></td></tr>';
 				$r.='</table></form>';

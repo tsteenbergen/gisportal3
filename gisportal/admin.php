@@ -33,10 +33,9 @@ if ($loggedIn && $is_admin){
 				foreach ($ts as $t) {
 					$r.='Table: '.$t['table_name'].'<br>';
 					$cs=$db->query('SHOW COLUMNS FROM '.$t['table_name']);
-					$r.=var_export($cs);
 					if ($cs) {
 						foreach ($cs as $c) {
-							$r.='&nbsp;&nbsp;Field: '.$c['Field'].' '.$c['column_Type'].' '.$c['Extra'].'<br>';
+							$r.='&nbsp;&nbsp;Field: '.$c['Field'].' '.$c['Type'].' '.$c['Extra'].'<br>';
 						}
 					} else {
 						$r.='&nbsp;&nbsp;Error: No fields found.<br>';

@@ -144,7 +144,56 @@ if ($loggedIn){
 				$tab1.='<tr><td>Upload een file:</td><td><span id="brongeopackage1" style="margin-right: 20px;">'.htmlspecialchars($g['brongeopackage']).'</span><input type="hidden" id="brongeopackage" name="brongeopackage" value="'.$g['brongeopackage'].'"><a id="geo-package-file-button" class="small-button" style="float: right;" uploadFile="geo-package,'.$g['id'].'">Upload geo-package</a></td></tr>';
 //				$tab1.='<tr><td>qgs file:</td><td><span id="opmaak1" style="margin-right: 20px;">'.htmlspecialchars($g['opmaak']).'</span><input type="hidden" id="opmaak-file" name="opmaak" value="'.$g['opmaak'].'"><a id="opmaak-file-button" class="small-button" style="float: right;" uploadFile="sld,'.$g['id'].'">Upload file</a></td></tr>';
 				$ext=$db->selectOne('versions','extensions','id='.$g['version']);
-				$tab1.='<tr><td>Files:</td><td>'.$g['version'].'='.$ext['extentions'].'</td></tr>';
+				$exts='';
+				if ($ext) {
+					$ext=str_replace(chr(13).chr(10),chr(13),$ext['extensions']);
+					$ext=str_replace(chr(10),chr(13),$ext);
+					$ext=explode(chr(13),$ext);
+					$exts='<table>';
+					foreach ($ext as $e) {
+						$exts.='<tr><td>'.$e.'</td><td>';
+						$pos=stripos($e,' '); $es=trim(substr($e,0,$pos)); $prms=trim(substr($e,$pos)); $opt=(stripos($prms,'O')!==false);  $krt=(stripos($prms,'K')!==false);
+						if ($krt) {
+							$exist=false;
+							foreach (explode('/',$es) as $e1) {
+								if (!$exist) {
+									$exist=file_exists($basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/'.$g['kaartnaam'].'.'.$e1);
+									if ($exist) {
+										$exts.='Bestaat: '.$g['kaartnaam'].'.'.$e1.'<br>';
+									}
+								}
+							}
+							if (!$exist) {
+								if ($opt) {
+									$exts.='Bestaat niet (optioneel)';
+								} else {
+									$exts.='Fout: Bestaat niet';
+								}
+							}
+						} else {
+							$exist=false;
+							foreach (explode('/',$es) as $e1) {
+								$files=glob($basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/*'.'.'.$e1);
+								if ($files) {
+									foreach ($files as $file) {
+										$exts.='Bestaat: '.$file.'<br>';
+									}
+									$exist=true;
+								}
+							}
+							if (!$exist) {
+								if ($opt) {
+									$exts.='Bestaat niet (optioneel)';
+								} else {
+									$exts.='Fout: Bestaat niet';
+								}
+							}
+						}
+						$exts.='</td></tr>';
+					}
+					$exts.='</table>';
+				}
+				$tab1.='<tr><td>Files:</td><td>'.$exts.'</td></tr>';
 				$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
 				if (file_exists('indata.data')) {
 					if (time()-filemtime('indata.data')>60*60) {unlink('indata.data');} // gooi weg als ouder dan een uur

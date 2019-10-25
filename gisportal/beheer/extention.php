@@ -12,7 +12,7 @@ class extention {
 		$definition=$db->selectOne('geopackages AS a LEFT JOIN versions AS b on b.id=a.version','b.extensions','a.id='.$gpid);
 $this->deb.=var_export($definition,true);
 		$definition=$definition['extensions'];
-		$d=str_ireplace(chr(13).chr(10),$definition);
+		$d=str_ireplace(chr(13).chr(10),chr(13),$definition);
 		$d=str_ireplace(chr(10),chr(13),$d);
 		$d=explode(chr(13),$d);
 $this->deb.='<br>'.var_export($d,true);

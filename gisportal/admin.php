@@ -19,7 +19,9 @@ if ($loggedIn && $is_admin){
 			}
 			break;
 		case 'dbdump':
-			$ts=$db->select('information_schema.tables','table_name','table_type=\'base table\' AND table_schema=\'gisportal\'');
+			//$ts=$db->select('information_schema.tables','table_name','table_type=\'base table\' AND table_schema=\'gisportal\'');
+			$ts=$db->query('show tables');
+			$r.=var_export($ts,true);
 			if ($ts) {
 				foreach ($ts as $t) {
 					$r.='Table: '.$t['table_name'].'<br>';

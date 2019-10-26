@@ -100,8 +100,8 @@ class extention {
 	
 	function getRightFilename($filename) {
 		global $basicPage;
-		$basicPage->writeLog('$filename='.$filename);
-
+		$basicPage->writeLog('getRightFilename $filename='.$filename);
+/*
 		$pos=strripos($filename,'.');
 		if ($pos!==false) {
 			$ext=strtolower(substr($filename,$pos+1));
@@ -131,6 +131,7 @@ $basicPage->writeLog('3');
 			}
 		}
 $basicPage->writeLog('4');
+*/
 		return false;
 	}
 }

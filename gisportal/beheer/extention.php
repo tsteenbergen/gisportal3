@@ -99,12 +99,17 @@ class extention {
 	}
 	
 	function getRightFilename($filename) {
+		global $basicPage;
+		$basicPage->writeLog('$filename='.$filename);
+
 		$pos=strripos($filename,'.');
 		if ($pos!==false) {
 			$ext=strtolower(substr($filename,$pos+1));
 			$filename=substr($filename,0,$pos);
 			foreach ($this->defs as $def) {
+$basicPage->writeLog('$def='.var_export($def,true));
 				foreach ($def[0] as $d) {
+$basicPage->writeLog('1='.$d);
 					if ($d==$ext) {
 						// $def[2] bevat boolean; Moet je de kaartnaam gebruiken
 						// $def[3] bevat vaste filenaam of ''
@@ -112,16 +117,20 @@ class extention {
 							global $db;
 							$kaart=$db->selectOne('geopackages','kaartnaam','id='.$this->gpid);
 							if ($kaart) {return $kaart['kaartnaam'].'.'.$ext;}
+$basicPage->writeLog('1');
 							return false;
 						}
 						if ($def[3]!='') {
+$basicPage->writeLog('2');
 							return $def[3].'.'.$ext;
 						}
+$basicPage->writeLog('3');
 						return filename.'.'.$ext;
 					}
 				}
 			}
 		}
+$basicPage->writeLog('4');
 		return false;
 	}
 }

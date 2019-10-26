@@ -99,6 +99,7 @@ class extention {
 	}
 	
 	function getRightFilename($filename) {
+/*
 		global $basicPage;
 		$basicPage->writeLog('$filename='.$filename);
 
@@ -131,7 +132,8 @@ $basicPage->writeLog('3');
 			}
 		}
 $basicPage->writeLog('4');
-		return false;
+*/
+		return 'hallo';
 	}
 }
 ?>

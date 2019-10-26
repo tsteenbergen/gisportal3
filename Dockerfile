@@ -19,6 +19,11 @@ RUN yum install -y php72 php72-php-fpm php72-php-mysqlnd php72-php-xml php72-php
 # Onderstaande regels zijn nodig voor installatie obv RHEL
 # ...
 
+# TBV ontwikkeling GIT installeren
+RUN yum install -y git
+COPY etc/ontwikkel.sh /var/ontwikkel.sh
+RUN chmod a+x /var/ontwikkel.sh
+
 # Instaleren van lighttpd
 RUN yum install -y lighttpd
 RUN yum install -y lighttpd-fastcgi

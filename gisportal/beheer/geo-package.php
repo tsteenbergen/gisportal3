@@ -70,16 +70,6 @@ if ($loggedIn){
 							$db->update('geopackages',$a,'id='.$g['id']);
 							$openshift_api->updateDeploymentConfig('../',$g['id'],$a['Qkaartnaam'],$version['image'],$version['version']);
 						}
-						$fname=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'];
-						if (!file_exists($fname)) {mkdir($fname);}
-						$fname=$basicPage->getConfig('geo-mappen').'/geo-packages/tmp-'.$_SESSION['user'].'.sqlite';
-						if (file_exists) {rename($fname,$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/'.$a['Qbrongeopackage']);}
-						$fname=$basicPage->getConfig('geo-mappen').'/geo-packages/tmp-'.$_SESSION['user'].'.gpkg';
-						if (file_exists) {rename($fname,$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/'.$a['Qbrongeopackage']);}
-						$fname=$basicPage->getConfig('geo-mappen').'/geo-packages/tmp-'.$_SESSION['user'].'.qgs';
-						if (file_exists) {rename($fname,$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/source.qgs');}
-						$fname=$basicPage->getConfig('geo-mappen').'/geo-packages/tmp-'.$_SESSION['user'].'.map';
-						if (file_exists) {rename($fname,$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/source.map');}
 						if ($func=='opslaan') {
 							$basicPage->redirect('/geo/portal/geo-packages.php',false,'Opslaan','De geopackage is opgeslagen.');
 						} else {

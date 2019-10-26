@@ -1,14 +1,9 @@
 <?php  //Start the Session
 
+require('./beheer/extention.php');
 
 /************************************************************************************************************************************
 Werking upload en indeling geo-mappen:
-1.	Bij de upload van een geo-package-file is niet altijd een geo-package-id bekend. Het bestand wordt daarom opgeslagen onder de naam: /geo-mappen/tmp-[user-id].gpkg of /geo-mappen/tmp-[user-id].sld
-2.	Bij elk bezoek aan een pagina wordt na het aanroepen van de render-functie het tmp-bestand verwijderd, als deze bestaat. Zo wordt voorkomen dat er (te) veel tmp-files ontstaan.
-3.	Bij het opslaan van een geo-package wordt (voor het renderen van de result-pagina) het eventueel geuploade bestand hernoemd en verplaatst naar: /geo-mappen/gpid-[geo-package-id]/source.gpkg of /geo-mappen/gpid-[geo-package-id]/sld.sld
-4.	De upload-files kunnen van de volgende types zijn:
-    a.	geo-package
-    b.	sld
 **************************************************************************************************************************************/
 
 require('basicPage.php');
@@ -16,12 +11,16 @@ require('basicPage.php');
 $basicPage->writeLog('$_FILES='.var_export($_FILES,true));
 $basicPage->writeLog('$_POST='.var_export($_POST,true));
 $basicPage->writeLog('$_GET='.var_export($_GET,true));
+$basicPage->writeLog('$loggedIn='.var_export($loggedIn,true));
 $r=array('error'=>true,'msg'=>'Unauthorised action');
 if ($loggedIn){
 	if ($_FILES['uploadfile']) {
 		$extradata=explode(',',$_POST['extradata']);
 		$uploadtype=$extradata[0];
 		$id=$extradata[1];
+		$fname=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$id;
+		$ext=new extention($id);
+		if (!file_exists($fname)) {mkdir($fname);}
 		$r['uploadtype']=$uploadtype;
 		$r['id']=$id;
 		$filename = $_FILES['uploadfile']['name'];
@@ -30,6 +29,7 @@ if ($loggedIn){
 		if (file_exists($path)) {
 			$path.='/geo-packages'; // upload directory
 			if (!file_exists($path)) {mkdir($path);}
+$filename2 = $filename; 
 /*			switch ($uploadtype) {
 				case 'geo-package':
 					$valid_extensions = array('sqlite','gpkg'); 

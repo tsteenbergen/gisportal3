@@ -392,8 +392,6 @@ class basicPage {
 		$r.='</body>';
 		$r.='</html>';
 		echo($r);
-		$path = $this->getConfig('geo-mappen').'/geo-packages/tmp-'.$_SESSION['user'];
-		if (file_exists($path)) {unlink($path);}
 	}
 }
 $basicPage=new basicPage();

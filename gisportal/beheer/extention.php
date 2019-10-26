@@ -3,19 +3,16 @@ class extention {
 	var $gpid;
 	var $defs=[];
 	var $files=[];
-	var $deb='';
 	
 	function __construct($gpid,$checkFilePath=false) {
 		global $db;
 		
 		$this->gpid=$gpid;
 		$definition=$db->selectOne('geopackages AS a LEFT JOIN versions AS b on b.id=a.version','b.extensions','a.id='.$gpid);
-$this->deb.=var_export($definition,true);
 		$definition=$definition['extensions'];
 		$d=str_ireplace(chr(13).chr(10),chr(13),$definition);
 		$d=str_ireplace(chr(10),chr(13),$d);
 		$d=explode(chr(13),$d);
-$this->deb.='<br>'.var_export($d,true);
 		foreach ($d as $de) {
 			$de=trim($de);
 			if ($de!='') {
@@ -34,7 +31,6 @@ $this->deb.='<br>'.var_export($d,true);
 				$this->defs[]=array(explode('/',$exts),$opt,($file==''?$krt:false),$file);
 			}
 		}
-$this->deb.='<br>'.var_export($this->defs,true);
 		if ($checkFilePath) { // Kijk ook of de files bestaan of niet
 			global $basicPage;
 			
@@ -99,7 +95,6 @@ $this->deb.='<br>'.var_export($this->defs,true);
 			$t++;
 		}
 		$r.='</table>';
-$r.=$this->deb;
 		return $r;
 	}
 }

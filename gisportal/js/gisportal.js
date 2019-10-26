@@ -216,7 +216,7 @@ function fileuploadMessage(el,error,msg,progressPercent,data) {
 				$('#opmaak1').html(data['filenaam']);
 				break;
 		}
-		location.reload();
+		if (!error) {location.reload();}
 	}
 }
 

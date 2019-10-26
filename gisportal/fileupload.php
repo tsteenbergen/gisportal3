@@ -29,7 +29,9 @@ if ($loggedIn){
 			if (!file_exists($path)) {mkdir($path);}
 			$path.='/gpid-'.$id;
 			if (!file_exists($path)) {mkdir($path);}
+$basicPage->writeLog('$filename='.$filename);
 			$filename2=$ext->getRightFilename($filename); 
+$basicPage->writeLog('$filename2='.$filename2);
 			if ($filename2) {
 				$tmp = $_FILES['uploadfile']['tmp_name'];
 				$basicPage->writeLog('Van '.$tmp.' naar '.$filename2);

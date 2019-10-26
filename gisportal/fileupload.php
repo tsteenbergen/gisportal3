@@ -29,33 +29,19 @@ if ($loggedIn){
 			if (!file_exists($path)) {mkdir($path);}
 			$path.='/gpid-'.$id;
 			if (!file_exists($path)) {mkdir($path);}
-$filename2=$path.'/'.$filename; 
-/*			switch ($uploadtype) {
-				case 'geo-package':
-					$valid_extensions = array('sqlite','gpkg'); 
-					$filename2 = $path.'/tmp-'.$_SESSION['user'].$ext; 
-					break;
-				case 'sld':
-					$valid_extensions = array('qgs','map'); 
-					$filename2 = $path.'/tmp-'.$_SESSION['user'].$ext; 
-					break;
-			}*/
-			$valid_extensions = array('sqlite','gpkg','map','qgs','qgz','png');
-			if ($valid_extensions) {
+			$filename2=$ext->getRightFilename($filename); 
+			if ($filename2) {
 				$tmp = $_FILES['uploadfile']['tmp_name'];
-				$ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-				if (in_array($ext, $valid_extensions)) {
-					$basicPage->writeLog('Van '.$tmp.' naar '.$filename2);
-					if(move_uploaded_file($tmp,$filename2)) {
-						$r['error']=false;
-						$r['msg']=' Uploaded file: '.$filename;
-						$r['filenaam']=$filename;
-					}
+				$basicPage->writeLog('Van '.$tmp.' naar '.$filename2);
+				if(move_uploaded_file($tmp,$path.'/'.$filename2)) {
+					$r['error']=false;
+					$r['msg']=' Uploaded file: '.$filename2;
+					$r['filenaam']=$filename2;
 				} else {
-					$r['msg']='Invalid file-extention';
+					$r['msg']='Error moving tmp file';
 				}
 			} else {
-					$r['msg']='Unknown uploadfile type: '.$uploadtype;
+					$r['msg']='Deze file past niet bij de versie van dit image.';
 			}
 		} else {
 			$r['msg']='Persistent storage /geo-mappen not found.';

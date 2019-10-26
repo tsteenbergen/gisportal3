@@ -187,6 +187,7 @@ function initFileuploads() {
 		for (t=0;t<els.length;t++) {
 			el=$(els[t]);
 			el.attr('no',no).click(function(e) {
+				$(this).hide();
 				$('#fileupload_no').val($(this).attr('no'));
 				$('#extradata').val($(this).attr('uploadfile'));
 				$('#uploadfile').click();
@@ -215,6 +216,7 @@ function fileuploadMessage(el,error,msg,progressPercent,data) {
 				$('#opmaak1').html(data['filenaam']);
 				break;
 		}
+		location.reload();
 	}
 }
 

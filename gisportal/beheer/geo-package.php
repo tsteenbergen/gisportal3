@@ -55,6 +55,15 @@ if ($loggedIn){
 						'Qwmts'=>$db->validateCheckbox($_POST['wmts']),
 						'version'=>$_POST['version'],
 					);
+					if ($a['Qkaartnaam']!='') {
+						for ($t=0;$t<strlen($a['Qkaartnaam']);$t++) {
+							$c=substr($a['Qkaartnaam'],$t,1);
+							if (! (  ($c>='a' && $c<='z') || ($c>='A' && $c<='Z') || ($c>='0' && $c<='9') || $c=='-' || $c=='_'  )  ) {
+								$db->foutMeldingen[]=['kaartnaam','De kaartnaam mag alleen letters, cijfers, - of _ bevatten'];
+								$t=strlen($a['Qkaartnaam']);
+							}
+						}
+					}
 					if (!($a['onderwerp']>=1)) {$db->foutMeldingen[]=['onderwerp','Er is geen onderwerop gekozen'];}
 					//file_put_contents('qqq',file_get_contents('qqq').'<br>'.var_export($_POST,true));
 					// velden die niet gespooft mogen worden

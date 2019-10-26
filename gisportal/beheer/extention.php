@@ -97,5 +97,32 @@ class extention {
 		$r.='</table>';
 		return $r;
 	}
+	
+	function getRightFilename($filename) {
+		$pos=strripos($filename,'.');
+		if ($pos!==false) {
+			$ext=strtolower(substr($filename,$pos+1));
+			$filename=substr($filename,0,$pos);
+			foreach ($this->defs as $def) {
+				foreach ($def[0] as $d) {
+					if ($d==$ext) {
+						// $def[2] bevat boolean; Moet je de kaartnaam gebruiken
+						// $def[3] bevat vaste filenaam of ''
+						if ($def[2]) {
+							global $db;
+							$kaart=$db->selectOne('geopackages','kaartnaam','id='.$this->gpid);
+							if ($kaart) {return $kaart['kaartnaam'].'.'.$ext;}
+							return false;
+						}
+						if ($def[3]!='') {
+							return $def[3].'.'.$ext;
+						}
+						return filename.'.'.$ext;
+					}
+				}
+			}
+		}
+		return false;
+	}
 }
 ?>

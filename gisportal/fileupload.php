@@ -18,6 +18,7 @@ if ($loggedIn){
 		$extradata=explode(',',$_POST['extradata']);
 		$uploadtype=$extradata[0];
 		$id=$extradata[1];
+$basicPage->writeLog('$id='.$id);
 		$ext=new extention($id);
 		$r['uploadtype']=$uploadtype;
 		$r['id']=$id;

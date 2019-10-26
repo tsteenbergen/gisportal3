@@ -3,3 +3,4 @@ cd /var
 cd gisportal
 git pull
 cp -r gisportal /var/www/html/geo/portal
+cd ..

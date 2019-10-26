@@ -18,8 +18,6 @@ if ($loggedIn){
 		$extradata=explode(',',$_POST['extradata']);
 		$uploadtype=$extradata[0];
 		$id=$extradata[1];
-$basicPage->writeLog('$id='.$id);
-		$ext=new extention($id);
 		$r['uploadtype']=$uploadtype;
 		$r['id']=$id;
 		$filename = $_FILES['uploadfile']['name'];
@@ -30,9 +28,8 @@ $basicPage->writeLog('$id='.$id);
 			if (!file_exists($path)) {mkdir($path);}
 			$path.='/gpid-'.$id;
 			if (!file_exists($path)) {mkdir($path);}
-$basicPage->writeLog('$filename='.$filename);
-			$filename2=$ext->getRightFilename($filename); 
-$basicPage->writeLog('$filename2='.$filename2);
+			$extention=new extention($id);
+			$filename2=$extention->getRightFilename($filename); 
 			if ($filename2) {
 				$tmp = $_FILES['uploadfile']['tmp_name'];
 				$basicPage->writeLog('Van '.$tmp.' naar '.$filename2);

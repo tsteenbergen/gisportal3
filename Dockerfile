@@ -22,6 +22,7 @@ RUN yum install -y php72 php72-php-fpm php72-php-mysqlnd php72-php-xml php72-php
 # TBV ontwikkeling GIT installeren
 RUN yum install -y git
 COPY etc/ontwikkel.sh /var/ontwikkel.sh
+RUN chmod +x /var/ontwikkel.sh
 
 # Instaleren van lighttpd
 RUN yum install -y lighttpd

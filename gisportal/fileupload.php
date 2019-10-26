@@ -18,9 +18,7 @@ if ($loggedIn){
 		$extradata=explode(',',$_POST['extradata']);
 		$uploadtype=$extradata[0];
 		$id=$extradata[1];
-		$fname=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$id;
 		$ext=new extention($id);
-		if (!file_exists($fname)) {mkdir($fname);}
 		$r['uploadtype']=$uploadtype;
 		$r['id']=$id;
 		$filename = $_FILES['uploadfile']['name'];
@@ -29,7 +27,9 @@ if ($loggedIn){
 		if (file_exists($path)) {
 			$path.='/geo-packages'; // upload directory
 			if (!file_exists($path)) {mkdir($path);}
-$filename2 = $filename; 
+			$path.='/gpid-'.$id;
+			if (!file_exists($path)) {mkdir($path);}
+$filename2=$path.'/'.$filename; 
 /*			switch ($uploadtype) {
 				case 'geo-package':
 					$valid_extensions = array('sqlite','gpkg'); 

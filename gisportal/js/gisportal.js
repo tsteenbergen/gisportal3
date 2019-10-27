@@ -206,13 +206,6 @@ function fileuploadMessage(el,error,msg,progressPercent,data) {
 		$(el).find('.bar').addClass('hidden');
 		if (!error) {$(el).find('.msg').html('').addClass('hidden');}
 		var el=$($(el).parent()).find('[uploadFile]');
-		console.log(data);
-		switch (data.uploadtype) {
-			case 'geo-package':
-				$('#brongeopackage').val(data['filenaam']);
-				$('#brongeopackage1').html(data['filenaam']);
-				break;
-		}
 		if (!error) {location.reload();}
 	}
 }

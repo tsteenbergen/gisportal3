@@ -19,7 +19,7 @@ class extention {
 				$pos=stripos($de,':');
 				if ($pos>=1) {
 					$label=trim(substr($de,0,$pos+1));
-					$de=trim(substr(de,$pos+1));
+					$de=trim(substr($de,$pos+1));
 				} else {
 					$label='';
 				}

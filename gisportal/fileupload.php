@@ -30,7 +30,7 @@ if ($loggedIn){
 			if (!file_exists($path)) {mkdir($path);}
 			$path.='/gpid-'.$id;
 			if (!file_exists($path)) {mkdir($path);}
-			$extention=new extention($id,true);
+			$extention=new extention($id);
 			$filename2=$extention->getRightFilename($filename); 
 			$tmp = $_FILES['uploadfile']['tmp_name'];
 			if ($filename2) {
@@ -56,6 +56,7 @@ if ($loggedIn){
 						$gfs[]=$filename.'='.$filename2;
 					}
 					$db->update('geopackages',array('Qbrongeopackage'=>implode(chr(13),$gfs)),'id='.$id);
+					$extention=new extention($id,true);
 					$r['tabel']=$extention->tabel();
 					
 				} else {

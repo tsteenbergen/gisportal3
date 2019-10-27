@@ -68,27 +68,39 @@ class extention {
 	
 	function tabel() {
 		global $basicPage;
+		global $db;
 		
 		$pad=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$this->gpid.'/';
+		$filenamen=explode(chr(13),$db->selectOne('geopackages','brongeopackage','id='.$this->gpid));
+		$orgfs=[];
+		foreach ($filenamen as $filenaam) {
+			$f=explode('=',$filenaam);
+			if (count($f)==2) {$orgfs[$f[0]]=$f[1];}
+		}
 		$r='<table>';
 		$t=0;
 		foreach ($this->defs as $def) {
 			$r.='<tr><td>'.implode('/',$def[0]).'</td><td>';
 			$ext='';
 			foreach ($def[0] as $d) {
-				if (file_exists($pad.$this->files[$t].'.'.$d)) {$ext=$d;}
+				if (file_exists($pad.$cfile.'.'.$d)) {
+					$ext=$d;
+					$op=date('d-m-Y H:i:s',filemtime($pad.$cfile.'.'.$d));
+				}
 			}
+			$cfile=$this->files[$t];
+			if (isset($orgfs[$cfile.'.'.$ext])) {$ofile=$orgfs[$cfile.'.'.$ext];} else {$ofile=$cfile.'.'.$ext;}
 			if ($def[1]) { // file is optioneel
-				if ($ext=='' || $this->files[$t]=='') {
-					$r.='File niet geupload (optioneel).';
+				if ($ext=='' || $cfile=='') {
+					$r.='File niet geupload (is optioneel).';
 				} else {
-					$r.='\''.$this->files[$t].'.'.$ext.'\' geupload.';
+					$r.='\''.$ofile.'\' geupload op '.$op;
 				}
 			} else { // file is verplicht
-				if ($ext=='' || $this->files[$t]=='') {
+				if ($ext=='' || $cfile=='') {
 					$r.='Fout: File niet geupload.';
 				} else {
-					$r.='\''.$this->files[$t].'.'.$ext.'\' geupload.';
+					$r.='\''.$ofile.'\' geupload op '.$op;
 				}
 			}
 			$r.='</td></tr>';

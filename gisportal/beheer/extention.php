@@ -17,8 +17,8 @@ class extention {
 			$de=trim($de);
 			if ($de!='') {
 				$pos=stripos($de,':');
-				if ($pos!==false) {
-					$label=substr($de,0,$pos+1);
+				if ($pos>=1) {
+					$label=trim(substr($de,0,$pos+1));
 					$de=trim(substr(de,$pos+1));
 				} else {
 					$label='';
@@ -87,7 +87,7 @@ class extention {
 		$r='<table>';
 		$t=0;
 		foreach ($this->defs as $def) {
-			$r.='<tr><td>'.,$def[4].'</td><td>'.implode('/',$def[0]).'</td><td>';
+			$r.='<tr><td>'.$def[4].'</td><td>'.implode('/',$def[0]).'</td><td>';
 			$ext='';
 			$cfile=$this->files[$t];
 			foreach ($def[0] as $d) {

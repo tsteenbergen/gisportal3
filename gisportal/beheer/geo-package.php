@@ -21,7 +21,6 @@ $basicPage->writeLog('geo-package.php 1');
 			$g=array('id'=>0,'naam'=>'','afdeling'=>$my_afd,'onderwerp'=>0,'version'=>$version['id']);
 			$title='Nieuw geopackage';
 		}
-	/*
 		if ($func=='delete') {
 			if ($g['id']>=1) {
 				$db->delete('geopackages','id='.$g['id']);
@@ -38,6 +37,7 @@ $basicPage->writeLog('geo-package.php 1');
 			}
 		} else {
 			if ($g) {
+	/*
 				if ($func=='opslaan' || $func=='cache-legen') {
 					if ($func=='cache-legen') {
 						if (file_exists('indata.data')) {unlink('indata.data');}
@@ -299,12 +299,12 @@ $basicPage->writeLog('geo-package.php 1');
 				if ($tab2) {$r.=$tab2;}
 				$r.='</div>';
 				$basicPage->add_js_ready('$( "#tabs" ).tabs({heightStyle: \'auto\'});');
+*/
 				
 			} else {
 				$basicPage->fout('Internal error','Geopackage niet gevonden.');
 			}
 		}
-*/
 	} else {
 		$basicPage->fout('Internal error','Er is geen ID opgegeven.');
 	}

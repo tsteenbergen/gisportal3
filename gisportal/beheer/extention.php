@@ -158,8 +158,7 @@ class extention {
 		foreach ($this->remove_exts as $ext) {
 			$f=glob($pad.'*.'.$ext);
 			if ($f) {
-				//unlink($f[0]);
-				$basicPage->writeLog('Unlink: '.$f[0]);
+				unlink($f[0]);
 			}
 		}
 	}

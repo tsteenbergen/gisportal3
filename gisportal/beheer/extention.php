@@ -16,6 +16,13 @@ class extention {
 		foreach ($d as $de) {
 			$de=trim($de);
 			if ($de!='') {
+				$pos=stripos($de,':');
+				if ($pos!==false) {
+					$label=substr($de,0,$pos+1);
+					$de=trim(substr(de,$pos+1));
+				} else {
+					$label='';
+				}
 				$opt=false; $krt=false; $file='';
 				$pos=stripos($de,' ');
 				if ($pos>=1) {
@@ -28,7 +35,7 @@ class extention {
 				} else {
 					$exts=$de;
 				}
-				$this->defs[]=array(explode('/',$exts),$opt,($file==''?$krt:false),$file);
+				$this->defs[]=array(explode('/',$exts),$opt,($file==''?$krt:false),$file,$label);
 			}
 		}
 		if ($checkFilePath) { // Kijk ook of de files bestaan of niet
@@ -80,7 +87,7 @@ class extention {
 		$r='<table>';
 		$t=0;
 		foreach ($this->defs as $def) {
-			$r.='<tr><td>'.implode('/',$def[0]).'</td><td>';
+			$r.='<tr><td>'.,$def[4].'</td><td>'.implode('/',$def[0]).'</td><td>';
 			$ext='';
 			$cfile=$this->files[$t];
 			foreach ($def[0] as $d) {
@@ -94,13 +101,13 @@ class extention {
 				if ($ext=='' || $cfile=='') {
 					$r.='File niet geupload (is optioneel).';
 				} else {
-					$r.='\''.$ofile.'\' geupload op '.$op;
+					$r.=$ofile.' '.$op;
 				}
 			} else { // file is verplicht
 				if ($ext=='' || $cfile=='') {
 					$r.='Fout: File niet geupload.';
 				} else {
-					$r.='\''.$ofile.'\' geupload op '.$op;
+					$r.=$ofile.' '.$op;
 				}
 			}
 			$r.='</td></tr>';

@@ -63,8 +63,10 @@ if ($loggedIn && $is_admin){
 					$r.='<tr><td colspan="2" class="button-top"><a class="small-button" style="float: left;" href="/geo/portal/beheer/index.php?tab=3">Annuleren</a><a class="small-button" onclick="areYouSure(\'Verwijderen\',\'Deze versie verwijderen?\',function () {$(\'#func\').val(\'delete\'); $(\'#form\').submit();});">Verwijderen</a></td></tr>';
 				}
 				$r.='<tr><td>Versie:</td><td><input name="version" value="'.htmlspecialchars($ver['version']).'" size="32"></td></tr>';
-				$r.='<tr><td>Upload files:</td><td><textarea name="extensions" rows="6" cols="32">'.$ver['extensions'].'</textarea><br>Format per regel:&nbsp;&nbsp;&nbsp;ext[/ext[/ext...]] [O][K|=&hellip;]<table><tr><td>ext/ext</td><td>&eacute;&eacute;n van deze extenties</td></tr><tr><td>O</td><td>Deze extentie is optioneel</td></tr><tr><td>K</td><td>Na upload wordt de KAARTNAAM voor de file gebruikt (de extentie blijft gelijk)</td></tr><tr><td>=&hellip;</td><td>Na upload wordt de &hellip; voor de file gebruikt (de extentie blijft gelijk)</td></tr></table></td></tr>';
 				$r.='<tr><td></td><td><input id="deflt" name="deflt" value="J" type="checkbox"'.($ver['deflt']=='J'?' checked="checked"':'').'><label for="deflt"> Default</label></td></tr>';
+				$r.='<tr><td>&nbsp;</td></tr>';
+				$r.='<tr><td>Benodigde files:</td><td><textarea name="extensions" rows="6" cols="32">'.$ver['extensions'].'</textarea><br>Format per regel:&nbsp;&nbsp;&nbsp;label:ext[/ext[/ext...]] [O][K|=&hellip;]<table><tr><td>label:</td><td>Het label dat een gebruiker ziet</td></tr><tr><td>ext/ext</td><td>&eacute;&eacute;n van deze extenties</td></tr><tr><td>O</td><td>Deze extentie is optioneel</td></tr><tr><td>K</td><td>Na upload wordt de KAARTNAAM voor de file gebruikt (de extentie blijft gelijk)</td></tr><tr><td>=&hellip;</td><td>Na upload wordt de &hellip; voor de file gebruikt (de extentie blijft gelijk)</td></tr></table></td></tr>';
+				$r.='<tr><td>&nbsp;</td></tr>';
 				$r.='<tr><td colspan="2" class="button-below"><button onclick="$(\'#func\').val(\'opslaan\'); $(\'#form\').submit();">Opslaan</button></td></tr>';
 				$r.='</table></form>';
 			} else {

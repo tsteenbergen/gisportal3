@@ -1,6 +1,5 @@
 <?php
 require('../basicPage.php');
-$r='Hallo';
 require('../openshift-api.php');
 require ('./extention.php');
 
@@ -8,6 +7,7 @@ $title='Beheer geopackage';
 $r='';
 $basicPage->writeLog('geo-package.php 0');
 if ($loggedIn){
+	/*
 	if (isset($_GET['id'])) {
 		$func=$_POST['func'];
 		$id=$_GET['id'];
@@ -307,6 +307,7 @@ $basicPage->writeLog('geo-package.php 1');
 	} else {
 		$basicPage->fout('Internal error','Er is geen ID opgegeven.');
 	}
+*/
 } else {
 	$basicPage->fout('Autorisatie','Je hebt niet de juiste autorisatie.');
 }

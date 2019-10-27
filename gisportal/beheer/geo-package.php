@@ -9,7 +9,7 @@ if ($loggedIn){
 	if (isset($_GET['id'])) {
 		$func=$_POST['func'];
 		$id=$_GET['id'];
-		$velden='id,afdeling,onderwerp,naam,kaartnaam,soort,brongeopackage,indatalink,datalink,opmaak,wms,wfs,wcs,wmts,version';
+		$velden='id,afdeling,onderwerp,naam,kaartnaam,soort,brongeopackage,indatalink,datalink,wms,wfs,wcs,wmts,version';
 		if ($id>=1) {
 			$g=$db->selectOne('geopackages',$velden,'id='.$id.($is_admin?'':' AND afdeling='.$my_afd));
 			$version=$db->selectOne('versions AS a LEFT JOIN images AS b ON b.id=a.image','b.image, a.version','a.id='.$g['version']);
@@ -19,14 +19,13 @@ if ($loggedIn){
 			$g=array('id'=>0,'naam'=>'','afdeling'=>$my_afd,'onderwerp'=>0,'version'=>$version['id']);
 			$title='Nieuw geopackage';
 		}
-//file_put_contents('qqq',file_get_contents('qqq').'<br>'.var_export($_POST,true));
 		if ($func=='delete') {
 			if ($g['id']>=1) {
 				$db->delete('geopackages','id='.$g['id']);
-				$fname=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/'.$g['brongeopackage'];
-				if (file_exists($fname)) {unlink($fname);}
-				$fname=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/source.gqs';
-				if (file_exists($fname)) {unlink($fname);}
+				$delfs=glob($basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/*.*');
+				id ($delfs) foreach ($delfs as $delf) {
+					unlink($delf);
+				}
 				$fname=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'];
 				if (file_exists($fname)) {rmdir($fname);}
 				$openshift_api->deleteDeploymentConfig('../',$g['id']);
@@ -67,8 +66,6 @@ if ($loggedIn){
 					if (!($a['onderwerp']>=1)) {$db->foutMeldingen[]=['onderwerp','Er is geen onderwerop gekozen'];}
 					//file_put_contents('qqq',file_get_contents('qqq').'<br>'.var_export($_POST,true));
 					// velden die niet gespooft mogen worden
-					$a['Qbrongeopackage']=$db->validateString($_POST['brongeopackage'],'brongeopackage',0,255,'Er is geen filenaam opgegeven','De filenaam is te lang (max 255 tekens).');
-					$a['Qopmaak']=$db->validateString($_POST['opmaak'],'opmaak',0,255,'Er is geen filenaam opgegeven','De filenaam is te lang (max 255 tekens).');
 					if (!$db->foutMeldingen) {
 						$version=$db->selectOne('versions AS a LEFT JOIN images AS b ON b.id=a.image','b.image,a.version','a.id='.$a['version']);
 						$theme=$db->selectOne('onderwerpen','afkorting','id='.$a['onderwerp']);
@@ -91,8 +88,6 @@ if ($loggedIn){
 						$g['kaartnaam']=$a['Qkaartnaam'];
 						$g['afdeling']=$a['afdeling'];
 						$g['onderwerp']=$a['onderwerp'];
-						$g['brongeopackage']=$a['Qbrongeopackage'];
-						$g['opmaak']=$a['Qopmaak'];
 						$g['soort']=$a['Qsoort'];
 						$g['indatalink']=$a['Qindatalink'];
 						$g['datalink']=$a['Qdatalink'];
@@ -119,11 +114,9 @@ if ($loggedIn){
 				$afds=[];
 				if ($a) {foreach ($a as $b) {$afds[]=$b['id'].'='.htmlspecialchars($b['naam']);}}
 				$tab1.='<form id="form" method="POST"><input type="hidden" name="id" value="'.$id.'"><input type="hidden" name="func" id="func"><table style="margin-bottom: 20px;">';
-				$basicPage->add_js_ready('autoForm(\'form\','.($g['id']==0?'true':'false').',\'#form-edit\',\'#form-delete\',\'#form-save,#opmaak-file-button,#helpindata,#helpdata\');');
-//				if ($id>=1) {
-					$tab1.='<tr><td colspan="2"><a class="small-button" id="form-save" onclick="$(\'#func\').val(\'opslaan\'); $(\'#form\').submit();" style="margin-right: 20px;">Opslaan</a><a id="form-edit" class="small-button">Bewerken</a><a id="form-delete" style="float: right;" class="small-button" onclick="areYouSure(\'Verwijderen\',\'Dit geopackage verwijderen?<br><br>NB: Dit kan niet ongedaan worden gemaakt.\',function () {$(\'[name=id]\').removeAttr(\'disabled\'); $(\'#func\').removeAttr(\'disabled\').val(\'delete\'); $(\'#form\').submit();});">Verwijderen</a></td></tr>';
-					$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
-//				}
+				$basicPage->add_js_ready('autoForm(\'form\','.($g['id']==0?'true':'false').',\'#form-edit\',\'#form-delete\',\'#form-save,#helpindata,#helpdata\');');
+				$tab1.='<tr><td colspan="2"><a class="small-button" id="form-save" onclick="$(\'#func\').val(\'opslaan\'); $(\'#form\').submit();" style="margin-right: 20px;">Opslaan</a><a id="form-edit" class="small-button">Bewerken</a><a id="form-delete" style="float: right;" class="small-button" onclick="areYouSure(\'Verwijderen\',\'Dit geopackage verwijderen?<br><br>NB: Dit kan niet ongedaan worden gemaakt.\',function () {$(\'[name=id]\').removeAttr(\'disabled\'); $(\'#func\').removeAttr(\'disabled\').val(\'delete\'); $(\'#form\').submit();});">Verwijderen</a></td></tr>';
+				$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
 				$t=time();
 				$tab1.='<tr><td>Afdeling:</td><td>'.$basicPage->getSelect('afdeling',$g['afdeling'],$afds,!$is_admin).'</td></tr>';
 				$tab1.='<tr><td>Onderwerp:</td><td><select name="onderwerp" id="onderwerp"></select></td></tr>';
@@ -141,8 +134,7 @@ if ($loggedIn){
 				}
 				$tab1.='<tr><td>Soort:</td><td>'.$basicPage->getSelect('soort',$g['soort'],array('Raster','Vector')).'</td></tr>';
 				$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
-				$tab1.='<tr><td>Upload een file:</td><td><span id="brongeopackage1" style="margin-right: 20px;"></span><input type="hidden" id="brongeopackage" name="brongeopackage" value=""><a class="small-button" style="float: right;" uploadFile="geo-package,'.$g['id'].'">Upload file</a></td></tr>';
-//				$tab1.='<tr><td>qgs file:</td><td><span id="opmaak1" style="margin-right: 20px;">'.htmlspecialchars($g['opmaak']).'</span><input type="hidden" id="opmaak-file" name="opmaak" value="'.$g['opmaak'].'"><a id="opmaak-file-button" class="small-button" style="float: right;" uploadFile="sld,'.$g['id'].'">Upload file</a></td></tr>';
+				$tab1.='<tr><td>Upload een file:</td><td><span id="brongeopackage1" style="margin-right: 20px;"></span><input id="brongeopackage" name="brongeopackage" value=""><a class="small-button" style="float: right;" uploadFile="geo-package,'.$g['id'].'">Upload file</a></td></tr>';
 				$ext=new extention($g['id'],true);
 				$tab1.='<tr><td>Files:</td><td>'.$ext->tabel().'</td></tr>';
 				$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
@@ -253,20 +245,13 @@ if ($loggedIn){
 					// tweede div
 					$tab2.='<div id="tabs-2" style="vertical-align: top;">';
 					$tab2.='<table>';
-					$tab2.='</tr><td>Sqlite file:</td><td>'.htmlspecialchars($g['brongeopackage']).'</td>';
-					if ($g['brongeopackage']=='') {
-						$tab2.='<td class="waarde-oranje">- niet gespecificeerd -</td>';
-					} else {
-						$tab2.=(file_exists($basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/'.$g['brongeopackage'])?'<td class="waarde-groen">Geen bijzonderheden</td>':'<td class="waarde-rood">Bestand niet gevonden</td>');
-					}
-					$tab2.='</tr>';
-					$tab2.='</tr><td>Qgs file:</td><td>'.htmlspecialchars($g['opmaak']).'</td>';
-					if ($g['opmaak']=='') {
-						$tab2.='<td class="waarde-oranje">- niet gespecificeerd -</td>';
-					} else {
-						$tab2.=(file_exists($basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/source.qgs')?'<td class="waarde-groen">Geen bijzonderheden</td>':'<td class="waarde-rood">Bestand niet gevonden</td>');
-					}
-					$tab2.='</tr>';
+//					$tab2.='<tr><td>Sqlite file:</td><td>'.htmlspecialchars($g['brongeopackage']).'</td>';
+//					if ($g['brongeopackage']=='') {
+//						$tab2.='<td class="waarde-oranje">- niet gespecificeerd -</td>';
+//					} else {
+//						$tab2.=(file_exists($basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/'.$g['brongeopackage'])?'<td class="waarde-groen">Geen bijzonderheden</td>':'<td class="waarde-rood">Bestand niet gevonden</td>');
+//					}
+//					$tab2.='</tr>';
 					$tab2.='<tr><td>&nbsp;</td></tr>';
 					$tab2.='<tr><td>Metadata indata.rivm.nl:</td><td><a href="http://indata.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/'.$g['indatalink'].'" target="from_gisportal">'.$current_indatalink.'</a></td>';
 					$meta_indata=@file_get_contents('http://indata.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/'.$g['indatalink']);

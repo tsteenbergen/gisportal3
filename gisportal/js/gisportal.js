@@ -212,10 +212,6 @@ function fileuploadMessage(el,error,msg,progressPercent,data) {
 				$('#brongeopackage').val(data['filenaam']);
 				$('#brongeopackage1').html(data['filenaam']);
 				break;
-			case 'sld':
-				$('#opmaak-file').val(data['filenaam']);
-				$('#opmaak1').html(data['filenaam']);
-				break;
 		}
 		if (!error) {location.reload();}
 	}

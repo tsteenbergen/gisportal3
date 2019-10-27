@@ -6,7 +6,7 @@ $r='';
 if ($loggedIn){
 	if (isset($_GET['id'])) {
 		$id=$_GET['id'];
-		$velden='id,afdeling,onderwerp,naam,soort,brongeopackage,indatalink,datalink,opmaak,wms,wfs,wcs,wmts';
+		$velden='id,afdeling,onderwerp,naam,soort,brongeopackage,indatalink,datalink,wms,wfs,wcs,wmts';
 		if ($id>=1) {
 			$g=$db->selectOne('geopackages',$velden,'id='.$id.($is_admin?'':' AND afdeling='.$my_afd));
 			if ($g) {

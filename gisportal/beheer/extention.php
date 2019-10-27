@@ -115,23 +115,23 @@ class extention {
 							global $db;
 							$kaart=$db->selectOne('geopackages','kaartnaam','id='.$this->gpid);
 							if ($kaart) {
-$basicPage->writeLog('$def='.implode('/',$def[0]).' '.($def[1]?'O':'').($def[2]?'K':'').($def[3]?' ='.$def[3]:'').' '.$kaart['kaartnaam'].'.'.$ext);
+//$basicPage->writeLog('$def='.implode('/',$def[0]).' '.($def[1]?'O':'').($def[2]?'K':'').($def[3]?' ='.$def[3]:'').' '.$kaart['kaartnaam'].'.'.$ext);
 								return $kaart['kaartnaam'].'.'.$ext;
 							}
-$basicPage->writeLog('$def='.implode('/',$def[0]).' '.($def[1]?'O':'').($def[2]?'K':'').($def[3]?' ='.$def[3]:'').' false');
+//$basicPage->writeLog('$def='.implode('/',$def[0]).' '.($def[1]?'O':'').($def[2]?'K':'').($def[3]?' ='.$def[3]:'').' false');
 							return false;
 						}
 						if ($def[3]!='') {
-$basicPage->writeLog('$def='.implode('/',$def[0]).' '.($def[1]?'O':'').($def[2]?'K':'').($def[3]?' ='.$def[3]:'').' '.$def[3].'.'.$ext);
+//$basicPage->writeLog('$def='.implode('/',$def[0]).' '.($def[1]?'O':'').($def[2]?'K':'').($def[3]?' ='.$def[3]:'').' '.$def[3].'.'.$ext);
 							return $def[3].'.'.$ext;
 						}
-$basicPage->writeLog('$def='.implode('/',$def[0]).' '.($def[1]?'O':'').($def[2]?'K':'').($def[3]?' ='.$def[3]:'').' '.$filename.'.'.$ext);
+//$basicPage->writeLog('$def='.implode('/',$def[0]).' '.($def[1]?'O':'').($def[2]?'K':'').($def[3]?' ='.$def[3]:'').' '.$filename.'.'.$ext);
 						return $filename.'.'.$ext;
 					}
 				}
 			}
 		}
-$basicPage->writeLog('$def='.implode('/',$def[0]).' '.($def[1]?'O':'').($def[2]?'K':'').($def[3]?' ='.$def[3]:'').' false');
+//$basicPage->writeLog('$def='.implode('/',$def[0]).' '.($def[1]?'O':'').($def[2]?'K':'').($def[3]?' ='.$def[3]:'').' false');
 		return false;
 	}
 }

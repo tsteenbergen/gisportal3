@@ -206,7 +206,13 @@ function fileuploadMessage(el,error,msg,progressPercent,data) {
 		$(el).find('.bar').addClass('hidden');
 		if (!error) {$(el).find('.msg').html('').addClass('hidden');}
 		var el=$($(el).parent()).find('[uploadFile]');
-		if (!error) {location.reload();}
+		if (!error) {
+			if (typeof(data.tabel)!='undefined') {
+				$('#filetabel').html(data.tabel);
+			}
+		}
+		$('#uploadfile').val('');
+		$('#uploadknop').show();
 	}
 }
 

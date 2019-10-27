@@ -244,7 +244,7 @@ $basicPage->writeLog('geo-package.php 1');
 					$tab2.='<table>';
 					$tab2.='<tr><td colspan="2">&nbsp;</a></td></tr>';
 					$ext=new extention($g['id'],true);
-					$tab2.='<tr><td>Benodigde files:</td><td>'.$ext->tabel().'</td></tr>';
+					$tab2.='<tr><td>Benodigde files:</td><td id="filetabel">'.$ext->tabel().'</td></tr>';
 					$tab2.='<tr><td>Upload een file:</td><td><a class="small-button" style="float: right;" id="uploadknop" uploadFile="geo-package,'.$g['id'].'">Upload file</a></td></tr>';
 					$tab2.='<tr><td>&nbsp;</td></tr>';
 					$tab2.='<tr><td>Metadata indata.rivm.nl:</td><td><a href="http://indata.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/'.$g['indatalink'].'" target="from_gisportal">'.$current_indatalink.'</a></td>';

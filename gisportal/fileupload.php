@@ -55,6 +55,8 @@ if ($loggedIn){
 					}
 					$db->update('geopackages',array('Qbrongeopackage'=>implode(chr(13),$gfs)),'id='.$id);
 					
+					$r['tabel']=$extention->tabel();
+					
 				} else {
 					if (file_exists($tmp)) {unlink(tmp);}
 					$r['msg']='Error moving tmp file';

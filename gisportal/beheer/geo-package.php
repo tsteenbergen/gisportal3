@@ -11,7 +11,6 @@ if ($loggedIn){
 		$func=$_POST['func'];
 		$id=$_GET['id'];
 		$velden='id,afdeling,onderwerp,naam,kaartnaam,soort,brongeopackage,indatalink,datalink,wms,wfs,wcs,wmts,version';
-	/*
 $basicPage->writeLog('geo-package.php 1');
 		if ($id>=1) {
 			$g=$db->selectOne('geopackages',$velden,'id='.$id.($is_admin?'':' AND afdeling='.$my_afd));
@@ -22,6 +21,7 @@ $basicPage->writeLog('geo-package.php 1');
 			$g=array('id'=>0,'naam'=>'','afdeling'=>$my_afd,'onderwerp'=>0,'version'=>$version['id']);
 			$title='Nieuw geopackage';
 		}
+	/*
 		if ($func=='delete') {
 			if ($g['id']>=1) {
 				$db->delete('geopackages','id='.$g['id']);

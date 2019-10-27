@@ -1,9 +1,9 @@
 <?php
 require('../basicPage.php');
 $r='Hallo';
-/*		
 require('../openshift-api.php');
 require ('./extention.php');
+/*		
 
 $title='Beheer geopackage';
 $r='';

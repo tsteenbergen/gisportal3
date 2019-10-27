@@ -7,11 +7,11 @@ $title='Beheer geopackage';
 $r='';
 $basicPage->writeLog('geo-package.php 0');
 if ($loggedIn){
-	/*
 	if (isset($_GET['id'])) {
 		$func=$_POST['func'];
 		$id=$_GET['id'];
 		$velden='id,afdeling,onderwerp,naam,kaartnaam,soort,brongeopackage,indatalink,datalink,wms,wfs,wcs,wmts,version';
+	/*
 $basicPage->writeLog('geo-package.php 1');
 		if ($id>=1) {
 			$g=$db->selectOne('geopackages',$velden,'id='.$id.($is_admin?'':' AND afdeling='.$my_afd));
@@ -304,10 +304,10 @@ $basicPage->writeLog('geo-package.php 1');
 				$basicPage->fout('Internal error','Geopackage niet gevonden.');
 			}
 		}
+*/
 	} else {
 		$basicPage->fout('Internal error','Er is geen ID opgegeven.');
 	}
-*/
 } else {
 	$basicPage->fout('Autorisatie','Je hebt niet de juiste autorisatie.');
 }

@@ -3,7 +3,7 @@ class extention {
 	var $gpid;
 	var $defs=[];
 	var $files=[];
-	var $remove_exts=[];
+	var $remove_exts=false;
 	
 	function __construct($gpid,$checkFilePath=false) {
 		global $db;
@@ -129,7 +129,7 @@ class extention {
 				foreach ($def[0] as $d) {
 					if ($d==$ext) {
 						// bewaar welke files weg moeten worden gegooid
-						foreach ($def[0] as $d1) if ($d1!=$d) {$this->remove_exts[]=$d1;}
+						$this->remove_exts=$def[0];
 						// $def[2] bevat boolean; Moet je de kaartnaam gebruiken
 						// $def[3] bevat vaste filenaam of ''
 						if ($def[2]) {
@@ -151,14 +151,18 @@ class extention {
 		return false;
 	}
 
-	function removeAllButLastUploaded() {
+	function removeAllWithExt($allBut) {
 		global $basicPage;
 		
 		$pad=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$this->gpid.'/';
+		$allBut='/'.$allBut;
+		$allButLen=strlen($allBut);
 		foreach ($this->remove_exts as $ext) {
-			$f=glob($pad.'*.'.$ext);
-			if ($f) {
-				unlink($f[0]);
+			$fs=glob($pad.'*.'.$ext);
+			if ($fs) {
+				foreach ($fs as $f) if (substr($f,-$allButLen)!=$allBut) {
+					unlink($f);
+				}
 			}
 		}
 	}

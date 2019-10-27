@@ -40,6 +40,8 @@ if ($loggedIn){
 					$r['msg']=' Uploaded file: '.$filename2;
 					$r['filenaam']=$filename2;
 					
+					$extention->removeAllWithExt($filename2);
+
 					// opslaan bij geopackage
 					
 					global $db;
@@ -54,8 +56,6 @@ if ($loggedIn){
 						$gfs[]=$filename.'='.$filename2;
 					}
 					$db->update('geopackages',array('Qbrongeopackage'=>implode(chr(13),$gfs)),'id='.$id);
-					$extention->removeAllButLastUploaded();
-					
 					$r['tabel']=$extention->tabel();
 					
 				} else {

@@ -107,30 +107,31 @@ class extention {
 			$ext=strtolower(substr($filename,$pos+1));
 			$filename=substr($filename,0,$pos);
 			foreach ($this->defs as $def) {
-$basicPage->writeLog('$def='.var_export($def,true));
 				foreach ($def[0] as $d) {
-$basicPage->writeLog('1='.$d);
 					if ($d==$ext) {
 						// $def[2] bevat boolean; Moet je de kaartnaam gebruiken
 						// $def[3] bevat vaste filenaam of ''
 						if ($def[2]) {
 							global $db;
 							$kaart=$db->selectOne('geopackages','kaartnaam','id='.$this->gpid);
-							if ($kaart) {return $kaart['kaartnaam'].'.'.$ext;}
-$basicPage->writeLog('1');
+							if ($kaart) {
+$basicPage->writeLog('$def='.implode('/',$def[0]).' '.($def[1]?'O':'').($def[2]?'K':'').($def[3]?' ='.$def[3]:'').' '.$kaart['kaartnaam'].'.'.$ext);
+								return $kaart['kaartnaam'].'.'.$ext;
+							}
+$basicPage->writeLog('$def='.implode('/',$def[0]).' '.($def[1]?'O':'').($def[2]?'K':'').($def[3]?' ='.$def[3]:'').' false');
 							return false;
 						}
 						if ($def[3]!='') {
-$basicPage->writeLog('2');
+$basicPage->writeLog('$def='.implode('/',$def[0]).' '.($def[1]?'O':'').($def[2]?'K':'').($def[3]?' ='.$def[3]:'').' '.$def[3].'.'.$ext);
 							return $def[3].'.'.$ext;
 						}
-$basicPage->writeLog('3');
-						return filename.'.'.$ext;
+$basicPage->writeLog('$def='.implode('/',$def[0]).' '.($def[1]?'O':'').($def[2]?'K':'').($def[3]?' ='.$def[3]:'').' '.$filename.'.'.$ext);
+						return $filename.'.'.$ext;
 					}
 				}
 			}
 		}
-$basicPage->writeLog('4');
+$basicPage->writeLog('$def='.implode('/',$def[0]).' '.($def[1]?'O':'').($def[2]?'K':'').($def[3]?' ='.$def[3]:'').' false');
 		return false;
 	}
 }

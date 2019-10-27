@@ -7,11 +7,13 @@ try {
 
 $title='Beheer geopackage';
 $r='';
+$basicPage->writeLog('geo-package.php 0');
 if ($loggedIn){
 	if (isset($_GET['id'])) {
 		$func=$_POST['func'];
 		$id=$_GET['id'];
 		$velden='id,afdeling,onderwerp,naam,kaartnaam,soort,brongeopackage,indatalink,datalink,wms,wfs,wcs,wmts,version';
+$basicPage->writeLog('geo-package.php 1');
 		if ($id>=1) {
 			$g=$db->selectOne('geopackages',$velden,'id='.$id.($is_admin?'':' AND afdeling='.$my_afd));
 			$version=$db->selectOne('versions AS a LEFT JOIN images AS b ON b.id=a.image','b.image, a.version','a.id='.$g['version']);
@@ -21,6 +23,7 @@ if ($loggedIn){
 			$g=array('id'=>0,'naam'=>'','afdeling'=>$my_afd,'onderwerp'=>0,'version'=>$version['id']);
 			$title='Nieuw geopackage';
 		}
+/*		
 		if ($func=='delete') {
 			if ($g['id']>=1) {
 				$db->delete('geopackages','id='.$g['id']);
@@ -66,7 +69,6 @@ if ($loggedIn){
 						}
 					}
 					if (!($a['onderwerp']>=1)) {$db->foutMeldingen[]=['onderwerp','Er is geen onderwerop gekozen'];}
-					//file_put_contents('qqq',file_get_contents('qqq').'<br>'.var_export($_POST,true));
 					// velden die niet gespooft mogen worden
 					if (!$db->foutMeldingen) {
 						$version=$db->selectOne('versions AS a LEFT JOIN images AS b ON b.id=a.image','b.image,a.version','a.id='.$a['version']);
@@ -247,13 +249,6 @@ if ($loggedIn){
 					// tweede div
 					$tab2.='<div id="tabs-2" style="vertical-align: top;">';
 					$tab2.='<table>';
-//					$tab2.='<tr><td>Sqlite file:</td><td>'.htmlspecialchars($g['brongeopackage']).'</td>';
-//					if ($g['brongeopackage']=='') {
-//						$tab2.='<td class="waarde-oranje">- niet gespecificeerd -</td>';
-//					} else {
-//						$tab2.=(file_exists($basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/'.$g['brongeopackage'])?'<td class="waarde-groen">Geen bijzonderheden</td>':'<td class="waarde-rood">Bestand niet gevonden</td>');
-//					}
-//					$tab2.='</tr>';
 					$tab2.='<tr><td>&nbsp;</td></tr>';
 					$tab2.='<tr><td>Metadata indata.rivm.nl:</td><td><a href="http://indata.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/'.$g['indatalink'].'" target="from_gisportal">'.$current_indatalink.'</a></td>';
 					$meta_indata=@file_get_contents('http://indata.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/'.$g['indatalink']);
@@ -311,6 +306,7 @@ if ($loggedIn){
 				$basicPage->fout('Internal error','Geopackage niet gevonden.');
 			}
 		}
+*/
 	} else {
 		$basicPage->fout('Internal error','Er is geen ID opgegeven.');
 	}

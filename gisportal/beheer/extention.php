@@ -99,15 +99,15 @@ class extention {
 			if (isset($orgfs[$cfile.'.'.$ext])) {$ofile=$orgfs[$cfile.'.'.$ext];} else {$ofile=$cfile.'.'.$ext;}
 			if ($def[1]) { // file is optioneel
 				if ($ext=='' || $cfile=='') {
-					$r.='File niet geupload (is optioneel).';
+					$r.='-- optioneel --';
 				} else {
-					$r.=$ofile.' '.$op;
+					$r.=$ofile.'</td><td>'.$op;
 				}
 			} else { // file is verplicht
 				if ($ext=='' || $cfile=='') {
-					$r.='Fout: File niet geupload.';
+					$r.='Fout: File (nog) niet geupload.';
 				} else {
-					$r.=$ofile.' '.$op;
+					$r.=$ofile.'</td><td>'.$op;
 				}
 			}
 			$r.='</td></tr>';

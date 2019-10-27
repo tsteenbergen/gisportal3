@@ -135,9 +135,9 @@ $basicPage->writeLog('geo-package.php 1');
 				}
 				$tab1.='<tr><td>Soort:</td><td>'.$basicPage->getSelect('soort',$g['soort'],array('Raster','Vector')).'</td></tr>';
 				$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
-				$tab1.='<tr><td>Upload een file:</td><td><a class="small-button" style="float: right;" uploadFile="geo-package,'.$g['id'].'">Upload file</a></td></tr>';
 				$ext=new extention($g['id'],true);
-				$tab1.='<tr><td>Files:</td><td>'.$ext->tabel().'</td></tr>';
+				$tab1.='<tr><td>Benodigde files:</td><td>'.$ext->tabel().'</td></tr>';
+				$tab1.='<tr><td>Upload een file:</td><td><a class="small-button" style="float: right;" uploadFile="geo-package,'.$g['id'].'">Upload file</a></td></tr>';
 				$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
 				if (file_exists('indata.data')) {
 					if (time()-filemtime('indata.data')>60*60) {unlink('indata.data');} // gooi weg als ouder dan een uur

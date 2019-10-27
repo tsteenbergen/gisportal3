@@ -395,10 +395,4 @@ class basicPage {
 	}
 }
 $basicPage=new basicPage();
-
-set_error_handler(function($errno, $errstr, $errfile, $errline) {
-	global $basicPage;
-	
-	$basicPage->writeLog('PHP error '.$errno.': '.$errstr.' in '.$errfile.' regel '.$errline);
-});
 ?>

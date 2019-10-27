@@ -3,6 +3,8 @@ require('../basicPage.php');
 require('../openshift-api.php');
 require ('./extention.php');
 
+try {
+
 $title='Beheer geopackage';
 $r='';
 if ($loggedIn){
@@ -317,4 +319,8 @@ if ($loggedIn){
 }
 
 $basicPage->render($title,$r);
+
+} catch($e) {
+	$basicPage->writeLog('PHP error '.var_export($e,true));
+}
 ?>

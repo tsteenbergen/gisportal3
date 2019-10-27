@@ -3,7 +3,6 @@ require('../basicPage.php');
 $r='Hallo';
 require('../openshift-api.php');
 require ('./extention.php');
-/*		
 
 $title='Beheer geopackage';
 $r='';
@@ -311,7 +310,6 @@ $basicPage->writeLog('geo-package.php 1');
 } else {
 	$basicPage->fout('Autorisatie','Je hebt niet de juiste autorisatie.');
 }
-*/
 
 $basicPage->render($title,$r);
 ?>

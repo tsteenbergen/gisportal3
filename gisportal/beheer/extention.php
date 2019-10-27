@@ -82,13 +82,13 @@ class extention {
 		foreach ($this->defs as $def) {
 			$r.='<tr><td>'.implode('/',$def[0]).'</td><td>';
 			$ext='';
+			$cfile=$this->files[$t];
 			foreach ($def[0] as $d) {
 				if (file_exists($pad.$cfile.'.'.$d)) {
 					$ext=$d;
 					$op=date('d-m-Y H:i:s',filemtime($pad.$cfile.'.'.$d));
 				}
 			}
-			$cfile=$this->files[$t];
 			if (isset($orgfs[$cfile.'.'.$ext])) {$ofile=$orgfs[$cfile.'.'.$ext];} else {$ofile=$cfile.'.'.$ext;}
 			if ($def[1]) { // file is optioneel
 				if ($ext=='' || $cfile=='') {

@@ -1,9 +1,9 @@
 <?php
 require('../basicPage.php');
+$r='Hallo';
+/*		
 require('../openshift-api.php');
-//require ('./extention.php');
-
-try {
+require ('./extention.php');
 
 $title='Beheer geopackage';
 $r='';
@@ -23,7 +23,6 @@ $basicPage->writeLog('geo-package.php 1');
 			$g=array('id'=>0,'naam'=>'','afdeling'=>$my_afd,'onderwerp'=>0,'version'=>$version['id']);
 			$title='Nieuw geopackage';
 		}
-/*		
 		if ($func=='delete') {
 			if ($g['id']>=1) {
 				$db->delete('geopackages','id='.$g['id']);
@@ -306,17 +305,13 @@ $basicPage->writeLog('geo-package.php 1');
 				$basicPage->fout('Internal error','Geopackage niet gevonden.');
 			}
 		}
-*/
 	} else {
 		$basicPage->fout('Internal error','Er is geen ID opgegeven.');
 	}
 } else {
 	$basicPage->fout('Autorisatie','Je hebt niet de juiste autorisatie.');
 }
+*/
 
 $basicPage->render($title,$r);
-
-} catch($e) {
-	$basicPage->writeLog('PHP error '.var_export($e,true));
-}
 ?>

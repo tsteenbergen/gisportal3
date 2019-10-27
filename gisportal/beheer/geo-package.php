@@ -1,7 +1,7 @@
 <?php
 require('../basicPage.php');
 require('../openshift-api.php');
-require ('./extention.php');
+//require ('./extention.php');
 
 try {
 

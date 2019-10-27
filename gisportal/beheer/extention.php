@@ -3,6 +3,7 @@ class extention {
 	var $gpid;
 	var $defs=[];
 	var $files=[];
+	var $remove_exts=[];
 	
 	function __construct($gpid,$checkFilePath=false) {
 		global $db;
@@ -119,7 +120,6 @@ class extention {
 	
 	function getRightFilename($filename) {
 		global $basicPage;
-		$basicPage->writeLog('$filename='.$filename);
 
 		$pos=strripos($filename,'.');
 		if ($pos!==false) {
@@ -128,30 +128,40 @@ class extention {
 			foreach ($this->defs as $def) {
 				foreach ($def[0] as $d) {
 					if ($d==$ext) {
+						// bewaar welke files weg moeten worden gegooid
+						foreach ($def[0] as $d1) if ($d1!=$d) {$this->remove_exts[]=$d1;}
 						// $def[2] bevat boolean; Moet je de kaartnaam gebruiken
 						// $def[3] bevat vaste filenaam of ''
 						if ($def[2]) {
 							global $db;
 							$kaart=$db->selectOne('geopackages','kaartnaam','id='.$this->gpid);
 							if ($kaart) {
-//$basicPage->writeLog('$def='.implode('/',$def[0]).' '.($def[1]?'O':'').($def[2]?'K':'').($def[3]?' ='.$def[3]:'').' '.$kaart['kaartnaam'].'.'.$ext);
 								return $kaart['kaartnaam'].'.'.$ext;
 							}
-//$basicPage->writeLog('$def='.implode('/',$def[0]).' '.($def[1]?'O':'').($def[2]?'K':'').($def[3]?' ='.$def[3]:'').' false');
 							return false;
 						}
 						if ($def[3]!='') {
-//$basicPage->writeLog('$def='.implode('/',$def[0]).' '.($def[1]?'O':'').($def[2]?'K':'').($def[3]?' ='.$def[3]:'').' '.$def[3].'.'.$ext);
 							return $def[3].'.'.$ext;
 						}
-//$basicPage->writeLog('$def='.implode('/',$def[0]).' '.($def[1]?'O':'').($def[2]?'K':'').($def[3]?' ='.$def[3]:'').' '.$filename.'.'.$ext);
 						return $filename.'.'.$ext;
 					}
 				}
 			}
 		}
-//$basicPage->writeLog('$def='.implode('/',$def[0]).' '.($def[1]?'O':'').($def[2]?'K':'').($def[3]?' ='.$def[3]:'').' false');
 		return false;
+	}
+
+	function removeAllButLastUploaded() {
+		global $basicPage;
+		
+		$pad=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$this->gpid.'/';
+		foreach ($this->remove_exts as $ext) {
+			$f=glob($pad.'*.'.$ext);
+			if ($f) {
+				//unlink($f[0]);
+				$basicPage->writeLog('Unlink: '.$f[0]);
+			}
+		}
 	}
 }
 ?>

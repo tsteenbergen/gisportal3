@@ -54,6 +54,7 @@ if ($loggedIn){
 						$gfs[]=$filename.'='.$filename2;
 					}
 					$db->update('geopackages',array('Qbrongeopackage'=>implode(chr(13),$gfs)),'id='.$id);
+					$extention->removeAllButLastUploaded();
 					
 					$r['tabel']=$extention->tabel();
 					

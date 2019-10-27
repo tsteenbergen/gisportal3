@@ -160,8 +160,11 @@ class extention {
 		foreach ($this->remove_exts as $ext) {
 			$fs=glob($pad.'*.'.$ext);
 			if ($fs) {
-				foreach ($fs as $f) if (substr($f,-$allButLen)!=$allBut) {
-					unlink($f);
+				foreach ($fs as $f) {
+$basicPage->writeLog($f.' ('.$allBut.'=='.substr($f,-$allButLen).')');
+					if (substr($f,-$allButLen)!=$allBut) {
+						unlink($f);
+					}
 				}
 			}
 		}

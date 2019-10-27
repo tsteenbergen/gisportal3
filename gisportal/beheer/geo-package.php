@@ -115,7 +115,7 @@ $basicPage->writeLog('geo-package.php 1');
 				$afds=[];
 				if ($a) {foreach ($a as $b) {$afds[]=$b['id'].'='.htmlspecialchars($b['naam']);}}
 				$tab1.='<form id="form" method="POST"><input type="hidden" name="id" value="'.$id.'"><input type="hidden" name="func" id="func"><table style="margin-bottom: 20px;">';
-				$basicPage->add_js_ready('autoForm(\'form\','.($g['id']==0?'true':'false').',\'#form-edit\',\'#form-delete\',\'#form-save,#helpindata,#helpdata\');');
+				$basicPage->add_js_ready('autoForm(\'form\','.($g['id']==0?'true':'false').',\'#form-edit,#uploadknop\',\'#form-delete\',\'#form-save,#helpindata,#helpdata\');');
 				$tab1.='<tr><td colspan="2"><a class="small-button" id="form-save" onclick="$(\'#func\').val(\'opslaan\'); $(\'#form\').submit();" style="margin-right: 20px;">Opslaan</a><a id="form-edit" class="small-button">Bewerken</a><a id="form-delete" style="float: right;" class="small-button" onclick="areYouSure(\'Verwijderen\',\'Dit geopackage verwijderen?<br><br>NB: Dit kan niet ongedaan worden gemaakt.\',function () {$(\'[name=id]\').removeAttr(\'disabled\'); $(\'#func\').removeAttr(\'disabled\').val(\'delete\'); $(\'#form\').submit();});">Verwijderen</a></td></tr>';
 				$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
 				$t=time();
@@ -137,7 +137,7 @@ $basicPage->writeLog('geo-package.php 1');
 				$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
 				$ext=new extention($g['id'],true);
 				$tab1.='<tr><td>Benodigde files:</td><td>'.$ext->tabel().'</td></tr>';
-				$tab1.='<tr><td>Upload een file:</td><td><a class="small-button" style="float: right;" uploadFile="geo-package,'.$g['id'].'">Upload file</a></td></tr>';
+				$tab1.='<tr><td>Upload een file:</td><td><a class="small-button" style="float: right;" id="uploadknop" uploadFile="geo-package,'.$g['id'].'">Upload file</a></td></tr>';
 				$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
 				if (file_exists('indata.data')) {
 					if (time()-filemtime('indata.data')>60*60) {unlink('indata.data');} // gooi weg als ouder dan een uur

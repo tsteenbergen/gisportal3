@@ -140,9 +140,18 @@ class openshift_api_ {
 		$this->command('oapi','routes/gpid-'.$id,'DELETE',$jsonString);
 		$jsonString = '{}';
 		$items=$this->command('api','pods?labelSelector=name=gpid-'.$id);
-		global $basicPage;
-		$basicPage->writeLog(var_export($items,true));
+global $basicPage;
+		if ($items) {
+			$items=$items['items'];
+			foreach ($items as $item) {
+$basicPage->writeLog('POD: '.$item['metadata']['name']);
+			}
+		}
 		//$this->command('api','pods/gpid-'.$id,'DELETE',$jsonString);
+		
+		
+		
+		
 	}
 }
 

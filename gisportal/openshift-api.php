@@ -148,16 +148,16 @@ I1028 15:42:49.687872   34304 round_trippers.go:383] GET    https://portaal.int.
 I1028 15:42:49.697138   34304 round_trippers.go:383] DELETE https://portaal.int.ssc-campus.nl:8443/apis/route.openshift.io/v1/namespaces/sscc-geoweb-co/routes/gpid-68
 */
 		$todos=[
-			['pods',					'PodList',						'api'],		
-			['replicationcontrollers',	'ReplicationControllerList',	'api'],
-			['services',				'ServiceList',					'api'],		
-			['horizontalpodautoscalers','HorizontalPodAutoscaler',		'apis/autoscaling/v1'],		
-			['deploymentconfigs',		'DeploymentConfigList',			'apis/apps.openshift.io/v1'],	
-			['routes',					'RouteList',					'apis/route.openshift.io/v1'],	
+			['pods',					'PodList',						'api',							'{"kind":"DeleteOptions","apiVersion":"v1","propagationPolicy":"Foreground","gracePeriodSeconds":0}'],		
+			['replicationcontrollers',	'ReplicationControllerList',	'api',							'{}'],
+			['services',				'ServiceList',					'api',							'{}'],		
+			['horizontalpodautoscalers','HorizontalPodAutoscaler',		'apis/autoscaling/v1',			'{}'],		
+			['deploymentconfigs',		'DeploymentConfigList',			'apis/apps.openshift.io/v1',	'{}'],	
+			['routes',					'RouteList',					'apis/route.openshift.io/v1',	'{}'],	
 		];
-		$jsonString = '{}';
 $r='';
 		foreach ($todos as $todo) {
+			$jsonString = $todo[3];
 			$this->command($todo[2],$todo[0].'?labelSelector=name=gpid-'.$id);
 			if ($this->response->kind==$todo[1]) {
 				for ($t=0;$t<count($this->response->items);$t++) {

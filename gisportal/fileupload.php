@@ -35,15 +35,14 @@ if ($loggedIn){
 			$tmp = $_FILES['uploadfile']['tmp_name'];
 			if ($filename2) {
 //$basicPage->writeLog('Van '.$tmp.' naar '.$filename2);
+				$extention->removeAllWithExt();
 				if(move_uploaded_file($tmp,$path.'/'.$filename2)) {
 					$r['error']=false;
 					$r['msg']=' Uploaded file: '.$filename2;
 					$r['filenaam']=$filename2;
 					
-					$extention->removeAllWithExt($filename2);
 
 					// opslaan bij geopackage
-					
 					global $db;
 					$gfs=$db->selectOne('geopackages','brongeopackage','id='.$id);
 					$gfs=explode(chr(13),$gfs['brongeopackage']);

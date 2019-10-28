@@ -151,20 +151,15 @@ class extention {
 		return false;
 	}
 
-	function removeAllWithExt($allBut) {
+	function removeAllWithExt() {
 		global $basicPage;
 		
 		$pad=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$this->gpid.'/';
-		$allBut='/'.$allBut;
-		$allButLen=strlen($allBut);
 		foreach ($this->remove_exts as $ext) {
 			$fs=glob($pad.'*.'.$ext);
 			if ($fs) {
 				foreach ($fs as $f) {
-$basicPage->writeLog($f.' ('.$allBut.'=='.substr($f,-$allButLen).')');
-					if (substr($f,-$allButLen)!=$allBut) {
-						unlink($f);
-					}
+					unlink($f);
 				}
 			}
 		}

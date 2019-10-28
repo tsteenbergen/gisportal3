@@ -2,8 +2,10 @@
     "kind": "Route",
     "apiVersion": "v1",
     "metadata": {
-        "name": "route-$name",
-        "namespace": "$namespace"
+        "labels": {
+			"name": "$name",
+			"namespace": "$namespace"
+		}
     },
     "spec": {
 		"host": "$host",

@@ -3,21 +3,13 @@
     "apiVersion": "v1",
     "metadata": {
         "labels": {
-            "app": "gisportal-dc"
+            "app": "gisportal-dc",
+			"name": "$name"
         },
-        "name": "$name"
     },
     "spec": {
         "replicas": 1,
-        "selector": {
-            "name": "$name"
-        },
         "template": {
-            "metadata": {
-                "labels": {
-                    "name": "$name"
-                }
-            },
             "spec": {
                 "containers": [
                     {

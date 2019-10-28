@@ -89,6 +89,8 @@ $basicPage->writeLog($q);
 				$t++;
 			}
 			$q.=' WHERE '.$where;
+global $basicPage;
+$basicPage->writeLog($q);
 			$this->mysqli->query('INSERT INTO audit_trail (persoon, query) VALUES ('.$_SESSION['user'].',\''.addslashes($q).'\')');
 			$result = $this->mysqli->query($q);
 			if ($result) {

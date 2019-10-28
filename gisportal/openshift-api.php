@@ -130,13 +130,13 @@ class openshift_api_ {
 		$this->command('oapi','deploymentconfigs/dc-gpid-'.$id,'PUT',$jsonString);
 	}
 	function deleteDeploymentConfig($subpath,$id) {
-		todos=[
+		$todos=[
 			['replicationcontrollers',	'ReplicationControllerList',	'api'],
 			['deploymentconfigs',		'DeploymentConfigList',			'oapi'],
 			['services',				'ServiceList',					'api'],
 			['routes',					'RouteList',					'oapi'],
 			['pods',					'PodList',						'api'],
-		]
+		];
 		$jsonString = '{}';
 		foreach ($todos as $todo) {
 			$this->command('api',$todo[0].'?labelSelector=name=gpid-'.$id);

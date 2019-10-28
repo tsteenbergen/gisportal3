@@ -140,7 +140,7 @@ class openshift_api_ {
 		$jsonString = '{}';
 $r='';
 		foreach ($todos as $todo) {
-			$this->command('api',$todo[0].'?labelSelector=name=gpid-'.$id);
+			$this->command($todo[2],$todo[0].'?labelSelector=name=gpid-'.$id);
 			if ($this->response->kind==$todo[1]) {
 				for ($t=0;$t<count($this->response->items);$t++) {
 					$itemID=$this->response->items[$t]->metadata->name;

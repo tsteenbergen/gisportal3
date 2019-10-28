@@ -4,7 +4,12 @@ require('basicPage.php');
 if ($loggedIn && $is_admin){
 	switch ($_GET['func']) {
 		case 'log':
+			if (isset($_GET['clear'])) {
+				if (file_exists($basicPage->getConfig('logfile'))) {unlink($basicPage->getConfig('logfile'));}
+				$basicPace->writeLog('Log cleared');
+			}
 			$r.=file_get_contents($basicPage->getConfig('logfile'));
+			$r.='<br><br><input type="button" value="Clear log" onclick="location=\'admin.php?func=log&clear\'">';
 			break;
 		case 'phpinfo':
 			$r.=phpinfo();

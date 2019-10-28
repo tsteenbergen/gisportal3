@@ -139,17 +139,12 @@ class openshift_api_ {
 		$jsonString = '{}';
 		$this->command('oapi','routes/gpid-'.$id,'DELETE',$jsonString);
 		$jsonString = '{}';
-		$items=$this->command('api','pods?labelSelector=name=gpid-'.$id);
+		$this->command('api','pods?labelSelector=name=gpid-'.$id);
 global $basicPage;
-$basicPage->writeLog('$items='.var_export($items,true));
-		if ($items) {
-$basicPage->writeLog('$items[\'items\']='.var_export($items['items'],true));
-$basicPage->writeLog('$items[\'items\'][0]='.var_export($items['items'][0],true));
-$basicPage->writeLog('$items[\'items\'][0][\'metadata\']='.var_export($items['items'][0]['metadata'],true));
-$basicPage->writeLog('$items[\'items\'][0][\'metadata\'][\'naam\']='.var_export($items['items'][0]['metadata']['naam'],true));
-			$items=$items['items'];
-			foreach ($items as $item) {
-$basicPage->writeLog('POD: '.$item['metadata']['name']);
+		if ($this->response->kind=='PodList') {
+			for ($t=0;$t<count($this->response->items);$t++) {
+				$pod=$this->response->items[$t]->metadata->name;
+$basicPage->writeLog('$pod='.$pod);
 			}
 		}
 		//$this->command('api','pods/gpid-'.$id,'DELETE',$jsonString);

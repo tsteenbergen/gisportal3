@@ -160,6 +160,7 @@ $r='';
 			$jsonString = $todo[3];
 			$this->command($todo[2],$todo[0].'?labelSelector=name=gpid-'.$id);
 			if ($this->response->kind==$todo[1]) {
+$r.='Response items: '.count($this->response->items).'<br>';
 				for ($t=0;$t<count($this->response->items);$t++) {
 					$itemID=$this->response->items[$t]->metadata->name;
 $r.='Delete '.$todo[1].': '.$itemID.'<br>';

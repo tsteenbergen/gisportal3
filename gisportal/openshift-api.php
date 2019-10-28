@@ -19,8 +19,8 @@ class openshift_api_ {
 		// $_SERVER['HTTP_HOST'] = 'gisportal-sscc-geoweb-co.apps.ssc-campus.nl'
 		// $_SERVER['HTTP_HOST'] = 'appname__-namespace__-c?.apps.ssc-campus.nl'
 		//   het vraagteken staat voor o=Ontwikkel, t=Test, a=Acceptatie, p=Productie
-		if ($api=='apis') {
-			$api_url=$basicPage->endpoint.'/apis/extensions/v1beta1/namespaces/'.$basicPage->namespace.'/';
+		if ($api!='api' && $api!='oapi') {
+			$api_url=$basicPage->endpoint.'/'.$api.'/namespaces/'.$basicPage->namespace.'/';
 		} else {
 			$api_url=$basicPage->endpoint.'/'.$api.'/v1/namespaces/'.$basicPage->namespace.'/';
 		}
@@ -134,12 +134,26 @@ class openshift_api_ {
 		$this->command('oapi','deploymentconfigs/dc-gpid-'.$id,'PUT',$jsonString);
 	}
 	function deleteDeploymentConfig($subpath,$id) {
+/*
+I1028 15:42:49.532585   34304 round_trippers.go:383] GET    https://portaal.int.ssc-campus.nl:8443/api/v1/namespaces/sscc-geoweb-co/pods?labelSelector=name%3Dgpid-68
+I1028 15:42:49.544093   34304 round_trippers.go:383] DELETE https://portaal.int.ssc-campus.nl:8443/api/v1/namespaces/sscc-geoweb-co/pods/gpid-68-1-h47xr
+I1028 15:42:49.551535   34304 round_trippers.go:383] GET    https://portaal.int.ssc-campus.nl:8443/api/v1/namespaces/sscc-geoweb-co/replicationcontrollers?labelSelector=name%3Dgpid-68
+I1028 15:42:49.572086   34304 round_trippers.go:383] DELETE https://portaal.int.ssc-campus.nl:8443/api/v1/namespaces/sscc-geoweb-co/replicationcontrollers/gpid-68-1
+I1028 15:42:49.587501   34304 round_trippers.go:383] GET    https://portaal.int.ssc-campus.nl:8443/api/v1/namespaces/sscc-geoweb-co/services?labelSelector=name%3Dgpid-68
+I1028 15:42:49.596369   34304 round_trippers.go:383] DELETE https://portaal.int.ssc-campus.nl:8443/api/v1/namespaces/sscc-geoweb-co/services/gpid-68
+I1028 15:42:49.650098   34304 round_trippers.go:383] GET    https://portaal.int.ssc-campus.nl:8443/apis/autoscaling/v1/namespaces/sscc-geoweb-co/horizontalpodautoscalers?labelSelector=name%3Dgpid-68
+I1028 15:42:49.659955   34304 round_trippers.go:383] GET    https://portaal.int.ssc-campus.nl:8443/apis/apps.openshift.io/v1/namespaces/sscc-geoweb-co/deploymentconfigs?labelSelector=name%3Dgpid-68
+I1028 15:42:49.666125   34304 round_trippers.go:383] DELETE https://portaal.int.ssc-campus.nl:8443/apis/apps.openshift.io/v1/namespaces/sscc-geoweb-co/deploymentconfigs/gpid-68
+I1028 15:42:49.687872   34304 round_trippers.go:383] GET    https://portaal.int.ssc-campus.nl:8443/apis/route.openshift.io/v1/namespaces/sscc-geoweb-co/routes?labelSelector=name%3Dgpid-68
+I1028 15:42:49.697138   34304 round_trippers.go:383] DELETE https://portaal.int.ssc-campus.nl:8443/apis/route.openshift.io/v1/namespaces/sscc-geoweb-co/routes/gpid-68
+*/
 		$todos=[
-			['replicationcontrollers',	'ReplicationControllerList',	'api'],
-			['deploymentconfigs',		'DeploymentConfigList',			'oapi'],	
-			['services',				'ServiceList',					'api'],		
-			['routes',					'RouteList',					'oapi'],	
 			['pods',					'PodList',						'api'],		
+			['replicationcontrollers',	'ReplicationControllerList',	'api'],
+			['services',				'ServiceList',					'api'],		
+			['horizontalpodautoscalers','HorizontalPodAutoscaler',		'apis/autoscaling/v1'],		
+			['deploymentconfigs',		'DeploymentConfigList',			'apis/apps.openshift.io/v1'],	
+			['routes',					'RouteList',					'apis/apps.openshift.io/v1'],	
 		];
 		$jsonString = '{}';
 $r='';

@@ -2,13 +2,16 @@
     "kind": "Service",
     "apiVersion": "v1",
     "metadata": {
+        "name": "$name",
+        "namespace": "$namespace",
         "labels": {
-			"name": "$name",
-			"namespace": "$namespace"
-		},
-		"name": "$name"
+			"name": "$name"
+        }
     },
     "spec": {
+        "selector": {
+            "name": "$name"
+        },
         "sessionAffinity": "None",
         "type": "ClusterIP",
         "ports": [

@@ -152,7 +152,7 @@ I1028 15:42:49.697138   34304 round_trippers.go:383] DELETE https://portaal.int.
 			['replicationcontrollers',	'ReplicationControllerList',	'api'],
 			['services',				'ServiceList',					'api'],		
 			['horizontalpodautoscalers','HorizontalPodAutoscaler',		'apis/autoscaling/v1'],		
-			['deploymentconfigs',		'DeploymentConfigList',			'apis/route.openshift.io/v1'],	
+			['deploymentconfigs',		'DeploymentConfigList',			'apis/apps.openshift.io/v1'],	
 			['routes',					'RouteList',					'apis/route.openshift.io/v1'],	
 		];
 		$jsonString = '{}';

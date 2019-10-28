@@ -130,28 +130,23 @@ class openshift_api_ {
 		$this->command('oapi','deploymentconfigs/dc-gpid-'.$id,'PUT',$jsonString);
 	}
 	function deleteDeploymentConfig($subpath,$id) {
+		todos=[
+			['replicationcontrollers',	'ReplicationControllerList',	'api'],
+			['deploymentconfigs',		'DeploymentConfigList',			'oapi'],
+			['services',				'ServiceList',					'api'],
+			['routes',					'RouteList',					'oapi'],
+			['pods',					'PodList',						'api'],
+		]
 		$jsonString = '{}';
-		$this->command('api','replicationcontrollers/gpid-'.$id.'-1','DELETE',$jsonString);
-		$jsonString = '{}';
-		$this->command('oapi','deploymentconfigs/gpid-'.$id,'DELETE',$jsonString);
-		$jsonString = '{}';
-		$this->command('api','services/gpid-'.$id,'DELETE',$jsonString);
-		$jsonString = '{}';
-		$this->command('oapi','routes/gpid-'.$id,'DELETE',$jsonString);
-		$jsonString = '{}';
-		$this->command('api','pods?labelSelector=name=gpid-'.$id);
-global $basicPage;
-		if ($this->response->kind=='PodList') {
-			for ($t=0;$t<count($this->response->items);$t++) {
-				$pod=$this->response->items[$t]->metadata->name;
-$basicPage->writeLog('$pod='.$pod);
+		foreach ($todos as $todo) {
+			$this->command('api',$todo[0].'?labelSelector=name=gpid-'.$id);
+			if ($this->response->kind==$todo[1]) {
+				for ($t=0;$t<count($this->response->items);$t++) {
+					$pod=$this->response->items[$t]->metadata->name;
+					$this->command($todo[2],$todo[0].'/'.$pod,'DELETE',$jsonString);
+				}
 			}
 		}
-		//$this->command('api','pods/gpid-'.$id,'DELETE',$jsonString);
-		
-		
-		
-		
 	}
 }
 

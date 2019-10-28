@@ -6,6 +6,7 @@
             "app": "gisportal-dc",
 			"name": "$name"
         },
+		"name": "$name"
     },
     "spec": {
         "replicas": 1,

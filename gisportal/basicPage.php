@@ -60,6 +60,8 @@ class db_ {
 				$v.=($v==''?'':',').$va;
 			}
 			$q.=$f.') VALUES ('.$v.')';
+global $basicPage;
+$basicPage->writeLog($q);
 			$this->mysqli->query('INSERT INTO audit_trail (persoon, query) VALUES ('.$_SESSION['user'].',\''.addslashes($q).'\')');
 			$result = $this->mysqli->query($q);
 			if ($result) {

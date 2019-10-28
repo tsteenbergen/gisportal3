@@ -6,12 +6,18 @@
             "app": "gisportal-dc",
 			"name": "$name"
         },
-		"name": "$name"
     },
     "spec": {
         "replicas": 1,
-		"name": "$name",
+        "selector": {
+            "name": "$name"
+        },
         "template": {
+            "metadata": {
+                "labels": {
+                    "name": "$name"
+                }
+            },
             "spec": {
                 "containers": [
                     {

@@ -60,11 +60,11 @@ class db_ {
 				$v.=($v==''?'':',').$va;
 			}
 			$q.=$f.') VALUES ('.$v.')';
-//global $basicPage;
-//$basicPage->writeLog($q);
+global $basicPage;
+$basicPage->writeLog($q);
 			$this->mysqli->query('INSERT INTO audit_trail (persoon, query) VALUES ('.$_SESSION['user'].',\''.addslashes($q).'\')');
 			$result = $this->mysqli->query($q);
-//$basicPage->writeLog(var_export($result,true).'<br>'.mysqli_error($this->mysqli));
+$basicPage->writeLog(var_export($result,true).'<br>'.mysqli_error($this->mysqli));
 			if ($result) {
 				$result=$this->mysqli->insert_id;
 			} else {

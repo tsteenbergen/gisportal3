@@ -16,7 +16,7 @@
 		},
         "to": {
 			"kind": "Service",
-			"name": "service-$name"
+			"name": "$name"
 		},
 		"wildcardPolicy": "None"
     }

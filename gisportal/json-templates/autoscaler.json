@@ -1,0 +1,23 @@
+{
+    "kind": "Route",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "$name",
+        "namespace": "$namespace",
+        "labels": {
+			"name": "$name"
+        }
+    },
+    "spec": {
+		"host": "$host",
+		"path": "/geo/$map-theme/$map-name",
+        "port": {
+			"targetPort": "$name"
+		},
+        "to": {
+			"kind": "Service",
+			"name": "$name"
+		},
+		"wildcardPolicy": "None"
+    }
+}

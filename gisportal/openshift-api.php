@@ -135,11 +135,12 @@ class openshift_api_ {
 		$jsonString = '{}';
 		$this->command('oapi','deploymentconfigs/gpid-'.$id,'DELETE',$jsonString);
 		$jsonString = '{}';
-		$this->command('api','services/service-gpid-'.$id,'DELETE',$jsonString);
+		$this->command('api','services/gpid-'.$id,'DELETE',$jsonString);
 		$jsonString = '{}';
-		$this->command('oapi','routes/route-gpid-'.$id,'DELETE',$jsonString);
+		$this->command('oapi','routes/gpid-'.$id,'DELETE',$jsonString);
 		$jsonString = '{}';
-		$this->command('api','pods?labelSelector=name=gpid-'.$id,'DELETE',$jsonString);
+//		$this->command('api','pods?labelSelector=name=gpid-'.$id,'DELETE',$jsonString);
+		$this->command('api','pods/gpid-'.$id,'DELETE',$jsonString);
 	}
 }
 

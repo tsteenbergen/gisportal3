@@ -19,7 +19,11 @@ class openshift_api_ {
 		// $_SERVER['HTTP_HOST'] = 'gisportal-sscc-geoweb-co.apps.ssc-campus.nl'
 		// $_SERVER['HTTP_HOST'] = 'appname__-namespace__-c?.apps.ssc-campus.nl'
 		//   het vraagteken staat voor o=Ontwikkel, t=Test, a=Acceptatie, p=Productie
-		$api_url=$basicPage->endpoint.'/'.$api.'/v1/namespaces/'.$basicPage->namespace.'/';
+		if ($api=='apis') {
+			$api_url=$basicPage->endpoint.'/apis/extensions/v1beta1/namespaces/'.$basicPage->namespace.'/';
+		} else {
+			$api_url=$basicPage->endpoint.'/'.$api.'/v1/namespaces/'.$basicPage->namespace.'/';
+		}
 		$bearer=getenv('gisbeheertoken');
 		if ($this->allowed) {
 //global $basicPage;
@@ -110,7 +114,7 @@ class openshift_api_ {
 		$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
 		$this->command('api','services','POST',$jsonString);
 		$jsonString = file_get_contents($subpath.'json-templates/route.json');
-		$jsonString = str_replace('$map-name','/'.$kaartnaam,$jsonString);
+		$jsonString = str_replace('$map-name',$kaartnaam,$jsonString);
 		$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
 		$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
 		$jsonString = str_replace('$host','acceptatie-data.rivm.nl',$jsonString);

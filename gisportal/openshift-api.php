@@ -127,7 +127,7 @@ class openshift_api_ {
 		$jsonString = str_replace('$version',$version,$jsonString);
 		$jsonString = str_replace('$storage','geo-mappen',$jsonString);
 		// je mag dit alleen doen als er iets is verandert. Dat moet nog uitgezocht en geprogrammeerd...
-		// $this->command('oapi','deploymentconfigs/dc-gpid-'.$id,'PUT',$jsonString);
+		$this->command('oapi','deploymentconfigs/dc-gpid-'.$id,'PUT',$jsonString);
 	}
 	function deleteDeploymentConfig($subpath,$id) {
 		$jsonString = '{}';

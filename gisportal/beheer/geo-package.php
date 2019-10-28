@@ -232,8 +232,41 @@ $basicPage->writeLog('geo-package.php 1');
 				$basicPage->add_js_inline($js);
                 $tab1.='<tr><td>Metadata indata.rivm.nl:</td><td><span style="display: inline-block; width: 160px;">Verfijn op zoekterm:</span><input style="width: calc(100% - 230px);" onkeyup="setMetadatalink(false);" id="zoekindata"><a id="helpindata" class="small-button" onclick="metadatalinkhelp(false);" style="float: right;">Help</a></td></tr>';
                 $tab1.='<tr><td></td><td><select name="indatalink" style="width: 100%;"><option value="'.$g['indatalink'].'">'.$current_indatalink.'</option></select></td></tr>';
+				if ($id>=1) {
+					$tab1.='<tr><td></td><td><a href="http://indata.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/'.$g['indatalink'].'" target="from_gisportal">'.$current_indatalink.'</a></td>';
+					$meta_indata=@file_get_contents('http://indata.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/'.$g['indatalink']);
+					if ($g['indatalink']=='') {
+						$tab1.='<td class="waarde-oranje">- niet gespecificeerd -</td>';
+					} else {
+						$csw=@file_get_contents('http://indata.rivm.nl/geonetwork/srv/dut/csw?SERVICE=CSW&version=2.0.2&request=GetRecordById&elementSetName=full&outputSchema=http://www.isotc211.org/2005/gmd&ID='.$g['indatalink']);
+						if (stripos($csw,$g['indatalink'])>=1) {
+							$tab1.='<td class="waarde-groen">Geen bijzonderheden</td>';
+						} else {
+							$tab1.='<td class="waarde-rood">De link naar indata.rivm.nl bestaat niet (meer)</td>';
+						}
+					}
+					if ($g['indatalink']!='') {
+						$tab1.='<tr><td></td><td id="mdata"></td>';
+						$basicPage->add_js_ready('add_mdata(\'mdata\',\'https://data.rivm.nl/geonetwork/srv/dut/xml.metadata.get?uuid='.$g['indatalink'].'\');');
+					}
+				}
+				
                 $tab1.='<tr><td>Metadata data.rivm.nl:</td><td><span style="display: inline-block; width: 160px;">Verfijn op zoekterm:</span><input style="width: calc(100% - 230px);" onkeyup="setMetadatalink(true);" id="zoekdata"><a id="helpdata" class="small-button" onclick="metadatalinkhelp(false);" style="float: right;">Help</a></td></tr>';
                 $tab1.='<tr><td></td><td><select name="datalink" style="width: 100%;"><option value="'.$g['datalink'].'">'.$current_datalink.'</option></select></td></tr>';
+				if ($id>=1) {
+					$tab1.='<tr><td>Metadata data.rivm.nl:</td><td><a href="http://data.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/'.$g['datalink'].'" target="from_gisportal">'.$current_datalink.'</a></td>';
+					$meta_data=@file_get_contents('http://data.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/'.$g['datalink']);
+					if ($g['datalink']=='') {
+						$tab1.='<td class="waarde-oranje">- niet gespecificeerd -</td>';
+					} else {
+						$csw=@file_get_contents('http://data.rivm.nl/geonetwork/srv/dut/csw?SERVICE=CSW&version=2.0.2&request=GetRecordById&elementSetName=full&outputSchema=http://www.isotc211.org/2005/gmd&ID='.$g['datalink']);
+						if (stripos($csw,$g['datalink'])>=1) {
+							$tab1.='<td class="waarde-groen">Geen bijzonderheden</td>';
+						} else {
+							$tab1.='<td class="waarde-rood">De link naar data.rivm.nl bestaat niet (meer)</td>';
+						}
+					}
+				}
 				$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
                 $tab1.='<tr><td>Services:</td><td>'.$basicPage->checkbox('wms',$g['wms']=='J','WMS').'<br>'.$basicPage->checkbox('wfs',$g['wfs']=='J','WFS').'<br>'.$basicPage->checkbox('wcs',$g['wcs']=='J','WCS').'<br>'.$basicPage->checkbox('wmts',$g['wmts']=='J','WMTS').'</td></tr>';
 				$tab1.='</table></form></div>';
@@ -242,38 +275,10 @@ $basicPage->writeLog('geo-package.php 1');
 					// tweede div
 					$tab2.='<div id="tabs-2" style="vertical-align: top;">';
 					$tab2.='<table>';
-					$tab2.='<tr><td><button style="float: right;" id="uploadknop" uploadFile="geo-package,'.$g['id'].'">Upload file</button></td></tr>';
+					$tab2.='<tr><td colspan="2"><button style="float: right;" id="uploadknop" uploadFile="geo-package,'.$g['id'].'">Upload file</button></td></tr>';
 					$tab2.='<tr><td>&nbsp;</td></tr>';
 					$ext=new extention($g['id'],true);
 					$tab2.='<tr><td>Benodigde files:</td><td id="filetabel">'.$ext->tabel().'</td></tr>';
-					$tab2.='<tr><td>Metadata indata.rivm.nl:</td><td><a href="http://indata.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/'.$g['indatalink'].'" target="from_gisportal">'.$current_indatalink.'</a></td>';
-					$meta_indata=@file_get_contents('http://indata.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/'.$g['indatalink']);
-					if ($g['indatalink']=='') {
-						$tab2.='<td class="waarde-oranje">- niet gespecificeerd -</td>';
-					} else {
-						$csw=@file_get_contents('http://indata.rivm.nl/geonetwork/srv/dut/csw?SERVICE=CSW&version=2.0.2&request=GetRecordById&elementSetName=full&outputSchema=http://www.isotc211.org/2005/gmd&ID='.$g['indatalink']);
-						if (stripos($csw,$g['indatalink'])>=1) {
-							$tab2.='<td class="waarde-groen">Geen bijzonderheden</td>';
-						} else {
-							$tab2.='<td class="waarde-rood">De link naar indata.rivm.nl bestaat niet (meer)</td>';
-						}
-					}
-					if ($g['indatalink']!='') {
-						$tab2.='<tr><td></td><td id="mdata"></td>';
-						$basicPage->add_js_ready('add_mdata(\'mdata\',\'https://data.rivm.nl/geonetwork/srv/dut/xml.metadata.get?uuid='.$g['indatalink'].'\');');
-					}
-					$tab2.='<tr><td>Metadata data.rivm.nl:</td><td><a href="http://data.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/'.$g['datalink'].'" target="from_gisportal">'.$current_datalink.'</a></td>';
-					$meta_data=@file_get_contents('http://data.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/'.$g['datalink']);
-					if ($g['datalink']=='') {
-						$tab2.='<td class="waarde-oranje">- niet gespecificeerd -</td>';
-					} else {
-						$csw=@file_get_contents('http://data.rivm.nl/geonetwork/srv/dut/csw?SERVICE=CSW&version=2.0.2&request=GetRecordById&elementSetName=full&outputSchema=http://www.isotc211.org/2005/gmd&ID='.$g['datalink']);
-						if (stripos($csw,$g['datalink'])>=1) {
-							$tab2.='<td class="waarde-groen">Geen bijzonderheden</td>';
-						} else {
-							$tab2.='<td class="waarde-rood">De link naar data.rivm.nl bestaat niet (meer)</td>';
-						}
-					}
 					$tab2.='</table>';
 					
 					$files=glob($basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/*.*');

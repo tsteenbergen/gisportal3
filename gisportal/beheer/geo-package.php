@@ -5,13 +5,11 @@ require ('./extention.php');
 
 $title='Beheer geopackage';
 $r='';
-$basicPage->writeLog('geo-package.php 0');
 if ($loggedIn){
 	if (isset($_GET['id'])) {
 		$func=$_POST['func'];
 		$id=$_GET['id'];
 		$velden='id,afdeling,onderwerp,naam,kaartnaam,soort,brongeopackage,indatalink,datalink,wms,wfs,wcs,wmts,version';
-$basicPage->writeLog('geo-package.php 1');
 		if ($id>=1) {
 			$g=$db->selectOne('geopackages',$velden,'id='.$id.($is_admin?'':' AND afdeling='.$my_afd));
 			$version=$db->selectOne('versions AS a LEFT JOIN images AS b ON b.id=a.image','b.image, a.version','a.id='.$g['version']);

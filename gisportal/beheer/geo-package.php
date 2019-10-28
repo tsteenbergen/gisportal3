@@ -254,7 +254,7 @@ $basicPage->writeLog('geo-package.php 1');
                 $tab1.='<tr><td>Metadata data.rivm.nl:</td><td><span style="display: inline-block; width: 160px;">Verfijn op zoekterm:</span><input style="width: calc(100% - 230px);" onkeyup="setMetadatalink(true);" id="zoekdata"><a id="helpdata" class="small-button" onclick="metadatalinkhelp(false);" style="float: right;">Help</a></td></tr>';
                 $tab1.='<tr><td></td><td><select name="datalink" style="width: 100%;"><option value="'.$g['datalink'].'">'.$current_datalink.'</option></select></td></tr>';
 				if ($id>=1) {
-					$tab1.='<tr><td>Metadata data.rivm.nl:</td><td><a href="http://data.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/'.$g['datalink'].'" target="from_gisportal">'.$current_datalink.'</a></td>';
+					$tab1.='<tr><td></td><td><a href="http://data.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/'.$g['datalink'].'" target="from_gisportal">'.$current_datalink.'</a></td>';
 					$meta_data=@file_get_contents('http://data.rivm.nl/geonetwork/srv/dut/catalog.search#/metadata/'.$g['datalink']);
 					if ($g['datalink']=='') {
 						$tab1.='<td class="waarde-oranje">- niet gespecificeerd -</td>';
@@ -281,6 +281,7 @@ $basicPage->writeLog('geo-package.php 1');
 					$tab2.='<tr><td>Benodigde files:</td><td id="filetabel">'.$ext->tabel().'</td></tr>';
 					$tab2.='</table>';
 					
+					$tab2.='<br><br>TBV ontwikkeling/controle de files die nu voor dit geopackage bestaan:';
 					$files=glob($basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/*.*');
 					if ($files) {
 						foreach ($files as $file) {

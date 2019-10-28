@@ -250,7 +250,7 @@ function add_mdata(el,src) {
 			});
 		},
 		error: function(e) {
-			$('#'+el).html('Error');
+			$('#'+el).html('Error: Metadata cannot be read from \'+src+\'');
 		}          
 	});
 }

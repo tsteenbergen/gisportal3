@@ -70,6 +70,7 @@ if ($loggedIn){
 						$theme=$db->selectOne('onderwerpen','afkorting','id='.$a['onderwerp']);
 						if ($g['id']==0) {
 							$g['id']=$db->insert('geopackages',$a);
+$basicPage->writeLog(var_export($a,true).' => '.$g['id']);
 							$openshift_api->createDeploymentConfig('../',$g['id'],$theme['afkorting'],$a['Qkaartnaam'],$version['image'],$version['version']);
 						} else {
 							$db->update('geopackages',$a,'id='.$g['id']);

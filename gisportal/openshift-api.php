@@ -155,21 +155,19 @@ I1028 15:42:49.697138   34304 round_trippers.go:383] DELETE https://portaal.int.
 			['deploymentconfigs',		'DeploymentConfigList',			'apis/apps.openshift.io/v1',	'{"kind":"DeleteOptions","apiVersion":"v1","propagationPolicy":"Foreground","gracePeriodSeconds":0}'],	
 			['routes',					'RouteList',					'apis/route.openshift.io/v1',	'{"kind":"DeleteOptions","apiVersion":"v1","propagationPolicy":"Foreground","gracePeriodSeconds":0}'],	
 		];
-$r='';
 		foreach ($todos as $todo) {
 			$jsonString = $todo[3];
 			$this->command($todo[2],$todo[0].'?labelSelector=name=gpid-'.$id);
 			if ($this->response->kind==$todo[1]) {
-$r.='Response items: '.count($this->response->items).'<br>';
+				$items=[];
 				for ($t=0;$t<count($this->response->items);$t++) {
-					$itemID=$this->response->items[$t]->metadata->name;
-$r.='Delete '.$todo[1].': '.$itemID.'<br>';
-					$this->command($todo[2],$todo[0].'/'.$itemID,'DELETE',$jsonString);
+					$items[]=$this->response->items[$t]->metadata->name;
+				}
+				for ($t=0;$t<count($items);$t++) {
+					$this->command($todo[2],$todo[0].'/'.$items[$t],'DELETE',$jsonString);
 				}
 			}
 		}
-global $basicPage;
-$basicPage->writelog($r);
 	}
 }
 

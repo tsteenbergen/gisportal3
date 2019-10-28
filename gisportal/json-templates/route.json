@@ -5,7 +5,8 @@
         "labels": {
 			"name": "$name",
 			"namespace": "$namespace"
-		}
+		},
+		"name": "$name"
     },
     "spec": {
 		"host": "$host",

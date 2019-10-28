@@ -132,21 +132,25 @@ class openshift_api_ {
 	function deleteDeploymentConfig($subpath,$id) {
 		$todos=[
 			['replicationcontrollers',	'ReplicationControllerList',	'api'],
-			['deploymentconfigs',		'DeploymentConfigList',			'oapi'],
-			['services',				'ServiceList',					'api'],
-			['routes',					'RouteList',					'oapi'],
-			['pods',					'PodList',						'api'],
+			['deploymentconfigs',		'DeploymentConfigList',			'oapi'],	
+			['services',				'ServiceList',					'api'],		
+			['routes',					'RouteList',					'oapi'],	
+			['pods',					'PodList',						'api'],		
 		];
 		$jsonString = '{}';
+$r='';
 		foreach ($todos as $todo) {
 			$this->command('api',$todo[0].'?labelSelector=name=gpid-'.$id);
 			if ($this->response->kind==$todo[1]) {
 				for ($t=0;$t<count($this->response->items);$t++) {
-					$pod=$this->response->items[$t]->metadata->name;
-					$this->command($todo[2],$todo[0].'/'.$pod,'DELETE',$jsonString);
+					$itemID=$this->response->items[$t]->metadata->name;
+$r.='Delete '.$todo[1].': '.$itemID.'<br>';
+					$this->command($todo[2],$todo[0].'/'.$itemID,'DELETE',$jsonString);
 				}
 			}
 		}
+global $basicPage;
+$basicPage->writelog($r);
 	}
 }
 

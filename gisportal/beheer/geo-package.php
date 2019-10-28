@@ -69,7 +69,8 @@ if ($loggedIn){
 						$version=$db->selectOne('versions AS a LEFT JOIN images AS b ON b.id=a.image','b.image,a.version','a.id='.$a['version']);
 						$theme=$db->selectOne('onderwerpen','afkorting','id='.$a['onderwerp']);
 						if ($g['id']==0) {
-							$a['Qbrongeopackage']=''; // Dit is nodig omdat het veld in de db verplicht is!!!!
+							$a['Qbrongeopackage']=''; // Dit is nodig omdat het veld in de db verplicht is!!!! Dit moet ooit nog weg!!!!
+							$a['Qopmaak']='';         // Dit is nodig omdat het veld in de db verplicht is!!!! Dit moet ooit nog weg!!!!
 							$g['id']=$db->insert('geopackages',$a);
 							$openshift_api->createDeploymentConfig('../',$g['id'],$theme['afkorting'],$a['Qkaartnaam'],$version['image'],$version['version']);
 						} else {

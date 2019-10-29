@@ -1,6 +1,6 @@
 {
-    "kind": "Route",
-    "apiVersion": "v1",
+    "kind": "HorizontalPodAutoscaler",
+    "apiVersion": "autoscaling/v1",
     "metadata": {
         "name": "$name",
         "namespace": "$namespace",
@@ -9,15 +9,8 @@
         }
     },
     "spec": {
-		"host": "$host",
-		"path": "/geo/$map-theme/$map-name",
-        "port": {
-			"targetPort": "$name"
-		},
-        "to": {
-			"kind": "Service",
-			"name": "$name"
-		},
-		"wildcardPolicy": "None"
+		"minReplicas": "1",
+		"maxReplicas": "5",
+        "targetCPUUtilizationPercentage": "80%"
     }
 }

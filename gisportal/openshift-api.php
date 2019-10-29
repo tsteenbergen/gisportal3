@@ -166,8 +166,8 @@ I1028 15:42:49.697138   34304 round_trippers.go:383] DELETE https://portaal.int.
 			}
 		}
 		// Wacht tot alles weg is
-/*
-Dit gaat fout omdat het serviceaccount onvoldoende rechten heeft om e.e.a. op te vragen!!!
+
+//Dit gaat fout omdat het serviceaccount onvoldoende rechten heeft om e.e.a. op te vragen!!!
 		$maxAant=2;
 $msg='';
 		while (count($checkItems)>0 && $maxAant>0) {
@@ -185,7 +185,7 @@ $msg.='$maxAant='.$maxAant.', checked '.$item[2].': '.$this->response->kind.' '.
 		}
 global $basicPage;
 $basicPage->writeLog($msg);
-*/
+
 	}
 }
 

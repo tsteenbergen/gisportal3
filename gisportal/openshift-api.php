@@ -190,16 +190,16 @@ I1028 15:42:49.697138   34304 round_trippers.go:383] DELETE https://portaal.int.
    'm
 */
 
-		$maxAant=2;
+		$maxAant=1;
 $msg='$checkItems='.var_export($checkItems,true).'<br>';
 		while (count($checkItems)>0 && $maxAant>0) {
 			for ($t=count($checkItems)-1;$t>=0;$t--) {
 				$item=$checkItems[$t];
-				$this->command($item[0],$item[2].'/'.$item[1]);
-$msg.='$maxAant='.$maxAant.', checked '.$item[2].': '.$this->response->kind.' '.$this->response->status.' '.$this->response->reason.'<br>';
-				if ($this->response->status=='Failure' && $this->response->reason=='NotFound') {
-					array_splice($checkItems,$t,1);
-				}
+//				$this->command($item[0],$item[2].'/'.$item[1]);
+$msg.='$this->command(\''.$item[0].'\',\''.$item[2].'/'.$item[1]'\');<br>';
+//				if ($this->response->status=='Failure' && $this->response->reason=='NotFound') {
+//					array_splice($checkItems,$t,1);
+//				}
 				
 			}
 			$maxAant--;

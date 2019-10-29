@@ -50,7 +50,7 @@ function formOpslaan() {
 }
 function areYouSure(title, meld, afterOk) {
     $('<div></div>').appendTo('body').html('<div>'+meld+'</div>').dialog({
-        modal: true, title: title, zIndex: 10000, autoOpen: true,
+        modal: true, title: title, zIndex: 10000,
         width: 'auto', resizable: false,
         buttons: {
             Ja: function () {

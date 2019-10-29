@@ -166,7 +166,7 @@ I1028 15:42:49.697138   34304 round_trippers.go:383] DELETE https://portaal.int.
 			}
 		}
 		// Wacht tot alles weg is
-		$maxAant=200;
+		$maxAant=20; // wacht maximaal 20 seconden
 		while (count($checkItems)>0 && $maxAant>0) {
 			for ($t=count($checkItems)-1;$t>=0;$t--) {
 				$item=$checkItems[$t];
@@ -177,7 +177,8 @@ I1028 15:42:49.697138   34304 round_trippers.go:383] DELETE https://portaal.int.
 				
 			}
 			$maxAant--;
-			usleep(100000); // 100.000 microseconden is 0.1 seconde
+			// usleep(100000); // 100.000 microseconden is 0.1 seconde
+			sleep(1);
 		}
 
 

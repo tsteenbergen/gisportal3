@@ -5,9 +5,9 @@ if ($loggedIn && $is_admin){
 	switch ($_GET['func']) {
 		case 'log':
 			if (isset($_GET['clear'])) {
-				$logfile=$this->getConfig('logfile');
-				//if (file_exists($logfile)) {unlink($logfile);}
-				$basicPace->writeLog('Log cleared: '.$logfile);
+				$logfile=$basicPace->getConfig('logfile');
+				if (file_exists($logfile)) {unlink($logfile);}
+				$basicPace->writeLog('Log cleared');
 			}
 			$r.=file_get_contents($basicPage->getConfig('logfile'));
 			$r.='<br><br><input type="button" value="Clear log" onclick="location=\'admin.php?func=log&clear\'">';

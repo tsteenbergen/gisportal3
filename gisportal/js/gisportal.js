@@ -44,13 +44,28 @@ function meldFormFouten() {
 		}
 	}
 }
+function formOpslaan() {
+	$('#func').val('opslaan');
+	$('#form').submit();
+}
+function formOnderwerpOpslaan() {
+	if ($('#afk').val()==$('#afk_oud').val()) { // geen wijziging URL
+		formOpslaan();
+	} else {
+		if ($('#areYouSureCheck').prop('checked')) { // wijziging URL is akkoord
+			formOpslaan();
+		} else {
+			$('#areYouSure').show();
+		}
+	}
+}
 function areYouSure(title, meld, afterOk) {
     $('<div></div>').appendTo('body').html('<div>'+meld+'</div>').dialog({
-        modal: true, title: title, zIndex: 10000, autoOpen: true,
+        modal: true, title: title, zIndex: 10000,
         width: 'auto', resizable: false,
         buttons: {
             Ja: function () {
-                afterOk();
+                eval(afterOk);
                 $(this).dialog("close");
             },
             Nee: function () {                                                                 
@@ -182,6 +197,7 @@ function initFileuploads() {
 						fileuploadMessage(this,true,e.responseText,100,false);
 					}          
 				});
+				fileuploadMessage(document.getElementById('progress_'+$('#fileupload_no').val()),false,'Uploading',0,false);
 			}
 		});
 		for (t=0;t<els.length;t++) {
@@ -192,7 +208,7 @@ function initFileuploads() {
 				$('#extradata').val($(this).attr('uploadfile'));
 				$('#uploadfile').click();
 			});
-			el.after('<div id="progress_'+no+'"><div class="bar hidden"></div><div class="msg"></div></div>');
+			el.after('<div id="progress_'+no+'"><div class="bar hidden"></div><div class="msg"></div><div class="spinner hidden"></div></div>');
 			no++;
 		}
 	}
@@ -201,9 +217,11 @@ function fileuploadMessage(el,error,msg,progressPercent,data) {
 	if (msg=='') {msg='File upload failed; Unknown error.';}
 	$(el).find('.bar').removeClass('hidden').css('width',parseInt(progressPercent,10)+'%');
 	$(el).find('.msg').removeClass('hidden').html(msg);
+	$(el).find('.spinner').removeClass('hidden').html('Upload in progress');
 	if (progressPercent==100) {
 		data=JSON.parse(data);
 		$(el).find('.bar').addClass('hidden');
+		$(el).find('.spinner').addClass('hidden');
 		if (!error) {$(el).find('.msg').html('').addClass('hidden');}
 		var el=$($(el).parent()).find('[uploadFile]');
 		if (!error) {

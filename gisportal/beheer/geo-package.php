@@ -298,7 +298,7 @@ if ($loggedIn){
 					$files=glob($basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/*.*');
 					if ($files) {
 						foreach ($files as $file) {
-							$tab2.=$file.'<br>';
+							$tab2.='<br>'.$file;
 						}
 					}
 					

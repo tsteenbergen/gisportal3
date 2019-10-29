@@ -8,6 +8,7 @@ if ($loggedIn && $is_admin){
 				$logfile=$basicPage->getConfig('logfile');
 				if (file_exists($logfile)) {unlink($logfile);}
 				$basicPage->writeLog('Log cleared');
+				$basicPage->redirect('admin.php?func=log');
 			}
 			$r.=file_get_contents($basicPage->getConfig('logfile'));
 			$r.='<br><br><input type="button" value="Clear log" onclick="location=\'admin.php?func=log&clear\'">';

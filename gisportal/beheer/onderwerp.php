@@ -94,7 +94,7 @@ if ($loggedIn && ($is_afd_admin || $is_admin)){
 				$r.='<tr><td>Naam:</td><td><input name="naam" value="'.htmlspecialchars($ond['naam']).'" size="32"></td></tr>';
 				$r.='<tr><td>(deel van) URL:</td><td><input name="afkorting" id="afk" value="'.htmlspecialchars($ond['afkorting']).'" size="8"><input id="afk_oud" value="'.htmlspecialchars($ond['afkorting']).'" type="hidden"></td></tr>';
 				$r.='<tr><td>Afdeling:</td><td>'.$basicPage->getSelect('afdeling',$ond['afdeling'],$afds,$is_afd_admin).'</td></tr>';
-				$r.='<tr><td colspan="2" id="areYouSure" style="display: none;"><br>Door deze wijziging verandert de URL van '.count($routes).' kaarten met dit onderwerp.<br><br><input type="checkbox" id="areYouSureCheck"'.(count($routes)==0?' checked="checked"':'').'><label for="areYouSureCheck"> Ik wil deze wijziging inderdaad doorvoeren.</label><br></td></tr>';
+				$r.='<tr><td colspan="2" id="areYouSure" style="display: none;" class="areYouSure">Door deze wijziging verandert de URL van '.count($routes).' kaarten met dit onderwerp.<br><br><input type="checkbox" id="areYouSureCheck"'.(count($routes)==0?' checked="checked"':'').'><label for="areYouSureCheck"> Ik wil deze wijziging inderdaad doorvoeren.</label></td></tr>';
 				$r.='</table></form>';
 				$r.='<div class="button-below"><button onclick="formOnderwerpOpslaan();">Opslaan</button></div>';
 				$r.='</div>';

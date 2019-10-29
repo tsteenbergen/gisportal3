@@ -85,3 +85,5 @@ input {border: solid 1px #007bc7; font-family: "RO Sans",Calibri,sans-serif; fon
 
 .bar.hidden {display: none;}
 .bar {width: 0%; height: 12px;  background-color: #007bc7; margin: 6px 0;}
+
+.areYouSure {background-color: orange; border: solid 2px red; padding: 12px 20px; margin: 12px 0;}

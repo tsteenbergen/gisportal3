@@ -207,7 +207,7 @@ function initFileuploads() {
 				$('#extradata').val($(this).attr('uploadfile'));
 				$('#uploadfile').click();
 			});
-			el.after('<div id="progress_'+no+'"><div class="bar hidden"></div><div class="msg"></div></div>');
+			el.after('<div id="progress_'+no+'"><div class="bar hidden"></div><div class="msg"></div></div><div id="progress_2_'+no+'" class="spinner hidden">Hallo</div>');
 			no++;
 		}
 	}
@@ -216,9 +216,11 @@ function fileuploadMessage(el,error,msg,progressPercent,data) {
 	if (msg=='') {msg='File upload failed; Unknown error.';}
 	$(el).find('.bar').removeClass('hidden').css('width',parseInt(progressPercent,10)+'%');
 	$(el).find('.msg').removeClass('hidden').html(msg);
+	$(el).find('.spinner').removeClass('hidden').html('Upload in progress');
 	if (progressPercent==100) {
 		data=JSON.parse(data);
 		$(el).find('.bar').addClass('hidden');
+		$(el).find('.spinner').addClass('hidden');
 		if (!error) {$(el).find('.msg').html('').addClass('hidden');}
 		var el=$($(el).parent()).find('[uploadFile]');
 		if (!error) {

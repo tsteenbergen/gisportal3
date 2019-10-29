@@ -140,7 +140,7 @@ class openshift_api_ {
 			$jsonString = str_replace('$version',$version,$jsonString);
 			$jsonString = str_replace('$map-name',$kaartnaam,$jsonString);
 			$jsonString = str_replace('$map-theme',$theme,$jsonString);
-			$this->command($todo['create-api'],'deploymentconfigs','POST',$jsonString);
+			$this->command($todo['create-api'],$todo['type'],'POST',$jsonString);
 			if ($todo_type=='deploymentconfig') { // wacht tot deploymentconfig er is
 //				$maxAant=20; // wacht maximaal 20 seconden
 //				while ($maxAant>0) {
@@ -155,7 +155,7 @@ class openshift_api_ {
 //					$maxAant--;
 //					usleep(100000);
 //				}
-				sleep(5);
+				sleep(10);
 			}
 		}
 	}

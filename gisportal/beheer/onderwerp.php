@@ -51,6 +51,7 @@ if ($loggedIn && ($is_afd_admin || $is_admin)){
 						} else {
 							if ($ond['afkorting']!=$a['Qafkorting']) {
 								$routes=$db->select('geopackages','id,version,kaartnaam','onderwerp='.$ond['id']);
+$basicPage->writeLog('$routes='.var_export($routes,true));
 								if ($routes) {
 									require('../openshift-api.php');
 									for($t=0;$t<count($routes);$t++) {

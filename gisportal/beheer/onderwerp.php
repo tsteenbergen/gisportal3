@@ -50,7 +50,7 @@ if ($loggedIn && ($is_afd_admin || $is_admin)){
 							$ond['id']=$db->insert('onderwerpen',$a);
 						} else {
 							if ($ond['afkorting']!=$a['Qafkorting']) {
-								$routes=$db->select('geopackages','id,version,kaartnaam','onderwerp='.$ond['id']);
+								$routes=$db->select('geopackages','id,kaartnaam','onderwerp='.$ond['id']);
 $basicPage->writeLog('$routes='.var_export($routes,true));
 								if ($routes) {
 									require('../openshift-api.php');
@@ -67,7 +67,7 @@ $basicPage->writeLog('$routes='.var_export($routes,true));
 											$maxAant--;
 											if ($maxAant>=0) {usleep(100000);} // 100.000 microseconden is 0.1 seconde
 										}
-										$openshift_api->createDeploymentConfig('../',$route['id'],$a['Qafkorting'],$routes['kaartnaam'],'onnodig','onnodig',['routes']);
+										$openshift_api->createDeploymentConfig('../',$route['id'],$a['Qafkorting'],$route['kaartnaam'],'onnodig','onnodig',['routes']);
 									}
 								}
 							}

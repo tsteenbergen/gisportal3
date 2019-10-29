@@ -79,7 +79,8 @@ class extention {
 		global $db;
 		
 		$pad=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$this->gpid.'/';
-		$filenamen=explode(chr(13),$db->selectOne('geopackages','brongeopackage','id='.$this->gpid));
+		$filenamen=$db->selectOne('geopackages','brongeopackage','id='.$this->gpid);
+		$filenamen=explode(chr(13),$filenamen['brongeopackage']);
 		$orgfs=[];
 		foreach ($filenamen as $filenaam) {
 			$f=explode('=',$filenaam);

@@ -67,7 +67,7 @@ $basicPage->writeLog('$routes='.var_export($routes,true));
 											$maxAant--;
 											if ($maxAant>=0) {usleep(100000);} // 100.000 microseconden is 0.1 seconde
 										}
-										$openshift_api->createDeploymentConfig('../',$routes['id'],$a['Qafkorting'],$routes['kaartnaam'],'onnodig','onnodig',['routes']);
+										$openshift_api->createDeploymentConfig('../',$route['id'],$a['Qafkorting'],$routes['kaartnaam'],'onnodig','onnodig',['routes']);
 									}
 								}
 							}

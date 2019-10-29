@@ -74,8 +74,8 @@ if ($loggedIn){
 							$g['id']=$db->insert('geopackages',$a);
 							$openshift_api->createDeploymentConfig('../',$g['id'],$theme['afkorting'],$a['Qkaartnaam'],$version['image'],$version['version']);
 						} else {
-							if ($g['version']!=$a['version']) {
 $basicPage->writeLog('Version was '.$g['version'].' en wordt '.$a['version']);
+							if ($g['version']!=$a['version']) {
 								$openshift_api->deleteDeploymentConfig($g['id']);
 							} else {
 								if ($g['kaartnaam']!=$a['Qkaartnaam']) {

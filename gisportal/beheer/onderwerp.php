@@ -94,7 +94,7 @@ if ($loggedIn && ($is_afd_admin || $is_admin)){
 				$r.='<tr><td>Naam:</td><td><input name="naam" value="'.htmlspecialchars($ond['naam']).'" size="32"></td></tr>';
 				$r.='<tr><td>(deel van) URL:</td><td><input name="afkorting" value="'.htmlspecialchars($ond['afkorting']).'" size="8"></td></tr>';
 				$r.='<tr><td>Afdeling:</td><td>'.$basicPage->getSelect('afdeling',$ond['afdeling'],$afds,$is_afd_admin).'</td></tr>';
-				$r.='<tr><td colspan="2" class="button-below"><button onclick="areYouSure(\'URL wijziging\', \'Door deze wijziging verandert de URL van alle kaarten met dit onderwerp.<br><br>Wilt u deze wijziging inderdaad doorvoeren?\',\'$(\\\'#func\\\').val(\\\'opslaan\\\'); $(\\\'#form\\\').submit();\');">Opslaan</button></td></tr>';
+				$r.='<tr><td colspan="2" class="button-below"><button onclick="areYouSure(\'URL wijziging\', \'Door deze wijziging verandert de URL van alle kaarten met dit onderwerp.<br><br>Wilt u deze wijziging inderdaad doorvoeren?\',\'formOpslaan();\');">Opslaan</button></td></tr>';
 				$r.='</table></form>';
 			} else {
 				$basicPage->fout('Internal error','Onderwerp niet gevonden.');

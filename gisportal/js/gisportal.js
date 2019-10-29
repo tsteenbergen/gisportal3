@@ -44,6 +44,10 @@ function meldFormFouten() {
 		}
 	}
 }
+function formOpslaan() {
+	$('#func').val('opslaan');
+	$('#form').submit();
+}
 function areYouSure(title, meld, afterOk) {
     $('<div></div>').appendTo('body').html('<div>'+meld+'</div>').dialog({
         modal: true, title: title, zIndex: 10000, autoOpen: true,

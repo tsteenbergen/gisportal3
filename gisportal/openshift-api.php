@@ -171,7 +171,7 @@ I1028 15:42:49.697138   34304 round_trippers.go:383] DELETE https://portaal.int.
 			}
 		}
 		// Wacht tot alles weg is
-		$maxAant=120;
+		$maxAant=2;
 		while (count($checkItems)>0 && $maxAant>0) {
 			for ($t=count($checkItems)-1;$t>=0;$t--) {
 				$item=$checkItems[$t];

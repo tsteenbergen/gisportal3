@@ -60,7 +60,7 @@ $basicPage->writeLog('$routes='.var_export($routes,true));
 										// Wacht tot route weg is
 										$maxAant=3; // wacht maximaal 0.3 seconden
 										while ($maxAant>0) {
-											$openshift_api->command('apis/route.openshift.io/v1','routes'.'?labelSelector=name=gpid-'.$route['id']);
+											$openshift_api->command('apis/route.openshift.io/v1','routes'.'/gpid-'.$route['id']);
 											if ($openshift_api->response->status=='Failure' && $openshift_api->response->reason=='NotFound') {
 												$maxAant=0;
 											}

@@ -197,7 +197,7 @@ function initFileuploads() {
 						fileuploadMessage(this,true,e.responseText,100,false);
 					}          
 				});
-				fileuploadMessage(this,false,'Uploading',0,false);
+				fileuploadMessage(document.getElementById('progress_'+$('#fileupload_no').val()),false,'Uploading',0,false);
 			}
 		});
 		for (t=0;t<els.length;t++) {

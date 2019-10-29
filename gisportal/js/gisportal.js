@@ -54,7 +54,7 @@ function areYouSure(title, meld, afterOk) {
         width: 'auto', resizable: false,
         buttons: {
             Ja: function () {
-                afterOk();
+                eval(afterOk);
                 $(this).dialog("close");
             },
             Nee: function () {                                                                 

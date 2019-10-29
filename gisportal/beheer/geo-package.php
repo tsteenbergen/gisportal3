@@ -74,12 +74,10 @@ if ($loggedIn){
 							$g['id']=$db->insert('geopackages',$a);
 							$openshift_api->createDeploymentConfig('../',$g['id'],$theme['afkorting'],$a['Qkaartnaam'],$version['image'],$version['version']);
 						} else {
-$basicPage->writeLog('Version was '.$g['version'].' en wordt '.$a['version']);
 							if ($g['version']!=$a['version']) {
 								$openshift_api->deleteDeploymentConfig($g['id']);
 							} else {
-								if ($g['kaartnaam']!=$a['Qkaartnaam']) {
-$basicPage->writeLog('Kaartnaam was '.$g['kaartnaam'].' en wordt '.$a['Qkaartnaam']);
+								if ($g['kaartnaam']!=$a['Qkaartnaam'] || $g['onderwerp']!=$a['onderwerp']) {
 									$openshift_api->deleteDeploymentConfig($g['id'],['routes']);
 								}
 							}
@@ -87,7 +85,7 @@ $basicPage->writeLog('Kaartnaam was '.$g['kaartnaam'].' en wordt '.$a['Qkaartnaa
 							if ($g['version']!=$a['version']) {
 								$openshift_api->createDeploymentConfig('../',$g['id'],$theme['afkorting'],$a['Qkaartnaam'],$version['image'],$version['version']);
 							} else {
-								if ($g['kaartnaam']!=$a['Qkaartnaam']) {
+								if ($g['kaartnaam']!=$a['Qkaartnaam'] || $g['onderwerp']!=$a['onderwerp']) {
 									$openshift_api->createDeploymentConfig('../',$g['id'],$theme['afkorting'],$a['Qkaartnaam'],$version['image'],$version['version'],['routes']);
 								}
 							}

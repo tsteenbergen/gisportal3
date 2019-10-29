@@ -149,17 +149,21 @@ I1028 15:42:49.697138   34304 round_trippers.go:383] DELETE https://portaal.int.
 			['routes',					'RouteList',					'apis/route.openshift.io/v1',	'{"kind":"DeleteOptions","apiVersion":"v1","propagationPolicy":"Foreground","gracePeriodSeconds":0}'],	
 		];
 		$checkItems=[];
-		foreach ($todos as $todo) if (array_search($todo,$todo_types)!==false) {
-			$jsonString = $todo[3];
-			$this->command($todo[2],$todo[0].'?labelSelector=name=gpid-'.$id);
-			if ($this->response->kind==$todo[1]) {
-				$items=[];
-				for ($t=0;$t<count($this->response->items);$t++) {
-					$items[]=$this->response->items[$t]->metadata->name;
-					$checkItems[]=[$todo[0],$todo[2],$this->response->items[$t]->metadata->name];
-				}
-				for ($t=0;$t<count($items);$t++) {
-					$this->command($todo[2],$todo[0].'/'.$items[$t],'DELETE',$jsonString);
+		foreach ($todos as $todo) {
+global $basicPage;
+$basicPage->writeLog($todo.' in '.var_export($todo_types,true).': '.vbar_export(array_search($todo,$todo_types),true));
+			if (array_search($todo,$todo_types)!==false) {
+				$jsonString = $todo[3];
+				$this->command($todo[2],$todo[0].'?labelSelector=name=gpid-'.$id);
+				if ($this->response->kind==$todo[1]) {
+					$items=[];
+					for ($t=0;$t<count($this->response->items);$t++) {
+						$items[]=$this->response->items[$t]->metadata->name;
+						$checkItems[]=[$todo[0],$todo[2],$this->response->items[$t]->metadata->name];
+					}
+					for ($t=0;$t<count($items);$t++) {
+						$this->command($todo[2],$todo[0].'/'.$items[$t],'DELETE',$jsonString);
+					}
 				}
 			}
 		}

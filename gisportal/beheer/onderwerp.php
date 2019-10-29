@@ -92,9 +92,9 @@ if ($loggedIn && ($is_afd_admin || $is_admin)){
 					$r.='<tr><td colspan="2" class="button-top"><a class="small-button" style="float: left;" href="/geo/portal/beheer/index.php?tab=1">Annuleren</a><a class="small-button" onclick="areYouSure(\'Verwijderen\',\'Dit onderwerp verwijderen?<br><br>NB: Dit kan niet ongedaan worden gemaakt.\',function () {$(\'#func\').val(\'delete\'); $(\'#form\').submit();});">Verwijderen</a></td></tr>';
 				}
 				$r.='<tr><td>Naam:</td><td><input name="naam" value="'.htmlspecialchars($ond['naam']).'" size="32"></td></tr>';
-				$r.='<tr><td>(deel van) URL:</td><td><input name="afkorting" value="'.htmlspecialchars($ond['afkorting']).'" size="8"></td></tr>';
+				$r.='<tr><td>(deel van) URL:</td><td><input name="afkorting" id="afk" value="'.htmlspecialchars($ond['afkorting']).'" size="8"><input id="afk_oud" value="'.htmlspecialchars($ond['afkorting']).'" type="hidden"></td></tr>';
 				$r.='<tr><td>Afdeling:</td><td>'.$basicPage->getSelect('afdeling',$ond['afdeling'],$afds,$is_afd_admin).'</td></tr>';
-				$r.='<tr><td colspan="2" class="button-below"><button onclick="areYouSure(\'URL wijziging\', \'Door deze wijziging verandert de URL van alle kaarten met dit onderwerp.<br><br>Wilt u deze wijziging inderdaad doorvoeren?\',\'formOpslaan();\');">Opslaan</button></td></tr>';
+				$r.='<tr><td colspan="2" class="button-below"><button onclick="if ($().val(\'#afk\')!=$(\'#afk_oud\').val()) {areYouSure(\'URL wijziging\', \'Door deze wijziging verandert de URL van alle kaarten met dit onderwerp.<br><br>Wilt u deze wijziging inderdaad doorvoeren?\',formOpslaan);} else {formOpslaan();}">Opslaan</button></td></tr>';
 				$r.='</table></form>';
 			} else {
 				$basicPage->fout('Internal error','Onderwerp niet gevonden.');

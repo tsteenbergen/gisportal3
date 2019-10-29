@@ -1,5 +1,38 @@
 <?php
 class openshift_api_ {
+	var $def=[
+		'replicationcontroller'=>[
+			'type'=>'replicationcontrollers',
+			'array'=>'ReplicationControllerList',
+			'api'=>'api'
+		],	
+		'deploymentconfig'=>[
+			'type'=>'deploymentconfigs',
+			'array'=>'DeploymentConfigList',
+			'api'=>'apis/apps.openshift.io/v1'
+		],	
+		'pod'=>[
+			'type' => 'pods',
+			'array' => 'PodList',
+			'api' =>'api'
+		],
+		'autoscaler'=>[
+			'type' => 'horizontalpodautoscalers',
+			'array' => 'HorizontalPodAutoscaler',
+			'api' =>'apis/autoscaling/v1'
+		],
+		'service'=>[
+			'type' => 'services',
+			'array' => 'ServiceList',
+			'api' =>'api'
+		],
+		'route'=>[
+			'type' => 'routes',
+			'array' => 'RouteList',
+			'api' =>'apis/route.openshift.io/v1'
+		],
+	];
+
 	var $allowed;
 	var $response;
 	
@@ -110,18 +143,19 @@ class openshift_api_ {
 			$jsonString = str_replace('$storage','geo-mappen',$jsonString);
 			$this->command('oapi','deploymentconfigs','POST',$jsonString);
 		}
-		if (array_search('services',$todo_types)!==false) {
-			$jsonString = file_get_contents($subpath.'json-templates/service.json');
-			$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
-			$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
-			$this->command('api','services','POST',$jsonString);
-		}
+		// wacht tot deploymentconfig er is
 		if (array_search('horizontalpodautoscalers',$todo_types)!==false) {
 			// POST https://portaal.int.ssc-campus.nl:8443/apis/autoscaling/v1/namespaces/sscc-geoweb-co/horizontalpodautoscalers
 			$jsonString = file_get_contents($subpath.'json-templates/autoscaler.json');
 			$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
 			$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
 			$this->command('apis/autoscaling/v1','horizontalpodautoscalers','POST',$jsonString);
+		}
+		if (array_search('services',$todo_types)!==false) {
+			$jsonString = file_get_contents($subpath.'json-templates/service.json');
+			$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
+			$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
+			$this->command('api','services','POST',$jsonString);
 		}
 		if (array_search('routes',$todo_types)!==false) {
 			$jsonString = file_get_contents($subpath.'json-templates/route.json');
@@ -133,42 +167,20 @@ class openshift_api_ {
 			$this->command('oapi','routes','POST',$jsonString);
 		}
 	}
-	function deleteDeploymentConfig($id,$todo_types=['pods','replicationcontrollers','services','horizontalpodautoscalers','deploymentconfigs','routes']) {
-/*
-I1028 15:42:49.532585   34304 round_trippers.go:383] GET    https://portaal.int.ssc-campus.nl:8443/api/v1/namespaces/sscc-geoweb-co/pods?labelSelector=name%3Dgpid-68
-I1028 15:42:49.544093   34304 round_trippers.go:383] DELETE https://portaal.int.ssc-campus.nl:8443/api/v1/namespaces/sscc-geoweb-co/pods/gpid-68-1-h47xr
-I1028 15:42:49.551535   34304 round_trippers.go:383] GET    https://portaal.int.ssc-campus.nl:8443/api/v1/namespaces/sscc-geoweb-co/replicationcontrollers?labelSelector=name%3Dgpid-68
-I1028 15:42:49.572086   34304 round_trippers.go:383] DELETE https://portaal.int.ssc-campus.nl:8443/api/v1/namespaces/sscc-geoweb-co/replicationcontrollers/gpid-68-1
-I1028 15:42:49.587501   34304 round_trippers.go:383] GET    https://portaal.int.ssc-campus.nl:8443/api/v1/namespaces/sscc-geoweb-co/services?labelSelector=name%3Dgpid-68
-I1028 15:42:49.596369   34304 round_trippers.go:383] DELETE https://portaal.int.ssc-campus.nl:8443/api/v1/namespaces/sscc-geoweb-co/services/gpid-68
-I1028 15:42:49.650098   34304 round_trippers.go:383] GET    https://portaal.int.ssc-campus.nl:8443/apis/autoscaling/v1/namespaces/sscc-geoweb-co/horizontalpodautoscalers?labelSelector=name%3Dgpid-68
-I1028 15:42:49.659955   34304 round_trippers.go:383] GET    https://portaal.int.ssc-campus.nl:8443/apis/apps.openshift.io/v1/namespaces/sscc-geoweb-co/deploymentconfigs?labelSelector=name%3Dgpid-68
-I1028 15:42:49.666125   34304 round_trippers.go:383] DELETE https://portaal.int.ssc-campus.nl:8443/apis/apps.openshift.io/v1/namespaces/sscc-geoweb-co/deploymentconfigs/gpid-68
-I1028 15:42:49.687872   34304 round_trippers.go:383] GET    https://portaal.int.ssc-campus.nl:8443/apis/route.openshift.io/v1/namespaces/sscc-geoweb-co/routes?labelSelector=name%3Dgpid-68
-I1028 15:42:49.697138   34304 round_trippers.go:383] DELETE https://portaal.int.ssc-campus.nl:8443/apis/route.openshift.io/v1/namespaces/sscc-geoweb-co/routes/gpid-68
-*/
-		$todos=[
-			['pods',					'PodList',						'api',							'{"kind":"DeleteOptions","apiVersion":"v1","propagationPolicy":"Foreground","gracePeriodSeconds":0}'],		
-			['replicationcontrollers',	'ReplicationControllerList',	'api',							'{"kind":"DeleteOptions","apiVersion":"v1","propagationPolicy":"Foreground","gracePeriodSeconds":0}'],
-			['services',				'ServiceList',					'api',							'{"kind":"DeleteOptions","apiVersion":"v1","propagationPolicy":"Foreground","gracePeriodSeconds":0}'],		
-			['horizontalpodautoscalers','HorizontalPodAutoscaler',		'apis/autoscaling/v1',			'{"kind":"DeleteOptions","apiVersion":"v1","propagationPolicy":"Foreground","gracePeriodSeconds":0}'],		
-			['deploymentconfigs',		'DeploymentConfigList',			'apis/apps.openshift.io/v1',	'{"kind":"DeleteOptions","apiVersion":"v1","propagationPolicy":"Foreground","gracePeriodSeconds":0}'],	
-			['routes',					'RouteList',					'apis/route.openshift.io/v1',	'{"kind":"DeleteOptions","apiVersion":"v1","propagationPolicy":"Foreground","gracePeriodSeconds":0}'],	
-		];
+	function deleteDeploymentConfig($id,$todo_types=['pod','replicationcontroller','service','horizontalpodautoscaler','deploymentconfig','route']) {
+		$jsonString = '{"kind":"DeleteOptions","apiVersion":"v1","propagationPolicy":"Foreground","gracePeriodSeconds":0}';
 		$checkItems=[];
 		foreach ($todo_types as $todo_type) {
-			foreach ($todos as $todo) if ($todo[0]==$todo_type) {
-				$jsonString = $todo[3];
-				$this->command($todo[2],$todo[0].'?labelSelector=name=gpid-'.$id);
-				if ($this->response->kind==$todo[1]) {
-					$items=[];
-					for ($t=0;$t<count($this->response->items);$t++) {
-						$items[]=$this->response->items[$t]->metadata->name;
-						$checkItems[]=[$todo[0],$todo[2],$this->response->items[$t]->metadata->name];
-					}
-					for ($t=0;$t<count($items);$t++) {
-						$this->command($todo[2],$todo[0].'/'.$items[$t],'DELETE',$jsonString);
-					}
+			$todo=$this->def[$todo_type];
+			$this->command($todo['api'],$todo['type'].'?labelSelector=name=gpid-'.$id);
+			if ($this->response->kind==$todo['array']) {
+				$items=[];
+				for ($t=0;$t<count($this->response->items);$t++) {
+					$items[]=$this->response->items[$t]->metadata->name;
+					$checkItems[]=['type'=>$todo['type'],'api'=>$todo['api'],'name'=>$this->response->items[$t]->metadata->name];
+				}
+				for ($t=0;$t<count($items);$t++) {
+					$this->command($todo['api'],$todo['type'].'/'.$items[$t],'DELETE',$jsonString);
 				}
 			}
 		}
@@ -177,7 +189,7 @@ I1028 15:42:49.697138   34304 round_trippers.go:383] DELETE https://portaal.int.
 		while (count($checkItems)>0 && $maxAant>0) {
 			for ($t=count($checkItems)-1;$t>=0;$t--) {
 				$item=$checkItems[$t];
-				$this->command($item[1],$item[0].'/'.$item[2]);
+				$this->command($item['api'],$item['type'].'/'.$item['name']);
 				if ($this->response->status=='Failure' && $this->response->reason=='NotFound') {
 					array_splice($checkItems,$t,1);
 				}
@@ -185,7 +197,7 @@ I1028 15:42:49.697138   34304 round_trippers.go:383] DELETE https://portaal.int.
 			}
 			$maxAant--;
 			// usleep(100000); // 100.000 microseconden is 0.1 seconde
-			sleep(1);
+			sleep(1); // 1 seconde
 		}
 
 

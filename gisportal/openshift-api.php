@@ -150,7 +150,7 @@ I1028 15:42:49.697138   34304 round_trippers.go:383] DELETE https://portaal.int.
 		];
 		$checkItems=[];
 		foreach ($todo_types as $todo_type) {
-			foreach ($todos as $todo) if ($todo==$todo_type) {
+			foreach ($todos as $todo) if ($todo[0]==$todo_type) {
 				$jsonString = $todo[3];
 				$this->command($todo[2],$todo[0].'?labelSelector=name=gpid-'.$id);
 				if ($this->response->kind==$todo[1]) {

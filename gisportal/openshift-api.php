@@ -177,7 +177,7 @@ I1028 15:42:49.697138   34304 round_trippers.go:383] DELETE https://portaal.int.
 				
 			}
 			$maxAant--;
-			sleep(100);
+			usleep(100000); // 100.000 microseconden is 0.1 seconde
 		}
 
 

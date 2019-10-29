@@ -40,7 +40,7 @@ COPY etc/umask-geo-mappen.sh /etc/umask-geo-mappen.sh
 COPY etc/lighttpd.conf /etc/lighttpd.conf
 COPY etc/php.ini /etc/opt/remi/php72/php.ini
 COPY etc/fpm.conf /etc/php-fpm.d/www.conf
-COPY php.httpd.user.ini /var/www/html/geo/portal/.user.ini
+COPY etc/php.httpd.user.ini /var/www/html/geo/portal/.user.ini
 
 # ******************  Onderstaande regels zijn nodig voor installatie obv RHEL *******************
 # COPY etc/modules.conf /etc/lighttpd/modules.conf

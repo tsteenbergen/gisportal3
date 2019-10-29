@@ -95,7 +95,7 @@ if ($loggedIn && ($is_afd_admin || $is_admin)){
 				$r.='<tr><td>(deel van) URL:</td><td><input name="afkorting" id="afk" value="'.htmlspecialchars($ond['afkorting']).'" size="8"><input id="afk_oud" value="'.htmlspecialchars($ond['afkorting']).'" type="hidden"></td></tr>';
 				$r.='<tr><td>Afdeling:</td><td>'.$basicPage->getSelect('afdeling',$ond['afdeling'],$afds,$is_afd_admin).'</td></tr>';
 				$r.='<tr><td colspan="2" id="areYouSure" style="display: none;"><br>Door deze wijziging verandert de URL van alle kaarten met dit onderwerp.<br><br><input type="checkbox" id="areYouSureCheck"><label for="areYouSureCheck"> Ik wil deze wijziging inderdaad doorvoeren.</label><br></td></tr>';
-				$r.='<tr><td colspan="2" class="button-below"><button onclick="if ($(\'#areYouSureCheck\').prop(\'checked\') || $(\'#afk\').val()==$(\'#afk_oud\').val()) {formOpslaan();} else { if ($(\'#afk\').val()!=$(\'#afk_oud\').val()) {$(\'#areYouSure\').show();}  }">Opslaan</button></td></tr>';
+				$r.='<tr><td colspan="2" class="button-below"><button onclick="formOnderwerpOpslaan();">Opslaan</button></td></tr>';
 				$r.='</table></form>';
 			} else {
 				$basicPage->fout('Internal error','Onderwerp niet gevonden.');

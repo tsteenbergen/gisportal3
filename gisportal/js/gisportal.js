@@ -48,6 +48,17 @@ function formOpslaan() {
 	$('#func').val('opslaan');
 	$('#form').submit();
 }
+function formOnderwerpOpslaan() {
+	if ($('#afk').val()==$('#afk_oud').val()) { // geen wijziging URL
+		formOpslaan();
+	} else {
+		if ($('#areYouSureCheck').prop('checked')) { // wijziging URL is akkoord
+			formOpslaan();
+		} else {
+			$('#areYouSure').show();
+		}
+	}
+}
 function areYouSure(title, meld, afterOk) {
     $('<div></div>').appendTo('body').html('<div>'+meld+'</div>').dialog({
         modal: true, title: title, zIndex: 10000,

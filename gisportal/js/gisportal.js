@@ -207,7 +207,7 @@ function initFileuploads() {
 				$('#extradata').val($(this).attr('uploadfile'));
 				$('#uploadfile').click();
 			});
-			el.after('<div id="progress_'+no+'"><div class="bar hidden"></div><div class="msg"></div></div><div id="progress_2_'+no+'" class="spinner hidden">Hallo</div>');
+			el.after('<div id="progress_'+no+'"><div class="bar hidden"></div><div class="msg"></div><div class="spinner hidden"></div></div>');
 			no++;
 		}
 	}

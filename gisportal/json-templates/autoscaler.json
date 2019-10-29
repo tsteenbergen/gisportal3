@@ -17,5 +17,5 @@
 			"kind": "DeploymentConfig",
 			"name": "$name"
 		}
-    },
+    }
 }

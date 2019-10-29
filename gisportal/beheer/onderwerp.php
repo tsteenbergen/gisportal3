@@ -46,6 +46,7 @@ if ($loggedIn && ($is_afd_admin || $is_admin)){
 						}
 					}
 					if (!$db->foutMeldingen) {
+						$msg='';
 						if ($ond['id']==0) {
 							$ond['id']=$db->insert('onderwerpen',$a);
 						} else {
@@ -69,11 +70,12 @@ if ($loggedIn && ($is_afd_admin || $is_admin)){
 										}
 										$openshift_api->createDeploymentConfig('../',$route['id'],$a['Qafkorting'],$route['kaartnaam'],'onnodig','onnodig',['routes']);
 									}
+									$msg='<br><br><b>Let op:</b>Er zijn '.count($routes).' kaarten die door deze wijziging een nieuwe URL hebben gekregen.'
 								}
 							}
 							$db->update('onderwerpen',$a,'id='.$ond['id']);
 						}
-						$basicPage->redirect('/geo/portal/beheer/index.php?tab=1',false,'Opslaan','Het onderwerp is opgeslagen.');
+						$basicPage->redirect('/geo/portal/beheer/index.php?tab=1',false,'Opslaan','Het onderwerp is opgeslagen.'.$msg);
 					} else {
 						$basicPage->add_js_inline('var foutmeldingen='.json_encode($db->foutMeldingen).';');
 						// zorg dat de POST waarden weer worden getoond
@@ -92,7 +94,7 @@ if ($loggedIn && ($is_afd_admin || $is_admin)){
 				$r.='<tr><td>Naam:</td><td><input name="naam" value="'.htmlspecialchars($ond['naam']).'" size="32"></td></tr>';
 				$r.='<tr><td>(deel van) URL:</td><td><input name="afkorting" value="'.htmlspecialchars($ond['afkorting']).'" size="8"></td></tr>';
 				$r.='<tr><td>Afdeling:</td><td>'.$basicPage->getSelect('afdeling',$ond['afdeling'],$afds,$is_afd_admin).'</td></tr>';
-				$r.='<tr><td colspan="2" class="button-below"><button onclick="$(\'#func\').val(\'opslaan\'); $(\'#form\').submit();">Opslaan</button></td></tr>';
+				$r.='<tr><td colspan="2" class="button-below"><button onclick="areYouSure(\'URL wijziging\', \'Door deze wijziging verandert de URL van alle kaarten met dit onderwerp.<br><br>Wilt u deze wijziging inderdaad doorvoeren?\',\'$(\\\'#func\\\').val(\\\'opslaan\\\'); $(\\\'#form\\\').submit();\');">Opslaan</button></td></tr>';
 				$r.='</table></form>';
 			} else {
 				$basicPage->fout('Internal error','Onderwerp niet gevonden.');

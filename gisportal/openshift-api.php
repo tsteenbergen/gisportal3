@@ -178,14 +178,15 @@ $this->command('deploymentconfigs','gpid-89/apis/apps.openshift.io/v1');
 $this->command('routes','gpid-89/apis/route.openshift.io/v1');
 */
 
-		$maxAant=1;
-$msg='$checkItems='.var_export($checkItems,true).'<br>';
-for ($t=0;$t<count($checkItems);$t++) {
-	$item=$checkItems[$t];
-$msg.='$this->command(\''.$item[1].'\',\''.$item[0].'/'.$item[2].'\');<br>';
-}
-/*
+		$maxAant=10;
+//$msg='$checkItems='.var_export($checkItems,true).'<br>';
+//for ($t=0;$t<count($checkItems);$t++) {
+//	$item=$checkItems[$t];
+//$msg.='$this->command(\''.$item[1].'\',\''.$item[0].'/'.$item[2].'\');<br>';
+//}
+
 		while (count($checkItems)>0 && $maxAant>0) {
+$msg='';
 			for ($t=count($checkItems)-1;$t>=0;$t--) {
 				$item=$checkItems[$t];
 				$this->command($item[1],$item[0].'/'.$item[2]);
@@ -195,12 +196,12 @@ $msg.='$this->command(\''.$item[0].'\',\''.$item[2].'/'.$item[1].'\');<br>';
 				}
 				
 			}
-			$maxAant--;
-			sleep(250);
-		}
-*/
 global $basicPage;
 $basicPage->writeLog($msg);
+			$maxAant--;
+			//sleep(50);
+		}
+
 
 	}
 }

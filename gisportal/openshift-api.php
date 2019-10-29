@@ -100,7 +100,7 @@ class openshift_api_ {
 //		$this->command('api','pods/gpid-'.$gpid,'DELETE');
 //	}
 
-	function createDeploymentConfig($subpath,$id, $theme, $kaartnaam, $image, $version,$todo_types=['deploymentconfigs','services','routes']) {
+	function createDeploymentConfig($subpath,$id, $theme, $kaartnaam, $image, $version,$todo_types=['deploymentconfigs','horizontalpodautoscalers','services','routes']) {
 		if (array_search('deploymentconfigs',$todo_types)!==false) {
 			$jsonString = file_get_contents($subpath.'json-templates/deploymentconfig.json');
 			$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
@@ -115,6 +115,13 @@ class openshift_api_ {
 			$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
 			$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
 			$this->command('api','services','POST',$jsonString);
+		}
+		if (array_search('horizontalpodautoscalers',$todo_types)!==false) {
+			// POST https://portaal.int.ssc-campus.nl:8443/apis/autoscaling/v1/namespaces/sscc-geoweb-co/horizontalpodautoscalers
+			$jsonString = file_get_contents($subpath.'json-templates/autoscaler.json');
+			$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
+			$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
+			$this->command('apis/autoscaling/v1','horizontalpodautoscalers','POST',$jsonString);
 		}
 		if (array_search('routes',$todo_types)!==false) {
 			$jsonString = file_get_contents($subpath.'json-templates/route.json');

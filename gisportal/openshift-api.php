@@ -196,7 +196,7 @@ $msg='$checkItems='.var_export($checkItems,true).'<br>';
 			for ($t=count($checkItems)-1;$t>=0;$t--) {
 				$item=$checkItems[$t];
 //				$this->command($item[0],$item[2].'/'.$item[1]);
-$msg.='$this->command(\''.$item[0].'\',\''.$item[2].'/'.$item[1]'\');<br>';
+$msg.='$this->command(\''.$item[0].'\',\''.$item[2].'/'.$item[1].'\');<br>';
 //				if ($this->response->status=='Failure' && $this->response->reason=='NotFound') {
 //					array_splice($checkItems,$t,1);
 //				}

@@ -15,7 +15,7 @@ if ($loggedIn){
 			if (count($back)==3) {$back='?a='.$back[0].'&ond='.$back[1].'&naam='.$back[2];} else {$back='';}
 			$r.='<button onclick="location.href=\'/geo/portal/geo-packages.php'.$back.'\';" style="margin-bottom: 40px;">Terug</button>';
 			
-			$openshift_api->command('oapi','routes/route-gpid-'.$id);
+			$openshift_api->command('oapi','routes/gpid-'.$id);
 			if ($openshift_api->response->kind=='Route') {
 				$spec=$openshift_api->response->spec;
 				$host=$spec->host.$spec->path;
@@ -29,7 +29,7 @@ if ($loggedIn){
 				$r.='<img src="'.$host.'?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&BBOX=202786,7072992,2158959,7213746&SRS=EPSG:3857&WIDTH=665&HEIGHT=551&LAYERS='.$baselayer.'&FORMAT=image/jpeg">';
 				
 			} else {
-				$basicPage->fout('Route','Route route-gpid-'.$id.' not found.');
+				$basicPage->fout('Route','Route gpid-'.$id.' not found.');
 			}
 		} else {
 			$basicPage->fout('Internal error','Geopackage niet gevonden.');

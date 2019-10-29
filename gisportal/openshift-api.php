@@ -168,12 +168,34 @@ I1028 15:42:49.697138   34304 round_trippers.go:383] DELETE https://portaal.int.
 		// Wacht tot alles weg is
 
 //Dit gaat fout omdat het serviceaccount onvoldoende rechten heeft om e.e.a. op te vragen!!!
+
+/*
+ )),
+))</td></tr><tr><td>29-10-19 09:50:47</td><td>&nbsp;</td><td>https://portaal.int.ssc-campus.nl:8443/routes/namespaces/sscc-geoweb-co/apis/route.openshift.io/v1/gpid-85<br></td></tr><tr><td></td><td>&nbsp;</td><td>stdClass::__set_state(array(
+   'kind' => 'Status',
+   'apiVersion' => 'v1',
+   'metadata' =>
+  stdClass::__set_state(array(
+  )),
+   'status' => 'Failure',
+   'message' => 'forbidden: User "system:serviceaccount:sscc-geoweb-co:gisbeheer" cannot get path "/routes/namespaces/sscc-geoweb-co/apis/route.openshift.io/v1/gpid-85": no RBAC policy matched',
+   'reason' => 'Forbidden',
+   'details' =>
+  stdClass::__set_state(array(
+  )),
+   'code' => 403,
+))</td></tr><tr><td>29-10-19 09:50:47</td><td>&nbsp;</td><td>https://portaal.int.ssc-campus.nl:8443/deploymentconfigs/namespaces/sscc-geoweb-co/apis/apps.openshift.io/v1/gpid-85<br></td></tr><tr><td></td><td>&nbsp;</td><td>stdClass::__set_state(array(
+   'kind' => 'Status',
+   'apiVersion' => 'v1',
+   'm
+*/
+
 		$maxAant=2;
 $msg='';
 		while (count($checkItems)>0 && $maxAant>0) {
 			for ($t=count($checkItems)-1;$t>=0;$t--) {
 				$item=$checkItems[$t];
-				$this->command($item[0],$item[1].'/'.$item[2]);
+				$this->command($item[0],$item[2].'/'.$item[1]);
 $msg.='$maxAant='.$maxAant.', checked '.$item[2].': '.$this->response->kind.' '.$this->response->status.' '.$this->response->reason.'<br>';
 				if ($this->response->status=='Failure' && $this->response->reason=='NotFound') {
 					array_splice($checkItems,$t,1);

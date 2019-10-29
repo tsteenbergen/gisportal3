@@ -9,7 +9,7 @@ if ($loggedIn && ($is_afd_admin || $is_admin)){
 		$id=$_GET['id'];
 		$velden='id,afdeling,naam,afkorting';
 		if ($id>=1) {
-			$ond=$db->selectOne('onderwerpen',$velden,'id='.$id.($https://github.com/rivm-syso/gisportal.gitis_afd_admin?' AND afdeling='.$my_afd:''));
+			$ond=$db->selectOne('onderwerpen',$velden,'id='.$id.($is_afd_admin?' AND afdeling='.$my_afd:''));
 		} else {
 			$id=0;
 			$ond=array('id'=>0,'naam'=>'','afdeling'=>$my_afd);

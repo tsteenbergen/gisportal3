@@ -28,7 +28,7 @@ if ($loggedIn){
 				}
 				$fname=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'];
 				if (file_exists($fname)) {rmdir($fname);}
-				$openshift_api->deleteDeploymentConfig('../',$g['id']);
+				$openshift_api->deleteDeploymentConfig($g['id']);
 				$basicPage->redirect('/geo/portal/geo-packages.php',true,'Verwijderen','Geopackage is verwijderd.');
 			} else {
 				$basicPage->fout('Internal error','Geopackage niet gevonden.');
@@ -74,8 +74,23 @@ if ($loggedIn){
 							$g['id']=$db->insert('geopackages',$a);
 							$openshift_api->createDeploymentConfig('../',$g['id'],$theme['afkorting'],$a['Qkaartnaam'],$version['image'],$version['version']);
 						} else {
+							if ($g['version']!=$a['version']) {
+$basicPage->writeLog('Version was '.$g['version'].' en wordt '.$a['version']);
+								$openshift_api->deleteDeploymentConfig($g['id']);
+							} else {
+								if ($g['kaartnaam']!=$a['Qkaartnaam']) {
+$basicPage->writeLog('Kaartnaam was '.$g['kaartnaam'].' en wordt '.$a['Qkaartnaam']);
+									$openshift_api->deleteDeploymentConfig($g['id'],['routes']);
+								}
+							}
 							$db->update('geopackages',$a,'id='.$g['id']);
-							$openshift_api->updateDeploymentConfig('../',$g['id'],$a['Qkaartnaam'],$version['image'],$version['version']);
+							if ($g['version']!=$a['version']) {
+								$openshift_api->createDeploymentConfig('../',$g['id'],$theme['afkorting'],$a['Qkaartnaam'],$version['image'],$version['version']);
+							} else {
+								if ($g['kaartnaam']!=$a['Qkaartnaam']) {
+									$openshift_api->createDeploymentConfig('../',$g['id'],$theme['afkorting'],$a['Qkaartnaam'],$version['image'],$version['version'],['routes']);
+								}
+							}
 						}
 						if ($func=='opslaan') {
 							$basicPage->redirect('/geo/portal/geo-packages.php',false,'Opslaan','De geopackage is opgeslagen.');

@@ -100,40 +100,33 @@ class openshift_api_ {
 //		$this->command('api','pods/gpid-'.$gpid,'DELETE');
 //	}
 
-	function createDeploymentConfig($subpath,$id, $theme, $kaartnaam, $image, $version) {
-		global $basicPage;
-		$jsonString = file_get_contents($subpath.'json-templates/deploymentconfig.json');
-		$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
-		$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
-		$jsonString = str_replace('$image',$image,$jsonString);
-		$jsonString = str_replace('$version',$version,$jsonString);
-		$jsonString = str_replace('$storage','geo-mappen',$jsonString);
-		$this->command('oapi','deploymentconfigs','POST',$jsonString);
-		$jsonString = file_get_contents($subpath.'json-templates/service.json');
-		$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
-		$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
-		$this->command('api','services','POST',$jsonString);
-		$jsonString = file_get_contents($subpath.'json-templates/route.json');
-		$jsonString = str_replace('$map-name',$kaartnaam,$jsonString);
-		$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
-		$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
-		$jsonString = str_replace('$host','acceptatie-data.rivm.nl',$jsonString);
-		$jsonString = str_replace('$map-theme',$theme,$jsonString);
-		$this->command('oapi','routes','POST',$jsonString);
+	function createDeploymentConfig($subpath,$id, $theme, $kaartnaam, $image, $version,$todo_types=['deploymentconfigs','services','routes']) {
+		if (array_search('deploymentconfigs',$todo_types)!==false) {
+			$jsonString = file_get_contents($subpath.'json-templates/deploymentconfig.json');
+			$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
+			$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
+			$jsonString = str_replace('$image',$image,$jsonString);
+			$jsonString = str_replace('$version',$version,$jsonString);
+			$jsonString = str_replace('$storage','geo-mappen',$jsonString);
+			$this->command('oapi','deploymentconfigs','POST',$jsonString);
+		}
+		if (array_search('services',$todo_types)!==false) {
+			$jsonString = file_get_contents($subpath.'json-templates/service.json');
+			$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
+			$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
+			$this->command('api','services','POST',$jsonString);
+		}
+		if (array_search('routes',$todo_types)!==false) {
+			$jsonString = file_get_contents($subpath.'json-templates/route.json');
+			$jsonString = str_replace('$map-name',$kaartnaam,$jsonString);
+			$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
+			$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
+			$jsonString = str_replace('$host','acceptatie-data.rivm.nl',$jsonString);
+			$jsonString = str_replace('$map-theme',$theme,$jsonString);
+			$this->command('oapi','routes','POST',$jsonString);
+		}
 	}
-	function updateDeploymentConfig($subpath,$id, $kaartnaam, $image, $version) {
-		global $basicPage;
-		$jsonString = file_get_contents($subpath.'json-templates/deploymentconfig.json');
-		$jsonString2= $jsonString;
-		$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
-		$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
-		$jsonString = str_replace('$image',$image,$jsonString);
-		$jsonString = str_replace('$version',$version,$jsonString);
-		$jsonString = str_replace('$storage','geo-mappen',$jsonString);
-		// je mag dit alleen doen als er iets is verandert. Dat moet nog uitgezocht en geprogrammeerd...
-		$this->command('oapi','deploymentconfigs/dc-gpid-'.$id,'PUT',$jsonString);
-	}
-	function deleteDeploymentConfig($subpath,$id) {
+	function deleteDeploymentConfig($id,$todo_types=['pods','replicationcontrollers','services','horizontalpodautoscalers','deploymentconfigs','routes']) {
 /*
 I1028 15:42:49.532585   34304 round_trippers.go:383] GET    https://portaal.int.ssc-campus.nl:8443/api/v1/namespaces/sscc-geoweb-co/pods?labelSelector=name%3Dgpid-68
 I1028 15:42:49.544093   34304 round_trippers.go:383] DELETE https://portaal.int.ssc-campus.nl:8443/api/v1/namespaces/sscc-geoweb-co/pods/gpid-68-1-h47xr
@@ -156,7 +149,7 @@ I1028 15:42:49.697138   34304 round_trippers.go:383] DELETE https://portaal.int.
 			['routes',					'RouteList',					'apis/route.openshift.io/v1',	'{"kind":"DeleteOptions","apiVersion":"v1","propagationPolicy":"Foreground","gracePeriodSeconds":0}'],	
 		];
 		$checkItems=[];
-		foreach ($todos as $todo) {
+		foreach ($todos as $todo) if (array_search($todo,$todo_types)!==false) {
 			$jsonString = $todo[3];
 			$this->command($todo[2],$todo[0].'?labelSelector=name=gpid-'.$id);
 			if ($this->response->kind==$todo[1]) {
@@ -171,6 +164,8 @@ I1028 15:42:49.697138   34304 round_trippers.go:383] DELETE https://portaal.int.
 			}
 		}
 		// Wacht tot alles weg is
+/*
+Dit gaat fout omdat het serviceaccount onvoldoende rechten heeft om e.e.a. op te vragen!!!
 		$maxAant=2;
 $msg='';
 		while (count($checkItems)>0 && $maxAant>0) {
@@ -188,6 +183,7 @@ $msg.='$maxAant='.$maxAant.', checked '.$item[2].': '.$this->response->kind.' '.
 		}
 global $basicPage;
 $basicPage->writeLog($msg);
+*/
 	}
 }
 

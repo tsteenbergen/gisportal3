@@ -56,7 +56,7 @@ if ($loggedIn && ($is_afd_admin || $is_admin)){
 									require('../openshift-api.php');
 									for($t=0;$t<count($routes);$t++) {
 										$route=$routes[$t];
-										$openshift_api->deleteDeploymentConfig($route['id'],['routes']);
+										$openshift_api->deleteDeploymentConfig($route['id'],['route']);
 										// Wacht tot route weg is
 										$maxAant=3; // wacht maximaal 0.3 seconden
 										while ($maxAant>0) {
@@ -68,7 +68,7 @@ if ($loggedIn && ($is_afd_admin || $is_admin)){
 												usleep(100000); // 100.000 microseconden is 0.1 seconde
 											}
 										}
-										$openshift_api->createDeploymentConfig('../',$route['id'],$a['Qafkorting'],$route['kaartnaam'],'onnodig','onnodig',['routes']);
+										$openshift_api->createDeploymentConfig('../',$route['id'],$a['Qafkorting'],$route['kaartnaam'],'onnodig','onnodig',['route']);
 									}
 									$msg='<br><br><b>Let op:</b> Er zijn '.count($routes).' kaarten die door deze wijziging een nieuwe URL hebben gekregen.';
 								}

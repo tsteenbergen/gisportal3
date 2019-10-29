@@ -9,7 +9,8 @@ class openshift_api_ {
 		'deploymentconfig'=>[
 			'type'=>'deploymentconfigs',
 			'array'=>'DeploymentConfigList',
-			'api'=>'apis/apps.openshift.io/v1'
+			'api'=>'apis/apps.openshift.io/v1',
+			'create-api'=>'oapi'
 		],	
 		'pod'=>[
 			'type' => 'pods',
@@ -19,17 +20,20 @@ class openshift_api_ {
 		'autoscaler'=>[
 			'type' => 'horizontalpodautoscalers',
 			'array' => 'HorizontalPodAutoscaler',
-			'api' =>'apis/autoscaling/v1'
+			'api' =>'apis/autoscaling/v1',
+			'create-api'=>'apis/autoscaling/v1'
 		],
 		'service'=>[
 			'type' => 'services',
 			'array' => 'ServiceList',
-			'api' =>'api'
+			'api' =>'api',
+			'create-api'=>'api'
 		],
 		'route'=>[
 			'type' => 'routes',
 			'array' => 'RouteList',
-			'api' =>'apis/route.openshift.io/v1'
+			'api' =>'apis/route.openshift.io/v1',
+			'create-api'=>'oapi'
 		],
 	];
 
@@ -59,8 +63,6 @@ class openshift_api_ {
 		}
 		$bearer=getenv('gisbeheertoken');
 		if ($this->allowed) {
-//global $basicPage;
-//$basicPage->writeLog('$bearer = '.$bearer);
 			if ($api_url!='' && $bearer!='') {
 				$headers = [
 					'Authorization: Bearer '.$bearer,
@@ -122,49 +124,38 @@ class openshift_api_ {
 		return $r;
 	}
 	
-//	function getPodInfo($gpid) {
-//		$this->command('api','pods/gpid-'.$gpid);
-//	}
-	
 	function monitorPod($gpid) {
 		$this->command('api','pods?labelSelector=name=gpid-'.$gpid);
 	}
-//	function deletePod($gpid) {
-//		$this->command('api','pods/gpid-'.$gpid,'DELETE');
-//	}
 
-	function createDeploymentConfig($subpath,$id, $theme, $kaartnaam, $image, $version,$todo_types=['deploymentconfigs','horizontalpodautoscalers','services','routes']) {
-		if (array_search('deploymentconfigs',$todo_types)!==false) {
-			$jsonString = file_get_contents($subpath.'json-templates/deploymentconfig.json');
+	function createDeploymentConfig($subpath,$id, $theme, $kaartnaam, $image, $version,$todo_types=['deploymentconfig','autoscaler','service','route']) {
+		foreach ($todo_types as $todo_type) {
+			$todo=$this->def[$todo_type];
+			$jsonString = file_get_contents($subpath.'json-templates/'.$todo_type.'.json');
+			$jsonString = str_replace('$host','acceptatie-data.rivm.nl',$jsonString);
 			$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
+			$jsonString = str_replace('$storage','geo-mappen',$jsonString);
 			$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
 			$jsonString = str_replace('$image',$image,$jsonString);
 			$jsonString = str_replace('$version',$version,$jsonString);
-			$jsonString = str_replace('$storage','geo-mappen',$jsonString);
-			$this->command('oapi','deploymentconfigs','POST',$jsonString);
-		}
-		// wacht tot deploymentconfig er is
-		if (array_search('horizontalpodautoscalers',$todo_types)!==false) {
-			// POST https://portaal.int.ssc-campus.nl:8443/apis/autoscaling/v1/namespaces/sscc-geoweb-co/horizontalpodautoscalers
-			$jsonString = file_get_contents($subpath.'json-templates/autoscaler.json');
-			$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
-			$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
-			$this->command('apis/autoscaling/v1','horizontalpodautoscalers','POST',$jsonString);
-		}
-		if (array_search('services',$todo_types)!==false) {
-			$jsonString = file_get_contents($subpath.'json-templates/service.json');
-			$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
-			$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
-			$this->command('api','services','POST',$jsonString);
-		}
-		if (array_search('routes',$todo_types)!==false) {
-			$jsonString = file_get_contents($subpath.'json-templates/route.json');
 			$jsonString = str_replace('$map-name',$kaartnaam,$jsonString);
-			$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
-			$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
-			$jsonString = str_replace('$host','acceptatie-data.rivm.nl',$jsonString);
 			$jsonString = str_replace('$map-theme',$theme,$jsonString);
-			$this->command('oapi','routes','POST',$jsonString);
+			$this->command($todo['create-api'],'deploymentconfigs','POST',$jsonString);
+			if ($todo_type=='deploymentconfig') { // wacht tot deploymentconfig er is
+				$maxAant=20; // wacht maximaal 20 seconden
+				while ($maxAant>0) {
+					$this->command($todo['api'],$item['todo'].'/gpid-'.$id);
+/*					if ($this->response->status=='Failure' && $this->response->reason=='NotFound') {
+						$maxAant=0;
+					} else {
+						$maxAant--;
+						// usleep(100000); // 100.000 microseconden is 0.1 seconde
+						sleep(1); // 1 seconde
+					}*/
+					usleep(100000);
+				}
+				
+			}
 		}
 	}
 	function deleteDeploymentConfig($id,$todo_types=['pod','replicationcontroller','service','horizontalpodautoscaler','deploymentconfig','route']) {
@@ -184,7 +175,7 @@ class openshift_api_ {
 				}
 			}
 		}
-		// Wacht tot alles weg is
+		// Wacht tot alles echt verwijderd is
 		$maxAant=20; // wacht maximaal 20 seconden
 		while (count($checkItems)>0 && $maxAant>0) {
 			for ($t=count($checkItems)-1;$t>=0;$t--) {
@@ -199,8 +190,6 @@ class openshift_api_ {
 			// usleep(100000); // 100.000 microseconden is 0.1 seconde
 			sleep(1); // 1 seconde
 		}
-
-
 	}
 }
 

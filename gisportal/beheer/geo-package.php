@@ -78,7 +78,7 @@ if ($loggedIn){
 								$openshift_api->deleteDeploymentConfig($g['id']);
 							} else {
 								if ($g['kaartnaam']!=$a['Qkaartnaam'] || $g['onderwerp']!=$a['onderwerp']) {
-									$openshift_api->deleteDeploymentConfig($g['id'],['routes']);
+									$openshift_api->deleteDeploymentConfig($g['id'],['route']);
 								}
 							}
 							$db->update('geopackages',$a,'id='.$g['id']);
@@ -86,7 +86,7 @@ if ($loggedIn){
 								$openshift_api->createDeploymentConfig('../',$g['id'],$theme['afkorting'],$a['Qkaartnaam'],$version['image'],$version['version']);
 							} else {
 								if ($g['kaartnaam']!=$a['Qkaartnaam'] || $g['onderwerp']!=$a['onderwerp']) {
-									$openshift_api->createDeploymentConfig('../',$g['id'],$theme['afkorting'],$a['Qkaartnaam'],$version['image'],$version['version'],['routes']);
+									$openshift_api->createDeploymentConfig('../',$g['id'],$theme['afkorting'],$a['Qkaartnaam'],$version['image'],$version['version'],['route']);
 								}
 							}
 						}

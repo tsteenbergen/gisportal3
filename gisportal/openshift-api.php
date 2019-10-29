@@ -155,6 +155,7 @@ I1028 15:42:49.697138   34304 round_trippers.go:383] DELETE https://portaal.int.
 			['deploymentconfigs',		'DeploymentConfigList',			'apis/apps.openshift.io/v1',	'{"kind":"DeleteOptions","apiVersion":"v1","propagationPolicy":"Foreground","gracePeriodSeconds":0}'],	
 			['routes',					'RouteList',					'apis/route.openshift.io/v1',	'{"kind":"DeleteOptions","apiVersion":"v1","propagationPolicy":"Foreground","gracePeriodSeconds":0}'],	
 		];
+		$checkItems=[];
 		foreach ($todos as $todo) {
 			$jsonString = $todo[3];
 			$this->command($todo[2],$todo[0].'?labelSelector=name=gpid-'.$id);
@@ -162,11 +163,26 @@ I1028 15:42:49.697138   34304 round_trippers.go:383] DELETE https://portaal.int.
 				$items=[];
 				for ($t=0;$t<count($this->response->items);$t++) {
 					$items[]=$this->response->items[$t]->metadata->name;
+					$checkItems[]=[$todo[0],$todo[2],$this->response->items[$t]->metadata->name];
 				}
 				for ($t=0;$t<count($items);$t++) {
 					$this->command($todo[2],$todo[0].'/'.$items[$t],'DELETE',$jsonString);
 				}
 			}
+		}
+		// Wacht tot alles weg is
+		$maxAant=120;
+		while (count($checkItems)>0 && $maxAant>0) {
+			for ($t=count($checkItems)-1;$t>=0;$t--) {
+				$item=$checkItems[$t];
+				$this->command($item[0],$item[1].'/'.$item[2]);
+				if ($this->response->status=='Failure' && $this->response->reason=='NotFound') {
+					array_splice($checkItems,$t,1);
+				}
+				
+			}
+			$maxAant++;
+			sleep(250);
 		}
 	}
 }

@@ -152,6 +152,7 @@ class openshift_api_ {
 						// usleep(100000); // 100.000 microseconden is 0.1 seconde
 						sleep(1); // 1 seconde
 					}*/
+					$maxAant--;
 					usleep(100000);
 				}
 				

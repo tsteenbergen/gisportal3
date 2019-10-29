@@ -144,7 +144,7 @@ class openshift_api_ {
 			if ($todo_type=='deploymentconfig') { // wacht tot deploymentconfig er is
 				$maxAant=20; // wacht maximaal 20 seconden
 				while ($maxAant>0) {
-					$this->command($todo['api'],$item['todo'].'/gpid-'.$id);
+					$this->command($todo['api'],$todo['type'].'/gpid-'.$id);
 /*					if ($this->response->status=='Failure' && $this->response->reason=='NotFound') {
 						$maxAant=0;
 					} else {

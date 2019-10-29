@@ -36,6 +36,15 @@ if ($loggedIn && ($is_afd_admin || $is_admin)){
 						'Qafkorting'=>$db->validateString($_POST['afkorting'],'afkorting',1,32,'Er is geen afkorting opgegeven','De afkorting is te lang (max 32 tekens)',array('onderwerpen','afkorting=\''.$_POST['afkorting'].'\' AND afdeling='.$afd.' AND id<>'.$ond['id'],'Deze afkorting komt al in de database voor')),
 						'afdeling'=>$afd
 					);
+					if ($a['Qafkorting']!='') {
+						for ($t=0;$t<strlen($a['Qafkorting']);$t++) {
+							$c=substr($a['Qafkorting'],$t,1);
+							if (! (  ($c>='a' && $c<='z') || ($c>='A' && $c<='Z') || ($c>='0' && $c<='9') || $c=='-' || $c=='_'  )  ) {
+								$db->foutMeldingen[]=['afkorting','De URL mag alleen letters, cijfers, - of _ bevatten'];
+								$t=strlen($a['Qafkorting']);
+							}
+						}
+					}
 					if (!$db->foutMeldingen) {
 						if ($ond['id']==0) {
 							$ond['id']=$db->insert('onderwerpen',$a);
@@ -59,7 +68,7 @@ if ($loggedIn && ($is_afd_admin || $is_admin)){
 					$r.='<tr><td colspan="2" class="button-top"><a class="small-button" style="float: left;" href="/geo/portal/beheer/index.php?tab=1">Annuleren</a><a class="small-button" onclick="areYouSure(\'Verwijderen\',\'Dit onderwerp verwijderen?<br><br>NB: Dit kan niet ongedaan worden gemaakt.\',function () {$(\'#func\').val(\'delete\'); $(\'#form\').submit();});">Verwijderen</a></td></tr>';
 				}
 				$r.='<tr><td>Naam:</td><td><input name="naam" value="'.htmlspecialchars($ond['naam']).'" size="32"></td></tr>';
-				$r.='<tr><td>Afkorting:</td><td><input name="afkorting" value="'.htmlspecialchars($ond['afkorting']).'" size="8"></td></tr>';
+				$r.='<tr><td>(deel van) URL:</td><td><input name="afkorting" value="'.htmlspecialchars($ond['afkorting']).'" size="8"></td></tr>';
 				$r.='<tr><td>Afdeling:</td><td>'.$basicPage->getSelect('afdeling',$ond['afdeling'],$afds,$is_afd_admin).'</td></tr>';
 				$r.='<tr><td colspan="2" class="button-below"><button onclick="$(\'#func\').val(\'opslaan\'); $(\'#form\').submit();">Opslaan</button></td></tr>';
 				$r.='</table></form>';

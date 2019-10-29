@@ -166,40 +166,18 @@ I1028 15:42:49.697138   34304 round_trippers.go:383] DELETE https://portaal.int.
 			}
 		}
 		// Wacht tot alles weg is
-
-//Dit gaat fout omdat het serviceaccount onvoldoende rechten heeft om e.e.a. op te vragen!!!
-
-/*
-command($api,$command,$subcommand=false,$data=false)
-$this->command('pods','gpid-89-1-jhl8s/api');
-$this->command('replicationcontrollers','gpid-89-1/api');
-$this->command('services','gpid-89/api');
-$this->command('deploymentconfigs','gpid-89/apis/apps.openshift.io/v1');
-$this->command('routes','gpid-89/apis/route.openshift.io/v1');
-*/
-
-		$maxAant=10;
-//$msg='$checkItems='.var_export($checkItems,true).'<br>';
-//for ($t=0;$t<count($checkItems);$t++) {
-//	$item=$checkItems[$t];
-//$msg.='$this->command(\''.$item[1].'\',\''.$item[0].'/'.$item[2].'\');<br>';
-//}
-
+		$maxAant=200;
 		while (count($checkItems)>0 && $maxAant>0) {
-$msg='';
 			for ($t=count($checkItems)-1;$t>=0;$t--) {
 				$item=$checkItems[$t];
 				$this->command($item[1],$item[0].'/'.$item[2]);
-$msg.='$this->command(\''.$item[0].'\',\''.$item[2].'/'.$item[1].'\');<br>';
 				if ($this->response->status=='Failure' && $this->response->reason=='NotFound') {
 					array_splice($checkItems,$t,1);
 				}
 				
 			}
-global $basicPage;
-$basicPage->writeLog($msg);
 			$maxAant--;
-			//sleep(50);
+			sleep(100);
 		}
 
 

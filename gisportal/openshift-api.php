@@ -142,9 +142,9 @@ class openshift_api_ {
 			$jsonString = str_replace('$map-theme',$theme,$jsonString);
 			$this->command($todo['create-api'],'deploymentconfigs','POST',$jsonString);
 			if ($todo_type=='deploymentconfig') { // wacht tot deploymentconfig er is
-				$maxAant=20; // wacht maximaal 20 seconden
-				while ($maxAant>0) {
-					$this->command($todo['api'],$todo['type'].'/gpid-'.$id);
+//				$maxAant=20; // wacht maximaal 20 seconden
+//				while ($maxAant>0) {
+//					$this->command($todo['api'],$todo['type'].'/gpid-'.$id);
 /*					if ($this->response->status=='Failure' && $this->response->reason=='NotFound') {
 						$maxAant=0;
 					} else {
@@ -152,14 +152,14 @@ class openshift_api_ {
 						// usleep(100000); // 100.000 microseconden is 0.1 seconde
 						sleep(1); // 1 seconde
 					}*/
-					$maxAant--;
-					usleep(100000);
-				}
-				
+//					$maxAant--;
+//					usleep(100000);
+//				}
+				sleep(5);
 			}
 		}
 	}
-	function deleteDeploymentConfig($id,$todo_types=['pod','replicationcontroller','service','horizontalpodautoscaler','deploymentconfig','route']) {
+	function deleteDeploymentConfig($id,$todo_types=['replicationcontroller','autoscaler','deploymentconfig','pod','service','route']) {
 		$jsonString = '{"kind":"DeleteOptions","apiVersion":"v1","propagationPolicy":"Foreground","gracePeriodSeconds":0}';
 		$checkItems=[];
 		foreach ($todo_types as $todo_type) {

@@ -344,15 +344,12 @@ function show_kaart(kaart) {
 	$.ajax({
 		url: '/geo/'+kaart+'?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities',
 		type: "GET",
-		contentType: false,
-		cache: false,
-		processData:false,
 		success: function(data) {
-			if (data.indexOf('<b>Warning</b>')>=1) {
+			/*if (data.indexOf('<b>Warning</b>')>=1) {
 				data={msg:data,error:true};
 			} else {
 				data=JSON.parse(data);
-			}
+			}*/
 			el.html('Succes: GetCapabilities');
 			console.log(data);
 		},

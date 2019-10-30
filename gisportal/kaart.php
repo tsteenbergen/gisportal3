@@ -15,7 +15,7 @@ if ($loggedIn){
 			if (count($back)==3) {$back='?a='.$back[0].'&ond='.$back[1].'&naam='.$back[2];} else {$back='';}
 			$r.='<button onclick="location.href=\'/geo/portal/geo-packages.php'.$back.'\';" style="margin-bottom: 40px;">Terug</button>';
 			$r.='<div id="kaart"></div>';
-			$kaart=$db->selectOne('geopackages AS a LEFT join onderwerpen AS b ON b.id=a.onderwerp','a.kaartnaam,b.afkorting');
+			$kaart=$db->selectOne('geopackages AS a LEFT join onderwerpen AS b ON b.id=a.onderwerp','a.kaartnaam,b.afkorting','a.id='.$id);
 			$js='show_kaart(\''.$kaart['afkorting'].'/'.$kaart['kaartnaam'].'\');';
 /*			
 				$capabilities=file_get_contents($host.'?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities');

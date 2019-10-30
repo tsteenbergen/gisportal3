@@ -342,7 +342,7 @@ function show_kaart(kaart) {
 	var el=$('#kaart');
 	
 	$.ajax({
-		url: '/'+kaart+'?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities',
+		url: '/geo/'+kaart+'?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities',
 		type: "GET",
 		contentType: false,
 		cache: false,
@@ -357,8 +357,7 @@ function show_kaart(kaart) {
 			console.log(data);
 		},
 		error: function(e) {
-			el.html('Fout: GetCapabilities failed; Watch console for error...');
-			console.log(e);
+			el.html('Fout: GetCapabilities geeft de volgende fout:<br><br>'+e.responseText);
 		}          
 	});
 	

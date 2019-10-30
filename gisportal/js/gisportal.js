@@ -337,3 +337,29 @@ function podFunctions(knop,func,id) {
 		}          
 	});
 }
+
+function show_kaart(kaart) {
+	var el=$('#kaart');
+	
+	$.ajax({
+		url: '/'+kaart+'?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities',
+		type: "GET",
+		contentType: false,
+		cache: false,
+		processData:false,
+		success: function(data) {
+			if (data.indexOf('<b>Warning</b>')>=1) {
+				data={msg:data,error:true};
+			} else {
+				data=JSON.parse(data);
+			}
+			el.html('Succes: GetCapabilities');
+			console.log(data);
+		},
+		error: function(e) {
+			el.html('Fout: GetCapabilities failed; Watch console for error...');
+			console.log(e);
+		}          
+	});
+	
+}

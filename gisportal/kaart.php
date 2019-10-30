@@ -11,16 +11,14 @@ if ($loggedIn){
 	if (isset($_GET['id'])) {
 		$id=$_GET['id'];
 		if ($id>=1) {
+			$basicPage->add_js_ready($js);
 			$back=explode(chr(1),base64_decode($_GET['back']));
 			if (count($back)==3) {$back='?a='.$back[0].'&ond='.$back[1].'&naam='.$back[2];} else {$back='';}
 			$r.='<button onclick="location.href=\'/geo/portal/geo-packages.php'.$back.'\';" style="margin-bottom: 40px;">Terug</button>';
-			
-			$openshift_api->command('oapi','routes/gpid-'.$id);
-			if ($openshift_api->response->kind=='Route') {
-				$spec=$openshift_api->response->spec;
-				$host=$spec->host.$spec->path;
-				if (substr($host,0,4)!='http') {$host='http://'.$host;}
-				$r.='<br><br>Host: '.$host.'<br><br>';
+			$r.='<div id="kaart"></div>';
+			$kaart=$db->selectOne('geopackages AS a LEFT join onderwerpen AS b ON b.id=a.onderwerp','a.kaartnaam,b.afkorting');
+			$js='show_kaart(\''.$kaart['afkorting'].'/'.$kaart['kaartnaam'].'\');';
+/*			
 				$capabilities=file_get_contents($host.'?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities');
 				$xml=simplexml_load_string($capabilities);
 				$r.='Getcapabilities: <div style="margin-bottom: 32px;"><code class="language-xml">'.$capabilities.'</code></div>';
@@ -30,7 +28,7 @@ if ($loggedIn){
 				
 			} else {
 				$basicPage->fout('Route','Route gpid-'.$id.' not found.');
-			}
+			} */
 		} else {
 			$basicPage->fout('Internal error','Geopackage niet gevonden.');
 		}

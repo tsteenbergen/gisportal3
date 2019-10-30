@@ -11,7 +11,6 @@ if ($loggedIn){
 	if (isset($_GET['id'])) {
 		$id=$_GET['id'];
 		if ($id>=1) {
-			$basicPage->add_js_ready($js);
 			$back=explode(chr(1),base64_decode($_GET['back']));
 			if (count($back)==3) {$back='?a='.$back[0].'&ond='.$back[1].'&naam='.$back[2];} else {$back='';}
 			$r.='<button onclick="location.href=\'/geo/portal/geo-packages.php'.$back.'\';" style="margin-bottom: 40px;">Terug</button>';
@@ -29,6 +28,7 @@ if ($loggedIn){
 			} else {
 				$basicPage->fout('Route','Route gpid-'.$id.' not found.');
 			} */
+			$basicPage->add_js_ready($js);
 		} else {
 			$basicPage->fout('Internal error','Geopackage niet gevonden.');
 		}

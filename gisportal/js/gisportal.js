@@ -350,7 +350,7 @@ function show_kaart(kaart,kaartnaam) {
 			r='Succes: GetCapabilities geeft het volgende terug:';
 			for (t=0;t<data.childNodes.length;t++) {
 				node=data.childNodes[t];
-				r+='<br>'+(t+1)+': '+node.localName;
+				r+='<br>'+(t+1)+': '+node['localName'];
 			}
 			r+='<br><br>Kaart:<img src="/geo/'+kaart+'?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&BBOX=202786,7072992,2158959,7213746&SRS=EPSG:3857&WIDTH=665&HEIGHT=551&LAYERS='+kaartnaam+'&FORMAT=image/jpeg">';
 			el.html(r);

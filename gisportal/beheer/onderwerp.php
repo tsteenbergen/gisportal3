@@ -68,7 +68,7 @@ if ($loggedIn && ($is_afd_admin || $is_admin)){
 												usleep(100000); // 100.000 microseconden is 0.1 seconde
 											}
 										}
-										$openshift_api->createDeploymentConfig('../',$route['id'],$a['Qafkorting'],$route['kaartnaam'],'onnodig','onnodig',['route']);
+										$openshift_api->createDeploymentConfig('../',$route['id'],['maptheme'=>$a['Qafkorting'],'mapname'=>$route['kaartnaam']],['route']);
 									}
 									$msg='<br><br><b>Let op:</b> Er zijn '.count($routes).' kaarten die door deze wijziging een nieuwe URL hebben gekregen.';
 								}

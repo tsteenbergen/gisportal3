@@ -128,18 +128,19 @@ class openshift_api_ {
 		$this->command('api','pods?labelSelector=name=gpid-'.$gpid);
 	}
 
-	function createDeploymentConfig($subpath,$id, $theme, $kaartnaam, $image, $version,$todo_types=['deploymentconfig','autoscaler','service','route']) {
+	function createDeploymentConfig($subpath, $id, $variables, $todo_types=['deploymentconfig','autoscaler','service','route']) {
 		foreach ($todo_types as $todo_type) {
 			$todo=$this->def[$todo_type];
 			$jsonString = file_get_contents($subpath.'json-templates/'.$todo_type.'.json');
+			// default replacements
 			$jsonString = str_replace('$host','acceptatie-data.rivm.nl',$jsonString);
 			$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
 			$jsonString = str_replace('$storage','geo-mappen',$jsonString);
 			$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
-			$jsonString = str_replace('$image',$image,$jsonString);
-			$jsonString = str_replace('$version',$version,$jsonString);
-			$jsonString = str_replace('$map-name',$kaartnaam,$jsonString);
-			$jsonString = str_replace('$map-theme',$theme,$jsonString);
+			// aanvullende replacements
+			foreach ($variables as $variable=>$value) {
+				$jsonString = str_replace('$'.$variable,$value,$jsonString);
+			}
 			$this->command($todo['create-api'],$todo['type'],'POST',$jsonString);
 			if ($todo_type=='deploymentconfig') { // wacht tot deploymentconfig er is
 //				$maxAant=20; // wacht maximaal 20 seconden

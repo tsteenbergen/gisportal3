@@ -3,7 +3,7 @@
     "apiVersion": "v1",
     "metadata": {
         "labels": {
-            "app": "gisportal-dc",
+            "app": "gisportal",
 			"name": "$name"
         },
 		"name": "$name"
@@ -23,7 +23,7 @@
                 "containers": [
                     {
                         "name": "$name",
-                        "image": "$namespace/$image",
+                        "image": "$namespace/$image-name",
                         "ports": [
                             {
                                 "containerPort": 80,
@@ -31,6 +31,14 @@
                             }
                         ],
                         "resources": {
+							"limits": {
+								"cpu": "$limit-cpu",
+								"memory": "$limit-memory"
+							},
+							"requests": {
+								"cpu": "$request-cpu",
+								"memory": "$request-memory"
+							}
 						},
                         "imagePullPolicy": "Always",
                         "capabilities": {},
@@ -72,7 +80,7 @@
                     ],
                     "from": {
                         "kind": "ImageStreamTag",
-                        "name": "$image:$version"
+                        "name": "$image-name:$image-version"
                     }
                 }
             }

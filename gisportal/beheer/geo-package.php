@@ -68,25 +68,35 @@ if ($loggedIn){
 					if (!$db->foutMeldingen) {
 						$version=$db->selectOne('versions AS a LEFT JOIN images AS b ON b.id=a.image','b.image,a.version','a.id='.$a['version']);
 						$theme=$db->selectOne('onderwerpen','afkorting','id='.$a['onderwerp']);
+						$variables=[
+							'map-theme'=>$theme['afkorting'],
+							'map-name'=>$a['Qkaartnaam'],
+							'image-name'=>$version['image'],
+							'image-version'=>$version['version'],
+							'limit-cpu'=>'800m',
+							'limit-memory'=>'1200Mi',
+							'request-cpu'=>'80m',
+							'request-memory'=>'120Mi',
+						];
 						if ($g['id']==0) {
 							$a['Qbrongeopackage']=''; // Dit is nodig omdat het veld in de db verplicht is!!!! Dit moet ooit nog weg!!!!
 							$a['Qopmaak']='';         // Dit is nodig omdat het veld in de db verplicht is!!!! Dit moet ooit nog weg!!!!
 							$g['id']=$db->insert('geopackages',$a);
-							$openshift_api->createDeploymentConfig('../',$g['id'],$theme['afkorting'],$a['Qkaartnaam'],$version['image'],$version['version']);
+							$openshift_api->createDeploymentConfig('../',$g['id'],$variables);
 						} else {
-							if ($g['version']!=$a['version']) {
+							if ($g['version']!=$a['version']) { // wijziging image? dan alles opneiuw aanmaken
 								$openshift_api->deleteDeploymentConfig($g['id']);
-							} else {
+							} else { // wijziging thema? dan route opnieuw aanmaken
 								if ($g['kaartnaam']!=$a['Qkaartnaam'] || $g['onderwerp']!=$a['onderwerp']) {
 									$openshift_api->deleteDeploymentConfig($g['id'],['route']);
 								}
 							}
 							$db->update('geopackages',$a,'id='.$g['id']);
-							if ($g['version']!=$a['version']) {
-								$openshift_api->createDeploymentConfig('../',$g['id'],$theme['afkorting'],$a['Qkaartnaam'],$version['image'],$version['version']);
-							} else {
+							if ($g['version']!=$a['version']) { // wijziging image? dan alles opneiuw aanmaken
+								$openshift_api->createDeploymentConfig('../',$g['id'],$variables);
+							} else { // wijziging thema? dan route opnieuw aanmaken
 								if ($g['kaartnaam']!=$a['Qkaartnaam'] || $g['onderwerp']!=$a['onderwerp']) {
-									$openshift_api->createDeploymentConfig('../',$g['id'],$theme['afkorting'],$a['Qkaartnaam'],$version['image'],$version['version'],['route']);
+									$openshift_api->createDeploymentConfig('../',$g['id'],$variables,['route']);
 								}
 							}
 						}

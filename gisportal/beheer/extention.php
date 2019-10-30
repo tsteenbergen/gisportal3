@@ -4,7 +4,7 @@ class extention {
 	var $defs=[];
 	var $files=[];
 	var $remove_exts=false;
-	var $kaartnaam
+	var $kaartnaam;
 	
 	function __construct($gpid,$checkFilePath=false) {
 		global $db;

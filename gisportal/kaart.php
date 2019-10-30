@@ -16,7 +16,7 @@ if ($loggedIn){
 			$r.='<button onclick="location.href=\'/geo/portal/geo-packages.php'.$back.'\';" style="margin-bottom: 40px;">Terug</button>';
 			$r.='<div id="kaart"></div>';
 			$kaart=$db->selectOne('geopackages AS a LEFT join onderwerpen AS b ON b.id=a.onderwerp','a.kaartnaam,b.afkorting','a.id='.$id);
-			$js='show_kaart(\''.$kaart['afkorting'].'/'.$kaart['kaartnaam'].'\');';
+			$js='show_kaart(\''.$kaart['afkorting'].'/'.$kaart['kaartnaam'].'\',\''.$kaart['kaartnaam'].'\');';
 /*			
 				$capabilities=file_get_contents($host.'?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities');
 				$xml=simplexml_load_string($capabilities);

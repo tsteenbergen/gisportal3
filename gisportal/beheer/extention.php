@@ -4,12 +4,14 @@ class extention {
 	var $defs=[];
 	var $files=[];
 	var $remove_exts=false;
+	var $kaartnaam
 	
 	function __construct($gpid,$checkFilePath=false) {
 		global $db;
 		
 		$this->gpid=$gpid;
-		$definition=$db->selectOne('geopackages AS a LEFT JOIN versions AS b on b.id=a.version','b.extensions','a.id='.$gpid);
+		$definition=$db->selectOne('geopackages AS a LEFT JOIN versions AS b on b.id=a.version','a.kaartnaam, b.extensions','a.id='.$gpid);
+		$this->kaartnaam=$definition['kaartnaam'];
 		$definition=$definition['extensions'];
 		$d=str_ireplace(chr(13).chr(10),chr(13),$definition);
 		$d=str_ireplace(chr(10),chr(13),$d);
@@ -150,6 +152,39 @@ class extention {
 			}
 		}
 		return false;
+	}
+	
+	function getFirstFilename() {
+		global $basicPage;
+		
+		$checkFilePath=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$gpid.'/';
+		$def=$this->defs[0];
+		// $def[0] bevat alle mogelijke extenties op deze regel
+		// $def[1] bevat boolean; Is file optioneel
+		// $def[2] bevat boolean; Moet je de kaartnaam gebruiken
+		// $def[3] bevat vaste filenaam of ''
+		$filenaam='';
+		if ($def[2]) {
+			$filenaam=$this->kaartnaam;
+		} else {
+			if ($def[3]!='') {
+				$filenaam=$def[3];
+			}
+		}
+		foreach ($def[0] as $ext) {
+			if ($filenaam=='') {
+				$files=glob($checkFilePath.'*.'.$ext);
+				if ($files) {
+					if (file_exists($files[0])) {
+						$file=substr($files[0],strlen($checkFilePath));
+						return substr($file,0,strlen($file)-strlen($ext)-1);
+					}
+				}
+			} else {
+				if (file_exists($checkFilePath.$filenaam.'.'.$ext)) {return $filenaam;}
+			}
+		}
+		return '';
 	}
 
 	function removeAllWithExt() {

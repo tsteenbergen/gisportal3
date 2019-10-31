@@ -25,8 +25,8 @@ if ($loggedIn && $is_admin) {
 			$r.='<table>';
 			$themas=$db->select('onderwerpen AS a LEFT JOIN afdelingen AS b ON b.id=a.afdeling','a.id,a.naam,a.afkorting,b.naam AS afdeling','a.id>=1');
 			$kaarten=$db->select('geopackages','id,naam,kaartnaam,onderwerp','id>=1');
-			$js='var themas=['; foreach ($themas as $thema) {$js.='['.$thema['id'].',\''.htmlspecialchars($thema['afdeling'].' '.$thema['afkorting'].':'.$thema['naam'].).'\'],';} $js.='];';
-			$js='var kaarten=['; foreach ($kaarten as $kaart) {$js.='['.$kaart['id'].',['.$kaart['onderwerp'].',\'.htmlspecialchars($kaart[''naam'].' ('.$kaart['kaartnaam'].').'],\'';} $js.='];';
+			$js='var themas=['; foreach ($themas as $thema) {$js.='['.$thema['id'].',\''.htmlspecialchars($thema['afdeling'].' '.$thema['afkorting'].':'.$thema['naam']).'\'],';} $js.='];';
+			$js='var kaarten=['; foreach ($kaarten as $kaart) {$js.='['.$kaart['id'].',['.$kaart['onderwerp'].',\''.htmlspecialchars($kaart['naam'].' ('.$kaart['kaartnaam'].')').'],';} $js.='];';
 			$basicPage->add_js_inline($js);
 			$r.='<tr><td>Kies thema:</td><td><select></td></tr>';
 			$r.='<tr><td>Kies kaart:</td><td><select></td></tr>';

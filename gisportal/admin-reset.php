@@ -6,6 +6,7 @@ $r='';
 if ($loggedIn && $is_admin) {
 	switch($_POST['func']) {
 		default:
+			$r.=var_export($_REQUEST,true);
 			$r.='Bij een reset wordt voor elk van geo-packages die voldoet aan het filter, het volgende gedaan:<ol>';
 			$r.='<li>Op het containerplatform worden de volgende zaken verwijderd:<ul>';
 			$r.='<li>replicationcontroller</li>';
@@ -52,12 +53,41 @@ if ($loggedIn && $is_admin) {
 			$r.='</div>';
 			break;
 		case 'controle':
-			$r=['msg'=>'Controle oke', 'error'=>false, 'thema'=>$_POST['thema'], 'kaart'=>$_POST['kaart']];
+			$thema=(int)$_POST['thema']; $kaart=(int)$_POST['kaart']; $del_uploads=$_POST['del_uploads'];
+			$error=false;
+			if ($thema>=1) {
+				if ($kaart>=1) { // 1 kaart
+					$kaarten=$db->select('geopackages AS a LEFT JOIN onderwerpen AS b, afdelingen AS c ON b.id=a.onderwerp AND c.id=a.afdeling', 'a.id,a.naam,a.kaartnaam,b.naam as thema, c.naam as afdeling', 'a.id='.$kaart, 'afdeling,thema,naam,kaartnaam');
+				} else { // alle kaarten van dit thema
+					$kaarten=$db->select('geopackages AS a LEFT JOIN onderwerpen AS b, afdelingen AS c ON b.id=a.onderwerp AND c.id=a.afdeling', 'a.id,a.naam,a.kaartnaam,b.naam as thema, c.naam as afdeling', 'a.onderwerp='.$thema, 'afdeling,thema,naam,kaartnaam');
+				}
+			} else { // alle kaarten
+				$kaarten=$db->select('geopackages AS a LEFT JOIN onderwerpen AS b, afdelingen AS c ON b.id=a.onderwerp AND c.id=a.afdeling', 'a.id,a.naam,a.kaartnaam,b.naam as thema, c.naam as afdeling', 'a.id>=1', 'afdeling,thema,naam,kaartnaam');
+			}
+			if ($kaarten) {
+				$c=count($kaarten);
+				$msg='Er '.($c==1?'is 1 kaart die voldoet':'zijn '.$c.' kaarten die voldoen').' aan dit filter:<table>';
+				for ($t=0;$t<50;$t++) {
+					if ($t<$c) {
+						$k=$kaarten[$t];
+						$r.='<tr><td>'.htmlspecialchars($k['afdeling']).'</td><td>'.htmlspecialchars($k['thema']).'</td><td>'.htmlspecialchars($k['naam']).'</td><td>'.htmlspecialchars($k['kaartnaam']).'</td></tr>';
+					}
+				}
+				if ($c>50) {
+					$r.='<tr><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td></tr>';
+				}
+				$r.='</table>';
+			} else {
+				$msg='Er zijn geen kaarten die voldoen aan dit filter.';
+				$error=true;
+			}
+			$r=['msg'=>$msg, 'error'=>$error, 'thema'=>$thema, 'kaart'=>$kaart, 'del_uploads'=>$del_uploads];
 			echo json_encode($r);
 			exit();
 			break;
 		case 'uitvoeren':
-			$r=['msg'=>'Uitvoring gestart', 'error'=>false];
+			$thema=(int)$_POST['thema']; $kaart=(int)$_POST['kaart']; $del_uploads=$_POST['del_uploads']; $reset_akkoord=$_POST['reset_akkoord'];
+			$r=['msg'=>'Uitvoering starten', 'error'=>false, 'thema'=>$thema, 'kaart'=>$kaart, 'del_uploads'=>$del_uploads, 'reset_akkoord'=>$reset_akkoord];
 			echo json_encode($r);
 			exit();
 			break;

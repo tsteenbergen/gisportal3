@@ -19,7 +19,7 @@ if ($loggedIn && $is_admin) {
 	$r.='</ol>';
 	
 	$func=$_POST['func'];
-	$id=isset($_POST['id']?(int)$_POST['id']:1);
+	$id=isset($_POST['id'])?(int)$_POST['id']:1;
 	// Betekenis van $id:
 	// 1 is toon de pagina waarop met het filter kan samenstellen
 	// 2 is toon de pagina opnieuw, maar geef nu aan wat de consequenties zijn

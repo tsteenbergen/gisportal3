@@ -325,6 +325,8 @@ function admin_reset(func) {
 	
 	$('.aknop').prop('disabled',true);
 	$('.error').html();
+	$('#stap2msg').html();
+	$('#stap3msg').html();
 	switch(func) {
 		case 'controle':
 			form_data.append('func', 'controle');
@@ -343,6 +345,7 @@ function admin_reset(func) {
 			form_data.append('func', 'niets');
 			break;
 	}
+	$('#reset_akkoord').prop('checked',false);
 	$.ajax({
 		url: '/geo/portal/admin-reset.php',
 		type: "POST",
@@ -368,6 +371,7 @@ function admin_reset(func) {
 					$('#stap1').hide();
 					$('#stap2').hide();
 					$('#stap3').show();
+					$('#stap3msg').html(data['msg']);
 					break;
 				default:
 					$('#stap1').show();

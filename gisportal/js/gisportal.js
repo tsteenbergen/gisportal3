@@ -322,6 +322,7 @@ function show_kaart(kaart,kaartnaam) {
 function admin_reset(func) {
 	var aknop='';
 	var form_data=new FormData();
+	var go=false;
 	
 	$('.aknop').hide();
 	$('.error').html();
@@ -331,23 +332,25 @@ function admin_reset(func) {
 			$('#stap2').show();
 			$('#stap3').hide();
 			$('.aknop2').show();
+			form_data.append('func', 'controle');
+			go=true;
 			break;
 		case 'uitvoeren':
 			$('#stap1').hide();
 			$('#stap2').hide();
 			$('#stap3').show();
 			$('.aknop3').show();
-			form_data.append('func', '');
+			form_data.append('func', 'uitvoeren');
+			go=true;
 			break;
 		default:
 			$('#stap1').show();
 			$('#stap2').hide();
 			$('#stap3').hide();
 			$('.aknop1').show();
-			form_data.append('func', '');
 			break;
 	}
-	$.ajax({
+	if (go) {$.ajax({
 		url: '/geo/portal/admin-reset.php',
 		type: "POST",
 		data:  form_data,
@@ -372,5 +375,5 @@ function admin_reset(func) {
 			$('.error').html(e.responseText);
 			console.log(e);
 		}          
-	});
+	});}
 }

@@ -6,7 +6,7 @@ $r='';
 if ($loggedIn && $is_admin) {
 	switch($_POST['func']) {
 		default:
-			$r.=var_export($_REQUEST,true);
+			$r.=var_export($_SERVER,true);
 			$r.='Bij een reset wordt voor elk van geo-packages die voldoet aan het filter, het volgende gedaan:<ol>';
 			$r.='<li>Op het containerplatform worden de volgende zaken verwijderd:<ul>';
 			$r.='<li>replicationcontroller</li>';

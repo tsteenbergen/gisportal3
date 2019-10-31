@@ -328,13 +328,12 @@ function admin_reset(func) {
 	switch(func) {
 		case 'controle':
 			form_data.append('func', 'controle');
-			go=true;
 			break;
 		case 'uitvoeren':
 			form_data.append('func', 'uitvoeren');
-			go=true;
 			break;
 		default:
+			form_data.append('func', 'niets');
 			break;
 	}
 	$.ajax({

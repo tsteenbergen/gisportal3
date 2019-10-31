@@ -352,7 +352,7 @@ function show_kaart(kaart,kaartnaam) {
 				node=data.childNodes[t];
 				r+='<br>'+(t+1)+': '+node['localName'];
 			}
-			r+='<br><br>Kaart:<br><img style="border: solid 1px black;" src="/geo/'+kaart+'?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&BBOX=202786,7072992,2158959,7213746&SRS=EPSG:3857&WIDTH=300&HEIGHT=250&LAYERS='+kaartnaam+'&FORMAT=image/jpeg">';
+			r+='<br><br>Kaart:<br><img style="border: solid 1px black;" src="/geo/'+kaart+'?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&BBOX=202786,7072992,2158959,7213746&SRS=EPSG:3857&WIDTH=250&HEIGHT=300&LAYERS='+kaartnaam+'&FORMAT=image/jpeg">';
 			el.html(r);
 			console.log(data);
 		},

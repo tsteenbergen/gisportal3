@@ -38,7 +38,7 @@ if ($loggedIn){
 	$r.='<tr class="header"><td>Afdeling</td><td>Onderwerp</td><td>Naam</td><td></td></tr>';
 	if ($gs) {
 		foreach ($gs as $g) {
-			$r.='<tr><td>'.htmlspecialchars($g['afd_naam']).'</td><td>'.htmlspecialchars($g['afkorting']).'</td><td>'.htmlspecialchars($g['naam']).'</td><td><a class="small-button" href="/geo/portal/beheer/geo-package.php?id='.$g['id'].'&back='.$back.'">Bewerk</a><a class="small-button" style="margin-left: 20px;" href="monitor-geo-package.php?id='.$g['id'].'&back='.$back.'">Monitor</a><a class="small-button" style="margin-left: 20px;" href="kaart.php?id='.$g['id'].'&back='.$back.'">Kaart</a></td></tr>';
+			$r.='<tr><td>'.htmlspecialchars($g['afd_naam']).'</td><td>'.htmlspecialchars($g['afkorting']).'</td><td>'.htmlspecialchars($g['naam']).'</td><td><a class="small-button" href="/geo/portal/beheer/geo-package.php?id='.$g['id'].'&back='.$back.'">Bewerk</a><a class="small-button" style="margin-left: 20px;" href="kaart.php?id='.$g['id'].'&back='.$back.'">Kaart</a></td></tr>';
 		}
 	}
 	$r.='</table>';

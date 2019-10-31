@@ -323,10 +323,6 @@ function admin_reset(func) {
 	var aknop='';
 	var form_data=new FormData();
 	
-	$('.aknop').prop('disabled',true);
-	$('.error').html();
-	$('#stap2msg').html();
-	$('#stap3msg').html();
 	switch(func) {
 		case 'controle':
 			form_data.append('func', 'controle');
@@ -339,16 +335,21 @@ function admin_reset(func) {
 			form_data.append('thema', $('#sel_themas').val());
 			form_data.append('kaart', $('#sel_kaarten').val());
 			form_data.append('del_uploads', $('#del_uploads').prop('checked')?'Ja':'Nee');
-			var reset_akkoord=$('#reset_akkoord').prop('checked')?'Ja':'Nee');
-			form_data.append('reset_akkoord', reset_akkoord;
+			var reset_akkoord=$('#reset_akkoord').prop('checked')?'Ja':'Nee';
+			form_data.append('reset_akkoord', reset_akkoord);
 			if (reset_akkoord!='Ja') {
 				$('#jaditwilikerror').html('Geef je akkoord!').addClass('error');
+				return;
 			}
 			break;
 		default:
 			form_data.append('func', 'niets');
 			break;
 	}
+	$('.aknop').prop('disabled',true);
+	$('.error').html();
+	$('#stap2msg').html();
+	$('#stap3msg').html();
 	$('#reset_akkoord').prop('checked',false);
 	$('#jaditwilikerror').html('').removeClass('error');
 	$.ajax({

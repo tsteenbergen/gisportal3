@@ -117,7 +117,7 @@ if ($loggedIn && $is_admin) {
 						'request-cpu'=>'80m',
 						'request-memory'=>'120Mi',
 					];
-					$openshift_api->createDeploymentConfig('../',$k['id'],$variables);
+					$openshift_api->createDeploymentConfig('',$k['id'],$variables);
 				}				
 				$r=['msg'=>'De geo-packages zijn gereset. Op de openshift console kan dit worden gemonitord.', 'error'=>false];
 			} else {

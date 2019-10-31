@@ -25,7 +25,7 @@ if ($loggedIn && $is_admin) {
 			$r.='<table>';
 			$themas=$db->select('onderwerpen AS a LEFT JOIN afdelingen AS b ON b.id=a.afdeling','a.id,a.naam,a.afkorting,b.naam AS afdeling','a.id>=1');
 			$kaarten=$db->select('geopackages','id,naam,kaartnaam,onderwerp','id>=1');
-			$js='var kaarten=['; foreach ($kaarten as $kaart) {$js.='[\''.htmlspecialchars($kaart['naam'].' ('.$kaart['kaartnaam'].')\'').','.$kaart['onderwerp'].'],';} $js.='];';
+			$js='var kaarten=['; foreach ($kaarten as $kaart) {$js.='['.$kaart['id'].','.$kaart['onderwerp'].',\''.htmlspecialchars($kaart['naam'].' ('.$kaart['kaartnaam'].')\'').'],';} $js.='];';
 			$basicPage->add_js_inline($js);
 			$basicPage->add_js_ready('depententSelect(\'sel_kaarten\',\'sel_themas\',kaarten,0,0)');
 			$r.='<tr><td>Kies thema:</td><td><select id="sel_themas"><option value="0"></option><option value="-1">-- Alle themas --</option>';

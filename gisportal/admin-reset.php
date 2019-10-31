@@ -18,9 +18,9 @@ if ($loggedIn && $is_admin) {
 			$r.='<li>Bovenstaande zaken worden vervolgens opnieuw aangemaakt (behalve de pods, die \'ontstaan vanzelf\' door de nieuwe deploymentconfig).</li>';
 			$r.='<li>Als \'Verwijder uploads\' is aangevinkt, dan worden alle bestanden van de betreffende geo-package verwijderd. Deze zullen dus opnieuw moeten worden geupload.</li>';
 			$r.='</ol>';
-			$r.='<br>Om de reset uit te voeren worden 3 stappen doorlopen:<ol><li>Filter instellen</li><li>Controle gevolgen</li><li>Uitvoering</li></ol>';
+			$r.='<br>Om de reset uit te voeren worden 3 stappen doorlopen:<br><br>1. Filter instellen&nbsp;&nbsp;&nbsp;=&gt;&nbsp;&nbsp;&nbsp;2. Controle gevolgen&nbsp;&nbsp;&nbsp;=&gt;&nbsp;&nbsp;&nbsp;3. Uitvoering<br>';
 			
-			$r.='<div id="stap1"><h2>Filter instellen</h2>';
+			$r.='<div id="stap1"><h2>1. Filter instellen</h2>';
 			$r.='<div class="error"></div>';
 			$r.='<table>';
 			$themas=$db->select('onderwerpen AS a LEFT JOIN afdelingen AS b ON b.id=a.afdeling','a.id,a.naam,a.afkorting,b.naam AS afdeling','a.id>=1');
@@ -37,7 +37,7 @@ if ($loggedIn && $is_admin) {
 			$r.='<button onclick="admin_reset(\'controle\');" class="aknop aknop1">Controle gevolgen</button>';
 			$r.='</div>';
 			
-			$r.='<div id="stap2" style="display: none;"><h2>Controle gevolgen</h2>';
+			$r.='<div id="stap2" style="display: none;"><h2>2. Controle gevolgen</h2>';
 			$r.='<div class="error"></div>';
 			$r.='<div id="stap2msg"></div>';
 			$r.='<table style="margin: 12px 0;">';
@@ -47,9 +47,9 @@ if ($loggedIn && $is_admin) {
 			$r.='<button style="margin-left: 40px;" onclick="admin_reset(\'uitvoeren\');" class="aknop aknop2">Uitvoeren</button>';
 			$r.='</div>';
 			
-			$r.='<div id="stap3" style="display: none;"><h2>Uitvoering</h2>';
+			$r.='<div id="stap3" style="display: none;"><h2>3. Uitvoering</h2>';
 			$r.='<div class="error"></div>';
-			$r.='<div id="stap2msg"></div>';
+			$r.='<div id="stap3msg"></div>';
 			$r.='</div>';
 			break;
 		case 'controle':
@@ -57,12 +57,12 @@ if ($loggedIn && $is_admin) {
 			$error=false;
 			if ($thema>=1) {
 				if ($kaart>=1) { // 1 kaart
-					$kaarten=$db->select('geopackages AS a LEFT JOIN onderwerpen AS b ON b.id=a.onderwerp LEFT JOIN afdelingen AS c ON c.id=a.afdeling', 'a.id,a.naam,a.kaartnaam,b.naam as thema, c.naam as afdeling', 'a.id='.$kaart, 'c.naam,b.naam,a.naam,a.kaartnaam');
+					$kaarten=$db->select('geopackages AS a LEFT JOIN onderwerpen AS b ON b.id=a.onderwerp LEFT JOIN afdelingen AS c ON c.id=a.afdeling', 'a.id,a.version,a.onderwerp,a.naam,a.kaartnaam,b.naam as thema, c.naam as afdeling', 'a.id='.$kaart, 'c.naam,b.naam,a.naam,a.kaartnaam');
 				} else { // alle kaarten van dit thema
-					$kaarten=$db->select('geopackages AS a LEFT JOIN onderwerpen AS b ON b.id=a.onderwerp LEFT JOIN afdelingen AS c ON c.id=a.afdeling', 'a.id,a.naam,a.kaartnaam,b.naam as thema, c.naam as afdeling', 'a.onderwerp='.$thema, 'c.naam,b.naam,a.naam,a.kaartnaam');
+					$kaarten=$db->select('geopackages AS a LEFT JOIN onderwerpen AS b ON b.id=a.onderwerp LEFT JOIN afdelingen AS c ON c.id=a.afdeling', 'a.id,a.version,a.onderwerp,a.naam,a.kaartnaam,b.naam as thema, c.naam as afdeling', 'a.onderwerp='.$thema, 'c.naam,b.naam,a.naam,a.kaartnaam');
 				}
 			} else { // alle kaarten
-				$kaarten=$db->select('geopackages AS a LEFT JOIN onderwerpen AS b ON b.id=a.onderwerp LEFT JOIN afdelingen AS c ON c.id=a.afdeling', 'a.id,a.naam,a.kaartnaam,b.naam as thema, c.naam as afdeling', 'a.id>=1', 'c.naam,b.naam,a.naam,a.kaartnaam');
+				$kaarten=$db->select('geopackages AS a LEFT JOIN onderwerpen AS b ON b.id=a.onderwerp LEFT JOIN afdelingen AS c ON c.id=a.afdeling', 'a.id,a.version,a.onderwerp,a.naam,a.kaartnaam,b.naam as thema, c.naam as afdeling', 'a.id>=1', 'c.naam,b.naam,a.naam,a.kaartnaam');
 			}
 			if ($kaarten) {
 				$c=count($kaarten);
@@ -88,8 +88,41 @@ if ($loggedIn && $is_admin) {
 		case 'uitvoeren':
 			$thema=(int)$_POST['thema']; $kaart=(int)$_POST['kaart']; $del_uploads=$_POST['del_uploads']; $reset_akkoord=$_POST['reset_akkoord'];
 			if ($reset_akkoord=='Ja') {
+				require('openshift-api.php');
+				if ($thema>=1) {
+					if ($kaart>=1) { // 1 kaart
+						$kaarten=$db->select('geopackages AS a LEFT JOIN onderwerpen AS b ON b.id=a.onderwerp LEFT JOIN afdelingen AS c ON c.id=a.afdeling', 'a.id,a.version,a.onderwerp,a.naam,a.kaartnaam,b.naam as thema, c.naam as afdeling', 'a.id='.$kaart, 'c.naam,b.naam,a.naam,a.kaartnaam');
+					} else { // alle kaarten van dit thema
+						$kaarten=$db->select('geopackages AS a LEFT JOIN onderwerpen AS b ON b.id=a.onderwerp LEFT JOIN afdelingen AS c ON c.id=a.afdeling', 'a.id,a.version,a.onderwerp,a.naam,a.kaartnaam,b.naam as thema, c.naam as afdeling', 'a.onderwerp='.$thema, 'c.naam,b.naam,a.naam,a.kaartnaam');
+					}
+				} else { // alle kaarten
+					$kaarten=$db->select('geopackages AS a LEFT JOIN onderwerpen AS b ON b.id=a.onderwerp LEFT JOIN afdelingen AS c ON c.id=a.afdeling', 'a.id,a.version,a.onderwerp,a.naam,a.kaartnaam,b.naam as thema, c.naam as afdeling', 'a.id>=1', 'c.naam,b.naam,a.naam,a.kaartnaam');
+				}
+				$path = $basicPage->getConfig('geo-mappen').'/geo-packages/gpid-';
+				if ($kaarten) foreach ($kaarten as $k) {
+					if ($del_uploads=='Ja') {
+						$fs=glob($path.$k['id'].'/*.*');
+						if (fs) foreach ($fs as $f) {unlink($f);}
+					}
+					$openshift_api->deleteDeploymentConfig($k['id']);
+					$version=$db->selectOne('versions AS a LEFT JOIN images AS b ON b.id=a.image','b.image,a.version','a.id='.$k['version']);
+					$theme=$db->selectOne('onderwerpen','afkorting','id='.$k['onderwerp']);
+					$variables=[
+						'map-theme'=>$theme['afkorting'],
+						'map-name'=>$a['Qkaartnaam'],
+						'image-name'=>$version['image'],
+						'image-version'=>$version['version'],
+						'limit-cpu'=>'800m',
+						'limit-memory'=>'1200Mi',
+						'request-cpu'=>'80m',
+						'request-memory'=>'120Mi',
+					];
+					$openshift_api->createDeploymentConfig('../',$k['id'],$variables);
+				}				
+				$r=['msg'=>'De geo-packages zijn gereset. Op de openshift console kan dit worden gemonitord.', 'error'=>false];
+			} else {
+				$r=['msg'=>'De uitvoering is niet gestart.', 'error'=>true];
 			}
-			$r=['msg'=>'De uitvoering is gestart. On de openshift console kan deze worden gemonitord.', 'error'=>false];
 			echo json_encode($r);
 			exit();
 			break;

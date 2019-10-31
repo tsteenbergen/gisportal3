@@ -328,8 +328,8 @@ function admin_reset(func) {
 	switch(func) {
 		case 'controle':
 			form_data.append('func', 'controle');
-			form_data.append('thema', $('#sel_thema').val());
-			form_data.append('kaart', $('#sel_kaart').val());
+			form_data.append('thema', $('#sel_themas').val());
+			form_data.append('kaart', $('#sel_kaarten').val());
 			break;
 		case 'uitvoeren':
 			form_data.append('func', 'uitvoeren');

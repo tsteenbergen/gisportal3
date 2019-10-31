@@ -27,8 +27,8 @@ if ($loggedIn && $is_admin) {
 			$kaarten=$db->select('geopackages','id,naam,kaartnaam,onderwerp','id>=1');
 			$js='var kaarten=['; foreach ($kaarten as $kaart) {$js.='['.$kaart['id'].','.$kaart['onderwerp'].',\''.htmlspecialchars($kaart['naam'].' ('.$kaart['kaartnaam'].')\'').'],';} $js.='];';
 			$basicPage->add_js_inline($js);
-			$basicPage->add_js_ready('depententSelect(\'sel_kaarten\',\'sel_themas\',kaarten,-1,0,\'-- Alle kaarten --\')');
-			$r.='<tr><td>Kies thema:</td><td><select id="sel_themas"><option value="0"></option><option value="-1">-- Alle themas --</option>';
+			$basicPage->add_js_ready('depententSelect(\'sel_kaarten\',\'sel_themas\',kaarten,0,0,\'-- Alle kaarten --\')');
+			$r.='<tr><td>Kies thema:</td><td><select id="sel_themas"><option value="0">-- Alle themas --</option>';
 			foreach ($themas as $thema) {$r.='<option value="'.$thema['id'].'">'.htmlspecialchars($thema['afdeling'].' '.$thema['afkorting'].':'.$thema['naam']).'</option>';}
 			$r.='</select></td></tr>';
 			$r.='<tr><td>Kies kaart:</td><td><select id="sel_kaarten"></select></td></tr>';

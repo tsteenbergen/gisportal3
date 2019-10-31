@@ -39,6 +39,7 @@ if ($loggedIn && $is_admin) {
 			
 			$r.='<div id="stap2" style="display: none;"><h2>Controle gevolgen</h2>';
 			$r.='<div class="error"></div>';
+			$r.='<div id="stap2msg"></div>';
 			$r.='<table>';
 			$r.='<tr><td></td><td><input type="checkbox" id="del_uploads_akkoord"><label for="del_uploads_akkoord"> Ja, dit wil ik</label></td></tr>';
 			$r.='</table>';
@@ -69,13 +70,13 @@ if ($loggedIn && $is_admin) {
 				for ($t=0;$t<50;$t++) {
 					if ($t<$c) {
 						$k=$kaarten[$t];
-						$r.='<tr><td>'.htmlspecialchars($k['afdeling']).'</td><td>'.htmlspecialchars($k['thema']).'</td><td>'.htmlspecialchars($k['naam']).'</td><td>'.htmlspecialchars($k['kaartnaam']).'</td></tr>';
+						$msg.='<tr><td>'.htmlspecialchars($k['afdeling']).'</td><td>'.htmlspecialchars($k['thema']).'</td><td>'.htmlspecialchars($k['naam']).'</td><td>'.htmlspecialchars($k['kaartnaam']).'</td></tr>';
 					}
 				}
 				if ($c>50) {
-					$r.='<tr><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td></tr>';
+					$msg.='<tr><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td></tr>';
 				}
-				$r.='</table>';
+				$msg.='</table>';
 			} else {
 				$msg='Er zijn geen kaarten die voldoen aan dit filter.';
 				$error=true;

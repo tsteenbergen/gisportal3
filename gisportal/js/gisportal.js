@@ -352,11 +352,17 @@ function admin_reset(func) {
 		processData:false,
 		success: function(data) {
 			console.log(data);
+			if (data.indexOf('<b>Warning</b>')>=1) {
+				data={msg:data,error:true};
+			} else {
+				data=JSON.parse(data);
+			}
 			switch(func) {
 				case 'controle':
 					$('#stap1').hide();
 					$('#stap2').show();
 					$('#stap3').hide();
+					$('#stap2msg').html(data['msg']);
 					break;
 				case 'uitvoeren':
 					$('#stap1').hide();

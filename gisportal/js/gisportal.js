@@ -272,13 +272,6 @@ function add_mdata(el,src) {
 		}          
 	});
 }
-
-function monitorPod(id) {
-	var counter=$('#counter'), c=parseInt(counter.attr('c'),10);
-	c++; counter.attr('c',c); counter.html(c);
-	podFunctions(false,'monitor',id);
-	setTimeout(function(){monitorPod(id)},1000);
-}
 function objectToString(o,pre) {
 	var r='', elm, t, aant;
 	if (typeof(pre)=='undefined') {pre='';}
@@ -300,42 +293,6 @@ function objectToString(o,pre) {
 		}
 	}
 	return r;
-}
-function podFunctions(knop,func,id) {
-	if (knop) {
-		$(knop).hide();
-		$('#podfunc').html('Commando wordt uitgevoerd. Dit kan enige tijd in beslag nemen.');
-	}
-	$.ajax({
-		url: './pod-functions.php?func='+func+'&id='+id,
-		type: "GET",
-		contentType: false,
-		cache: false,
-		processData:false,
-		success: function(data) {
-			data=JSON.parse(data);
-			if (data.monitor===true) {
-				data=JSON.parse(data.msg);
-				$('#monitor').html(objectToString(data));
-				$('#pod-name').html(data.metadata.name);
-				$('#pod-phase').html(data.status.phase);
-				var s='<table>',t,c;
-				for (t=0;t<data.status.conditions.length;t++) {c=data.status.conditions[t]; s+='<tr><td>'+c.type+'</td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>'+c.status+'</td></tr>';}
-				$('#pod-status').html(s+'</table>');
-			} else {
-				if (knop) {$(knop).show();}
-				if (data.error) {
-					$('#podfunc').html('Error:<br>'+e.responseText);
-				} else {
-					$('#podfunc').html('Succes:<br>'+data.msg);
-				}
-			}
-		},
-		error: function(e) {
-			$('#podfunc').html('Error:<br>'+e.responseText);
-			if (knop) {$(knop).show();}
-		}          
-	});
 }
 
 function show_kaart(kaart,kaartnaam) {
@@ -360,5 +317,48 @@ function show_kaart(kaart,kaartnaam) {
 			el.html('Fout: GetCapabilities geeft de volgende fout:<br><br>'+e.responseText);
 		}          
 	});
+}
+
+function admin_reset(func) {
+	var aknop='';
 	
+	$('.aknop').hide();
+	switch(func) {
+		case 'controle':
+			$('#stap1').hide();
+			$('#stap2').show();
+			$('#stap3').hide();
+			break;
+		case 'uitvoeren':
+			$('#stap1').hide();
+			$('#stap2').hide();
+			$('#stap3').show();
+			break;
+		default:
+			$('#stap1').show();
+			$('#stap2').hide();
+			$('#stap3').hide();
+			$('.aknop1').show();
+			break;
+	}
+	$.ajax({
+		url: '/geo/portal/admin-reset?func='+func,
+		type: "POST",
+		success: function(data) {
+			console.log(data);
+			switch(func) {
+				case 'controle':
+					$('.aknop2').show();
+					break;
+				case 'uitvoeren':
+					$('.aknop3').show();
+					break;
+				default:
+					break;
+			}
+		},
+		error: function(e) {
+			console.log(e);
+		}          
+	});
 }

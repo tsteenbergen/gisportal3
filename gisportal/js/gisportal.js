@@ -361,13 +361,13 @@ function admin_reset(func) {
 			console.log(data);
 			switch(func) {
 				case 'controle':
-					admin_reset('uitvoeren');
+					//admin_reset('uitvoeren');
 					break;
 				case 'uitvoeren':
-					admin_reset('');
+					//admin_reset('');
 					break;
 				default:
-					admin_reset('controle');
+					//admin_reset('controle');
 					break;
 			}
 		},

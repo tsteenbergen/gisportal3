@@ -339,13 +339,18 @@ function admin_reset(func) {
 			form_data.append('thema', $('#sel_themas').val());
 			form_data.append('kaart', $('#sel_kaarten').val());
 			form_data.append('del_uploads', $('#del_uploads').prop('checked')?'Ja':'Nee');
-			form_data.append('reset_akkoord', $('#reset_akkoord').prop('checked')?'Ja':'Nee');
+			var reset_akkoord=$('#reset_akkoord').prop('checked')?'Ja':'Nee');
+			form_data.append('reset_akkoord', reset_akkoord;
+			if (reset_akkoord!='Ja') {
+				$('#jaditwilikerror').html('Geef je akkoord!').addClass('error');
+			}
 			break;
 		default:
 			form_data.append('func', 'niets');
 			break;
 	}
 	$('#reset_akkoord').prop('checked',false);
+	$('#jaditwilikerror').html('').removeClass('error');
 	$.ajax({
 		url: '/geo/portal/admin-reset.php',
 		type: "POST",

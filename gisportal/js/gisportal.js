@@ -328,11 +328,13 @@ function admin_reset(func) {
 			$('#stap1').hide();
 			$('#stap2').show();
 			$('#stap3').hide();
+			$('.aknop2').show();
 			break;
 		case 'uitvoeren':
 			$('#stap1').hide();
 			$('#stap2').hide();
 			$('#stap3').show();
+			$('.aknop3').show();
 			break;
 		default:
 			$('#stap1').show();
@@ -348,10 +350,8 @@ function admin_reset(func) {
 			console.log(data);
 			switch(func) {
 				case 'controle':
-					$('.aknop2').show();
 					break;
 				case 'uitvoeren':
-					$('.aknop3').show();
 					break;
 				default:
 					break;

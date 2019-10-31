@@ -20,7 +20,7 @@ if ($loggedIn && $is_admin) {
 			$r.='</ol>';
 			$r.='<br>Om de reset uit te voeren worden 3 stappen doorlopen:<ol><li>Filter instellen</li><li>Controle gevolgen</li><li>Uitvoering</li></ol>';
 			
-			$r.='<div id="stap1" style="display: none;"><h2>Filter instellen</h2>';
+			$r.='<div id="stap1"><h2>Filter instellen</h2>';
 			$r.='<button onclick="admin_reset(\'controle\');" class="aknop aknop1">Controle gevolgen</button>';
 			$r.='</div>';
 			

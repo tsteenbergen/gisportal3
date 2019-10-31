@@ -124,10 +124,6 @@ class openshift_api_ {
 		return $r;
 	}
 	
-	function monitorPod($gpid) {
-		$this->command('api','pods?labelSelector=name=gpid-'.$gpid);
-	}
-
 	function createDeploymentConfig($subpath, $id, $variables, $todo_types=['deploymentconfig','autoscaler','service','route']) {
 		foreach ($todo_types as $todo_type) {
 			$todo=$this->def[$todo_type];

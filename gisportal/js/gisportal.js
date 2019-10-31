@@ -330,6 +330,7 @@ function admin_reset(func) {
 			form_data.append('func', 'controle');
 			form_data.append('thema', $('#sel_themas').val());
 			form_data.append('kaart', $('#sel_kaarten').val());
+			form_data.append('del_uploads', $('#del_uploads').prop('checked')?'Ja':'Nee');
 			break;
 		case 'uitvoeren':
 			form_data.append('func', 'uitvoeren');

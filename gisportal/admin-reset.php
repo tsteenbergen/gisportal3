@@ -7,7 +7,6 @@ if ($loggedIn && $is_admin) {
 	switch($_POST['func']) {
 		default:
 			$r.='Bij een reset wordt voor elk van geo-packages die voldoet aan het filter, het volgende gedaan:<ol>';
-			$r.='<li>Als \'Verwijder uploads\' is aangevinkt, dan worden alle bestanden van de betreffende geo-package verwijderd. Deze zullen dus opnieuw moeten worden geupload.</li>';
 			$r.='<li>Op het containerplatform worden de volgende zaken verwijderd:<ul>';
 			$r.='<li>replicationcontroller</li>';
 			$r.='<li>autoscaler</li>';
@@ -17,6 +16,7 @@ if ($loggedIn && $is_admin) {
 			$r.='<li>route</li>';
 			$r.='</ul></li>';
 			$r.='<li>Bovenstaande zaken worden vervolgens opnieuw aangemaakt (behalve de pods, die \'ontstaan vanzelf\' door de nieuwe deploymentconfig).</li>';
+			$r.='<li>Als \'Verwijder uploads\' is aangevinkt, dan worden alle bestanden van de betreffende geo-package verwijderd. Deze zullen dus opnieuw moeten worden geupload.</li>';
 			$r.='</ol>';
 			$r.='<br>Om de reset uit te voeren worden 3 stappen doorlopen:<ol><li>Filter instellen</li><li>Controle gevolgen</li><li>Uitvoering</li></ol>';
 			
@@ -32,14 +32,18 @@ if ($loggedIn && $is_admin) {
 			foreach ($themas as $thema) {$r.='<option value="'.$thema['id'].'">'.htmlspecialchars($thema['afdeling'].' '.$thema['afkorting'].':'.$thema['naam']).'</option>';}
 			$r.='</select></td></tr>';
 			$r.='<tr><td>Kies kaart:</td><td><select id="sel_kaarten"></select></td></tr>';
+			$r.='<tr><td></td><td><input type="checkbox" id="del_uploads"><label for="del_uploads"> Verwijder uploads</label></td></tr>';
 			$r.='</table>';
 			$r.='<button onclick="admin_reset(\'controle\');" class="aknop aknop1">Controle gevolgen</button>';
 			$r.='</div>';
 			
 			$r.='<div id="stap2" style="display: none;"><h2>Controle gevolgen</h2>';
 			$r.='<div class="error"></div>';
+			$r.='<table>';
+			$r.='<tr><td></td><td><input type="checkbox" id="del_uploads_akkoord"><label for="del_uploads_akkoord"> Ja, dit wil ik</label></td></tr>';
+			$r.='</table>';
 			$r.='<button onclick="admin_reset(\'\');" class="aknop aknop2">Filter (opnieuw) instellen</button>';
-			$r.='<button onclick="admin_reset(\'uitvoeren\');" class="aknop aknop2">Uitvoeren</button>';
+			$r.='<button style="margin-left: 40px;" onclick="admin_reset(\'uitvoeren\');" class="aknop aknop2">Uitvoeren</button>';
 			$r.='</div>';
 			
 			$r.='<div id="stap3" style="display: none;"><h2>Uitvoering</h2>';

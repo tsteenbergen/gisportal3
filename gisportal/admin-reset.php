@@ -21,15 +21,18 @@ if ($loggedIn && $is_admin) {
 			$r.='<br>Om de reset uit te voeren worden 3 stappen doorlopen:<ol><li>Filter instellen</li><li>Controle gevolgen</li><li>Uitvoering</li></ol>';
 			
 			$r.='<div id="stap1"><h2>Filter instellen</h2>';
+			$r.='<div id="error1" class="error"></div>';
 			$r.='<button onclick="admin_reset(\'controle\');" class="aknop aknop1">Controle gevolgen</button>';
 			$r.='</div>';
 			
 			$r.='<div id="stap2" style="display: none;"><h2>Controle gevolgen</h2>';
+			$r.='<div id="error1" class="error"></div>';
 			$r.='<button onclick="admin_reset(\'\');" class="aknop aknop2">Filter (opnieuw) instellen</button>';
 			$r.='<button onclick="admin_reset(\'uitvoeren\');" class="aknop aknop2">Uitvoeren</button>';
 			$r.='</div>';
 			
 			$r.='<div id="stap3" style="display: none;"><h2>Uitvoering</h2>';
+			$r.='<div id="error1" class="error"></div>';
 			$r.='<button onclick="admin_reset(\'\');" class="aknop aknop3">Klaar</button>';
 			$r.='</div>';
 			break;

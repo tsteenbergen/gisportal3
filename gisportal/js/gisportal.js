@@ -323,6 +323,7 @@ function admin_reset(func) {
 	var aknop='';
 	
 	$('.aknop').hide();
+	$('.error').html();
 	switch(func) {
 		case 'controle':
 			$('#stap1').hide();
@@ -350,14 +351,18 @@ function admin_reset(func) {
 			console.log(data);
 			switch(func) {
 				case 'controle':
+					admin_reset('uitvoeren');
 					break;
 				case 'uitvoeren':
+					admin_reset('');
 					break;
 				default:
+					admin_reset('controle');
 					break;
 			}
 		},
 		error: function(e) {
+			$('.error').html(e.responseText);
 			console.log(e);
 		}          
 	});

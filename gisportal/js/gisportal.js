@@ -320,7 +320,6 @@ function show_kaart(kaart,kaartnaam) {
 }
 
 function admin_reset(func) {
-	
 	var aknop='';
 	var form_data=new FormData();
 	
@@ -352,6 +351,9 @@ function admin_reset(func) {
 		url: '/geo/portal/admin-reset.php',
 		type: "POST",
 		data:  form_data,
+		contentType: false,
+		cache: false,
+		processData:false,
 		success: function(data) {
 			console.log(data);
 			switch(func) {

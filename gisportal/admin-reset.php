@@ -29,7 +29,7 @@ if ($loggedIn && $is_admin) {
 			$basicPage->add_js_inline($js);
 			$basicPage->add_js_ready('depententSelect(\'sel_kaarten\',\'sel_themas\',kaarten,0,0)');
 			$r.='<tr><td>Kies thema:</td><td><select id="sel_themas"><option value="0"></option><option value="-1">-- Alle themas --</option>';
-			foreach ($themas as $thema) {$r.='<option>'.htmlspecialchars($thema['afdeling'].' '.$thema['afkorting'].':'.$thema['naam']).'</option>';}
+			foreach ($themas as $thema) {$r.='<option value="'.$thema['id'].'">'.htmlspecialchars($thema['afdeling'].' '.$thema['afkorting'].':'.$thema['naam']).'</option>';}
 			$r.='</select></td></tr>';
 			$r.='<tr><td>Kies kaart:</td><td><select id="sel_kaarten"></select></td></tr>';
 			$r.='</table>';

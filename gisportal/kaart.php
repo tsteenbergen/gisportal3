@@ -3,8 +3,8 @@ require('basicPage.php');
 require('openshift-api.php');
 require('beheer/extention.php');
 
-// https://acceptatie-data.rivm.nl/geo/rivm/toon-ms02?SERVICE=WMS&VERSION=1.1.1&REQUEST=Getmap&BBOX=2000000,1000000,8000000,6000000&SRS=EPSG:3035&FORMAT=PNG&WIDTH=800&HEIGHT=600&map=/geo-map/source.map&LAYERS=nuts_02_2016
-// https://acceptatie-data.rivm.nl/geo/RDG-test/nationaleparken?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&BBOX=202786,7072992,2158959,7213746 &SRS=EPSG:3857&WIDTH=665&HEIGHT=551&LAYERS=&FORMAT=image/jpeg
+// https://acceptatie.data.rivm.nl/geo/rivm/toon-ms02?SERVICE=WMS&VERSION=1.1.1&REQUEST=Getmap&BBOX=2000000,1000000,8000000,6000000&SRS=EPSG:3035&FORMAT=PNG&WIDTH=800&HEIGHT=600&map=/geo-map/source.map&LAYERS=nuts_02_2016
+// https://acceptatie.data.rivm.nl/geo/RDG-test/nationaleparken?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&BBOX=202786,7072992,2158959,7213746 &SRS=EPSG:3857&WIDTH=665&HEIGHT=551&LAYERS=&FORMAT=image/jpeg
 
 $title='Kaart';
 $r='';

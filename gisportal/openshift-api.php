@@ -129,7 +129,7 @@ class openshift_api_ {
 			$todo=$this->def[$todo_type];
 			$jsonString = file_get_contents($subpath.'json-templates/'.$todo_type.'.json');
 			// default replacements
-			$jsonString = str_replace('$host','acceptatie.data.rivm.nl',$jsonString);
+			$jsonString = str_replace('$host',$_SERVER['HTTP_HOST'],$jsonString);
 			$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
 			$jsonString = str_replace('$storage','geo-mappen',$jsonString);
 			$jsonString = str_replace('$name','gpid-'.$id,$jsonString);

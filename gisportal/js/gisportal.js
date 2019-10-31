@@ -322,35 +322,22 @@ function show_kaart(kaart,kaartnaam) {
 function admin_reset(func) {
 	var aknop='';
 	var form_data=new FormData();
-	var go=false;
 	
-	$('.aknop').hide();
+	$('.aknop').prop('disabled',true);
 	$('.error').html();
 	switch(func) {
 		case 'controle':
-			$('#stap1').hide();
-			$('#stap2').show();
-			$('#stap3').hide();
-			$('.aknop2').show();
 			form_data.append('func', 'controle');
 			go=true;
 			break;
 		case 'uitvoeren':
-			$('#stap1').hide();
-			$('#stap2').hide();
-			$('#stap3').show();
-			$('.aknop3').show();
 			form_data.append('func', 'uitvoeren');
 			go=true;
 			break;
 		default:
-			$('#stap1').show();
-			$('#stap2').hide();
-			$('#stap3').hide();
-			$('.aknop1').show();
 			break;
 	}
-	if (go) {$.ajax({
+	$.ajax({
 		url: '/geo/portal/admin-reset.php',
 		type: "POST",
 		data:  form_data,
@@ -361,19 +348,27 @@ function admin_reset(func) {
 			console.log(data);
 			switch(func) {
 				case 'controle':
-					//admin_reset('uitvoeren');
+					$('#stap1').hide();
+					$('#stap2').show();
+					$('#stap3').hide();
 					break;
 				case 'uitvoeren':
-					//admin_reset('');
+					$('#stap1').hide();
+					$('#stap2').hide();
+					$('#stap3').show();
 					break;
 				default:
-					//admin_reset('controle');
+					$('#stap1').show();
+					$('#stap2').hide();
+					$('#stap3').hide();
 					break;
 			}
+			$('.aknop').prop('disabled',false);
 		},
 		error: function(e) {
 			$('.error').html(e.responseText);
+			$('.aknop').prop('disabled',false);
 			console.log(e);
 		}          
-	});}
+	});
 }

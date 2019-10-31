@@ -37,6 +37,12 @@ if ($loggedIn && $is_admin) {
 			$r.='</div>';
 			break;
 		case 'controle':
+			$r=['msg'=>'Controle oke', 'error'=>false];
+			echo json_encode($r);
+			exit();
+			break;
+		case 'uitvoeren':
+			$r=['msg'=>'Uitvoring gestart', 'error'=>false];
 			echo json_encode($r);
 			exit();
 			break;

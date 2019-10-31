@@ -89,3 +89,6 @@ input {border: solid 1px #007bc7; font-family: "RO Sans",Calibri,sans-serif; fon
 .areYouSure {background-color: orange; border: solid 2px red; padding: 12px 20px; margin: 12px 0;}
 .spinner.hidden {display: none;}
 .spinner {background-image: url(progressbar.gif); width: 125px; height: 125px; background-position: -185px -70px; border: solid 1px black;}
+
+.jaditwilikerror {display: none;}
+.jaditwilikerror.error {display: inline-block; border: solid 2px red; background-color: orange; padding: 12px 20px; margin: 12px 0;}

@@ -41,7 +41,7 @@ if ($loggedIn && $is_admin) {
 			$r.='<div class="error"></div>';
 			$r.='<div id="stap2msg"></div>';
 			$r.='<table>';
-			$r.='<tr><td></td><td><input type="checkbox" id="reset_akkoord"><label for="reset_akkoord"> Ja, dit wil ik</label></td></tr>';
+			$r.='<tr><td></td><td><input type="checkbox" id="reset_akkoord"><label for="reset_akkoord"> Ja, dit wil ik</label><div id="jaditwilikerror" class="jaditwilikerror"></div></td></tr>';
 			$r.='</table>';
 			$r.='<button onclick="admin_reset(\'\');" class="aknop aknop2">Filter (opnieuw) instellen</button>';
 			$r.='<button style="margin-left: 40px;" onclick="admin_reset(\'uitvoeren\');" class="aknop aknop2">Uitvoeren</button>';

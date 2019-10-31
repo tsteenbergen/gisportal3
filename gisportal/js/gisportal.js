@@ -79,14 +79,14 @@ function areYouSure(title, meld, afterOk) {
 	$('.ui-icon.ui-icon-closethick').html('X');
 };
 
-function depententSelect(el,afhankelijk_van,data,default_waarde,index_blank) { // index_blank == false => geen lege regel
+function depententSelect(el,afhankelijk_van,data,default_waarde,index_blank,txt_blank) { // index_blank == false => geen lege regel
 	$('#'+afhankelijk_van).on('change', function() {
-		sepentenSelectSet(el,$('#'+afhankelijk_van).val(),data,default_waarde,index_blank);
+		sepentenSelectSet(el,$('#'+afhankelijk_van).val(),data,default_waarde,index_blank,txt_blank);
 	});
-	sepentenSelectSet(el,$('#'+afhankelijk_van).val(),data,default_waarde,index_blank);
+	sepentenSelectSet(el,$('#'+afhankelijk_van).val(),data,default_waarde,index_blank,txt_blank);
 }
-function sepentenSelectSet(el,waarde,data,default_waarde,index_blank) {
-	var opts=(index_blank===false?'':'<option value="'+index_blank+'"></option>'), t;
+function sepentenSelectSet(el,waarde,data,default_waarde,index_blank,txt_blank) {
+	var opts=(index_blank===false?'':'<option value="'+index_blank+'">'+txt_blank+'</option>'), t;
 	
 	for (t=0;t<data.length;t++) {
 		if (data[t][1]==waarde) {
@@ -328,6 +328,8 @@ function admin_reset(func) {
 	switch(func) {
 		case 'controle':
 			form_data.append('func', 'controle');
+			form_data.append('thema', $('#sel_thema').val());
+			form_data.append('kaart', $('#sel_kaart').val());
 			break;
 		case 'uitvoeren':
 			form_data.append('func', 'uitvoeren');

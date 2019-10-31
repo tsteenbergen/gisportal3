@@ -40,7 +40,7 @@ if ($loggedIn && $is_admin) {
 			$r.='<div id="stap2" style="display: none;"><h2>Controle gevolgen</h2>';
 			$r.='<div class="error"></div>';
 			$r.='<div id="stap2msg"></div>';
-			$r.='<table>';
+			$r.='<table style="margin: 12px 0;">';
 			$r.='<tr><td></td><td><input type="checkbox" id="reset_akkoord"><label for="reset_akkoord"> Ja, dit wil ik</label><div id="jaditwilikerror" class="jaditwilikerror"></div></td></tr>';
 			$r.='</table>';
 			$r.='<button onclick="admin_reset(\'\');" class="aknop aknop2">Filter (opnieuw) instellen</button>';
@@ -50,7 +50,6 @@ if ($loggedIn && $is_admin) {
 			$r.='<div id="stap3" style="display: none;"><h2>Uitvoering</h2>';
 			$r.='<div class="error"></div>';
 			$r.='<div id="stap2msg"></div>';
-			$r.='<button onclick="admin_reset(\'\');" class="aknop aknop3">Klaar</button>';
 			$r.='</div>';
 			break;
 		case 'controle':
@@ -67,7 +66,7 @@ if ($loggedIn && $is_admin) {
 			}
 			if ($kaarten) {
 				$c=count($kaarten);
-				$msg='Er '.($c==1?'is 1 kaart die voldoet':'zijn '.$c.' kaarten die voldoen').' aan dit filter:<table>';
+				$msg='Er '.($c==1?'is 1 kaart die voldoet':'zijn '.$c.' kaarten die voldoen').' aan dit filter:<table style="margin: 12px 0;">';
 				for ($t=0;$t<50;$t++) {
 					if ($t<$c) {
 						$k=$kaarten[$t];
@@ -88,7 +87,9 @@ if ($loggedIn && $is_admin) {
 			break;
 		case 'uitvoeren':
 			$thema=(int)$_POST['thema']; $kaart=(int)$_POST['kaart']; $del_uploads=$_POST['del_uploads']; $reset_akkoord=$_POST['reset_akkoord'];
-			$r=['msg'=>'Uitvoering starten', 'error'=>false, 'thema'=>$thema, 'kaart'=>$kaart, 'del_uploads'=>$del_uploads, 'reset_akkoord'=>$reset_akkoord];
+			if ($reset_akkoord=='Ja') {
+			}
+			$r=['msg'=>'De uitvoering is gestart. On de openshift console kan deze worden gemonitord.', 'error'=>false];
 			echo json_encode($r);
 			exit();
 			break;

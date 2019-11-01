@@ -242,6 +242,7 @@ class basicPage {
 	var $meldingen=[];
 	var $namespace='ERROR-NO-NAMESPACE';
 	var $endpoint='ERROR-NO-ENDPOINT';
+	var $persistent_storage='ERROR-NO-PERSISTENT-STORAGE';
 	
 	function __construct() {
 		global $db;
@@ -254,6 +255,7 @@ class basicPage {
 		foreach ($insts as $inst) {
 			if ($inst['var']=='endpoint') {$this->endpoint=$inst['instelling'];}
 			if ($inst['var']=='namespace') {$this->namespace=$inst['instelling'];}
+			if ($inst['var']=='persistent_storage') {$this->namespace=$inst['persistent_storage'];}
 		}
 	}
 	

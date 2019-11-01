@@ -1,5 +1,6 @@
 <?php
 require('../basicPage.php');
+require('../openshift-api.php');
 
 if ($loggedIn && ($is_admin || $is_afd_admin)){
 	$tabA='';
@@ -40,10 +41,25 @@ if ($loggedIn && ($is_admin || $is_afd_admin)){
 
 
 
-		$tabB.='<div id="tabs-B1" style="vertical-align: top;">';
-		$tabB.='<table class="colored">';
-		$tabB.='<tr class="top-button"><td colspan="4"><a class="small-button" href="/geo/portal/beheer/image.php?id=0">Nieuw image</a></td></tr>';
-		$tabB.='</table></div>';
+		$tabA.='<div id="tabs-A2" style="vertical-align: top;">';
+		$tabA.='<table class="colored">';
+		$openshift_api->command('api','persistentvolumeclaims/'.$basicPage->persistent_storage);
+/*		
+		stdClass::__set_state(array( 
+			'kind' => 'PersistentVolumeClaim', 
+			'apiVersion' => 'v1', 
+			'metadata' => stdClass::__set_state(array( 'name' => 'geomappen', 'namespace' => 'sscc-geoweb-co', 'selfLink' => '/api/v1/namespaces/sscc-geoweb-co/persistentvolumeclaims/geomappen', 'uid' => '6f69ab2b-fc86-11e9-8598-f2a7cee00114', 'resourceVersion' => '52472960', 'creationTimestamp' => '2019-11-01T09:03:13Z', 'annotations' => stdClass::__set_state(array( 'pv.kubernetes.io/bind-completed' => 'yes', 'pv.kubernetes.io/bound-by-controller' => 'yes', 'volume.beta.kubernetes.io/storage-provisioner' => 'kubernetes.io/glusterfs', )), 'finalizers' => array ( 0 => 'kubernetes.io/pvc-protection', ), )), 
+			'spec' => stdClass::__set_state(array( 
+				'accessModes' => array ( 0 => 'ReadWriteMany', ), 
+				'resources' => stdClass::__set_state(array( 
+					'requests' => stdClass::__set_state(array( 
+						'storage' => '10Gi', )), )), 'volumeName' => 'pvc-6f69ab2b-fc86-11e9-8598-f2a7cee00114', 'storageClassName' => 'glusterfs-storage-expandable', )), 
+			'status' => stdClass::__set_state(array( 'phase' => 'Bound', 'accessModes' => array ( 0 => 'ReadWriteMany', ), 'capacity' => stdClass::__set_state(array( 'storage' => '10Gi', )), )), 
+		))
+*/	
+		$mem=$openshift_api->response->spec->resources->requests->storage;
+		$tabA.='<tr><td>Geheugen persistent storage:</td><td>'.$mem.'</td></tr>';
+		$tabA.='</table></div>';
 		
 	}
 	
@@ -75,12 +91,10 @@ if ($loggedIn && ($is_admin || $is_afd_admin)){
 	
 	$r.='<div id="tabs">';
 	$r.='<ul><li><a href="#tabs-P">Personen</a></li><li><a href="#tabs-O">Onderwerpen</a></li>';
-	if ($tabA!='') {$r.='<li><a href="#tabs-A">Afdelingen</a></li><li><a href="#tabs-A1">Images</a></li>';}
-	if ($tabB!='') {$r.='<li><a href="#tabs-B">Geheugen</a></li><li><a href="#tabs-B1">Geheugen</a></li>';}
+	if ($tabA!='') {$r.='<li><a href="#tabs-A">Afdelingen</a></li><li><a href="#tabs-A1">Images</a></li><li><a href="#tabs-A2">Geheugen</a></li>';}
 	$r.='</ul>';
 	$r.=$tabP.$tabO;
 	if ($tabA!='') {$r.=$tabA;}
-	if ($tabB!='') {$r.=$tabB;}
 	$r.='</div>';
 	$tab=$_GET['tab']; if ($tab=='') {$tab=0;}
 	$basicPage->add_js_ready('$( "#tabs" ).tabs({active: '.$tab.',heightStyle: \'auto\'});');

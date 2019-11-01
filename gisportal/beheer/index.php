@@ -44,29 +44,18 @@ if ($loggedIn && ($is_admin || $is_afd_admin)){
 		$tabA.='<div id="tabs-A2" style="vertical-align: top;">';
 		$tabA.='<table class="colored">';
 		$openshift_api->command('api','persistentvolumeclaims/'.$basicPage->persistent_storage);
-/*		
-		stdClass::__set_state(array( 
-			'kind' => 'PersistentVolumeClaim', 
-			'apiVersion' => 'v1', 
-			'metadata' => stdClass::__set_state(array( 'name' => 'geomappen', 'namespace' => 'sscc-geoweb-co', 'selfLink' => '/api/v1/namespaces/sscc-geoweb-co/persistentvolumeclaims/geomappen', 'uid' => '6f69ab2b-fc86-11e9-8598-f2a7cee00114', 'resourceVersion' => '52472960', 'creationTimestamp' => '2019-11-01T09:03:13Z', 'annotations' => stdClass::__set_state(array( 'pv.kubernetes.io/bind-completed' => 'yes', 'pv.kubernetes.io/bound-by-controller' => 'yes', 'volume.beta.kubernetes.io/storage-provisioner' => 'kubernetes.io/glusterfs', )), 'finalizers' => array ( 0 => 'kubernetes.io/pvc-protection', ), )), 
-			'spec' => stdClass::__set_state(array( 
-				'accessModes' => array ( 0 => 'ReadWriteMany', ), 
-				'resources' => stdClass::__set_state(array( 
-					'requests' => stdClass::__set_state(array( 
-						'storage' => '10Gi', )), )), 'volumeName' => 'pvc-6f69ab2b-fc86-11e9-8598-f2a7cee00114', 'storageClassName' => 'glusterfs-storage-expandable', )), 
-			'status' => stdClass::__set_state(array( 'phase' => 'Bound', 'accessModes' => array ( 0 => 'ReadWriteMany', ), 'capacity' => stdClass::__set_state(array( 'storage' => '10Gi', )), )), 
-		))
-*/	
+		$mem1.=$openshift_api->response->spec->resources->requests->storage;
+		$tabA.='<tr><td>Geheugen persistent storage vlgs. Openshift:</td><td>'.$mem1.'</td></tr>';
 		$path=$basicPage->getConfig('geo-mappen');
-		$mem='1'.var_export($openshift_api->response->kind,true).'<br>';
-		$mem.='1'.var_export($openshift_api->response,true).'<br>';
-		$mem.='2'.var_export($openshift_api->response->spec,true).'<br>';
-		$mem.='3'.var_export($openshift_api->response->spec->resources,true).'<br>';
-		$mem.='4'.var_export($openshift_api->response->spec->resources->requests,true).'<br>';
-		$mem.='5'.var_export($openshift_api->response->spec->resources->requests->storage,true).'<br>';
-		$mem.=shell_exec(' df '.$path.' > '.$path.'/df.df').'<br>';
-		$mem.='fd.fd:'.file_get_contents($path.'/df.df').'||||';
-		$tabA.='<tr><td>Geheugen persistent storage:</td><td>'.$mem.'</td></tr>';
+		shell_exec(' df '.$path.' > '.$path.'/df.df');
+		$df=file_get_contents($path.'/df.df'); $df=str_ireplace(chr(13).chr(10),chr(13),$df); $df=str_ireplace(chr(10),chr(13),$df); $df=explode(chr(13),$df);
+		$mem2='<table>';
+		foreach ($df as $regel) {
+			$regel=str_ireplace('  ',' ',$regel);
+			$mem2.='<tr><td>'.implode('</td><td>',explode(' ',$regel)).'</td></tr>';
+		}
+		$mem2.='</table>';
+		$tabA.='<tr><td>Geheugen persistent storage vlgs. Linux:</td><td>'.$mem2.'</td></tr>';
 		$tabA.='</table></div>';
 		
 	}

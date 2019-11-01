@@ -29,6 +29,7 @@ if ($loggedIn && $is_admin){
 			//$ts=$db->select('information_schema.tables','table_name','table_type=\'base table\' AND table_schema=\'gisportal\'');
 			$ts=[
 				['table_name'=>'database_version'],
+				['table_name'=>'instellingen'],
 				['table_name'=>'afdelingen'],
 				['table_name'=>'personen'],
 				['table_name'=>'onderwerpen'],

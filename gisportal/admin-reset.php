@@ -85,9 +85,10 @@ if ($loggedIn && $is_admin) {
 			$k=$db->selectOne('geopackages AS a LEFT JOIN onderwerpen AS b ON b.id=a.onderwerp LEFT JOIN afdelingen AS c ON c.id=a.afdeling', 'a.id,a.version,a.onderwerp,a.naam,a.kaartnaam,b.naam as thema, c.naam as afdeling', 'a.id='.$id, 'c.naam,b.naam,a.naam,a.kaartnaam');
 			$path = $basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$id.'/';
 			if ($k) {
+				require('openshift-api.php');
 				if ($del_uploads=='Ja') {
 					$fs=glob($path.'*.*');
-					if (fs) foreach ($fs as $f) {unlink($f);}
+					if ($fs) foreach ($fs as $f) {unlink($f);}
 				}
 				$openshift_api->deleteDeploymentConfig($id);
 				$version=$db->selectOne('versions AS a LEFT JOIN images AS b ON b.id=a.image','b.image,a.version','a.id='.$k['version']);

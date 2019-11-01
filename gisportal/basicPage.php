@@ -232,6 +232,8 @@ $is_afd_admin=$_SESSION['is_afd_admin'];
 $is_admin=$_SESSION['is_admin'];
 $my_afd=$_SESSION['afdeling'];
 
+$basedir=__DIR;
+
 class basicPage {
 	var $js_ready='';
 	var $js_inline='';
@@ -365,6 +367,7 @@ class basicPage {
 	}
 	function render($titel,$content) {
 		global $loggedIn;
+		globas $basedir;
 		
 		$r='<html>';
 		$r.='<head>';
@@ -392,6 +395,7 @@ class basicPage {
 		$r.='<h1>'.$titel.'</h1>'.$content.'</div></div>';
 		$r.='<div class="footer"><div class="max-width">GIS portaal, in beheer bij RIVM/RDG</div></div>';
 //$r.='<div>'.var_export($_SERVER,true).'</div>';
+$r.='|'.$basedir.'|';
 		$r.='</body>';
 		$r.='</html>';
 		echo($r);

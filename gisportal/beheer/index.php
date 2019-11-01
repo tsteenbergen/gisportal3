@@ -51,7 +51,7 @@ if ($loggedIn && ($is_admin || $is_afd_admin)){
 		$df=file_get_contents($path.'/df.df'); $df=str_ireplace(chr(13).chr(10),chr(13),$df); $df=str_ireplace(chr(10),chr(13),$df); $df=explode(chr(13),$df);
 		$mem2='<table>';
 		foreach ($df as $regel) {
-			$regel=str_ireplace('  ',' ',$regel);
+			$regel=preg_replace('/\s+/', ' ',$regel);
 			$mem2.='<tr><td>'.implode('</td><td>',explode(' ',$regel)).'</td></tr>';
 		}
 		$mem2.='</table>';

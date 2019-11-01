@@ -255,7 +255,7 @@ class basicPage {
 		foreach ($insts as $inst) {
 			if ($inst['var']=='endpoint') {$this->endpoint=$inst['instelling'];}
 			if ($inst['var']=='namespace') {$this->namespace=$inst['instelling'];}
-			if ($inst['var']=='persistent_storage') {$this->namespace=$inst['persistent_storage'];}
+			if ($inst['var']=='persistent_storage') {$this->persistent_storage=$inst['persistent_storage'];}
 		}
 	}
 	

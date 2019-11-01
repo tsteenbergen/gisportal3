@@ -57,13 +57,14 @@ if ($loggedIn && ($is_admin || $is_afd_admin)){
 			'status' => stdClass::__set_state(array( 'phase' => 'Bound', 'accessModes' => array ( 0 => 'ReadWriteMany', ), 'capacity' => stdClass::__set_state(array( 'storage' => '10Gi', )), )), 
 		))
 */	
+		$path=$basicPage->getConfig('geo-mappen');
 		$mem='1'.var_export($openshift_api->response,true).'<br>';
 		$mem.='2'.var_export($openshift_api->response->spec,true).'<br>';
 		$mem.='3'.var_export($openshift_api->response->spec->resources,true).'<br>';
 		$mem.='4'.var_export($openshift_api->response->spec->resources->requests,true).'<br>';
 		$mem.='5'.var_export($openshift_api->response->spec->resources->requests->storage,true).'<br>';
-		$mem.=shell_exec('fd /geo-mappen > /geo-mappen/fd.fd').'<br>';
-		$mem.=file_get_contents('/geo-mappen/fd.fd');
+		$mem.=shell_exec('fd '.$path.' > '.$path.'/fd.fd').'<br>';
+		$mem.=file_get_contents($path.'/fd.fd');
 		$tabA.='<tr><td>Geheugen persistent storage:</td><td>'.$mem.'</td></tr>';
 		$tabA.='</table></div>';
 		

@@ -157,7 +157,7 @@ class extention {
 	function getFirstFilename() {
 		global $basicPage;
 		
-		$checkFilePath=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$gpid.'/';
+		$checkFilePath=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$this->gpid.'/';
 		$def=$this->defs[0];
 		// $def[0] bevat alle mogelijke extenties op deze regel
 		// $def[1] bevat boolean; Is file optioneel

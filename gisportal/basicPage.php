@@ -250,7 +250,7 @@ class basicPage {
 		if (isset($_SESSION['meldingen'])) {$this->meldingen=$_SESSION['meldingen'];}
 		unset($_SESSION['fouten']);
 		unset($_SESSION['meldingen']);
-		$insts=$db->selectOne('instellingen','instelling,var','id>=1');
+		$insts=$db->select('instellingen','instelling,var','id>=1');
 		foreach ($insts as $inst) {
 			if ($inst['var']=='endpoint') {$this->endpoint=$inst['instelling'];}
 			if ($inst['var']=='namespace') {$this->namespace=$inst['instelling'];}

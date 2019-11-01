@@ -144,20 +144,20 @@ class openshift_api_ {
 			}
 			$this->command($todo['create-api'],$todo['type'],'POST',$jsonString);
 			if ($todo_type=='deploymentconfig') { // wacht tot deploymentconfig er is
-//				$maxAant=20; // wacht maximaal 20 seconden
-//				while ($maxAant>0) {
-//					$this->command($todo['api'],$todo['type'].'/gpid-'.$id);
-/*					if ($this->response->status=='Failure' && $this->response->reason=='NotFound') {
+				$maxAant=28; // wacht maximaal 28 seconden
+				while ($maxAant>0) {
+					$this->command($todo['api'],$todo['type'].'/gpid-'.$id);
+global $basicPage;
+$basicPage->writeLog('createDeploymentConfig '.$maxAant.' '.$this->response->kind);
+					if ($this->response->kind=='DeploymentConfig') {
 						$maxAant=0;
 					} else {
 						$maxAant--;
 						// usleep(100000); // 100.000 microseconden is 0.1 seconde
 						sleep(1); // 1 seconde
-					}*/
-//					$maxAant--;
-//					usleep(100000);
-//				}
-				sleep(10);
+					}
+				}
+				//sleep(10);
 			}
 		}
 	}

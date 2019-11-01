@@ -37,19 +37,14 @@ if ($loggedIn && $is_admin) {
 			$r.='<button onclick="admin_reset(\'controle\');" class="aknop aknop1">Controle gevolgen</button>';
 			$r.='</div>';
 			
-			$r.='<div id="stap2" style="display: none;"><h2>2. Controle gevolgen</h2>';
+			$r.='<div id="stap2" style="display: none;"><h2 id="stap2h2">2. Controle gevolgen</h2>';
 			$r.='<div class="error"></div>';
 			$r.='<div id="stap2msg"></div>';
 			$r.='<table style="margin: 12px 0;">';
 			$r.='<tr><td></td><td><input type="checkbox" id="reset_akkoord"><label for="reset_akkoord"> Ja, dit wil ik</label><div id="jaditwilikerror" class="jaditwilikerror"></div></td></tr>';
 			$r.='</table>';
-			$r.='<button onclick="admin_reset(\'\');" class="aknop aknop2">Filter (opnieuw) instellen</button>';
-			$r.='<button style="margin-left: 40px;" onclick="admin_reset(\'uitvoeren\');" class="aknop aknop2">Uitvoeren</button>';
-			$r.='</div>';
-			
-			$r.='<div id="stap3" style="display: none;"><h2>3. Uitvoering</h2>';
-			$r.='<div class="error"></div>';
-			$r.='<div id="stap3msg"></div>';
+			$r.='<button onclick="admin_reset(\'\');" class="aknop aknop2 aknop2a">Filter (opnieuw) instellen</button>';
+			$r.='<button style="margin-left: 40px;" onclick="admin_reset(\'uitvoeren\');" class="aknop aknop2 aknop2b">Uitvoeren</button>';
 			$r.='</div>';
 			break;
 		case 'controle':

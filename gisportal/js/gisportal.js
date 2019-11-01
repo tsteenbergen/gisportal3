@@ -347,6 +347,7 @@ function admin_reset(func) {
 			$('#stap2msg').html();
 			$('#stap3msg').html();
 			$('#jaditwilikerror').html('').removeClass('error');
+			$('#stap2h2').html('3. Controle');
 			startGpidReset(0);
 			return;
 			break;
@@ -354,6 +355,7 @@ function admin_reset(func) {
 			form_data.append('func', 'niets');
 			break;
 	}
+	$('#stap2h2').html('2. Controle gevolgen');
 	$('.aknop').prop('disabled',true);
 	$('.error').html();
 	$('#stap2msg').html();
@@ -406,7 +408,12 @@ function admin_reset(func) {
 function startGpidReset(no) {
 	var form_data=new FormData(), el=$('#kaart'+no), id;
 	
-	if (el.length!=1) {return;}
+	if (el.length!=1) {
+		$('.aknop').prop('disabled',false); // enable alle knoppen
+		$('.aknop2a').show(); // toon 'Stel filter opnieuw in'
+		return;
+	}
+	el.html('Start reset');
 	id=el.attr('kaartid');
 	form_data.append('func', 'uitvoeren');
 	form_data.append('kaartid', id);
@@ -427,14 +434,17 @@ function startGpidReset(no) {
 			}
 			if (data.error===false) {
 				startGpidReset(no+1);
+				el.html('Reset done');
 			} else {
 				$('.error').html(data.msg);
 				$('.aknop').prop('disabled',false);
+				el.html('Error; aborted');
 			}
 		},
 		error: function(e) {
 			$('.error').html(e.responseText);
 			$('.aknop').prop('disabled',false);
+			el.html('Error; aborted');
 			console.log(e);
 		}          
 	});

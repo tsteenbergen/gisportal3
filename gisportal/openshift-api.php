@@ -95,7 +95,7 @@ class openshift_api_ {
 			$this->response=json_decode(json_encode(array('status'=>'Failure','message'=>'Not allowed')),false);
 		}
 		global $basicPage;
-		$basicPage->writeLog($api_url.$command.($subcommand?' : '.$subcommand:''),'Input:'.$data.'<br>Response: <div style="display: none;" onclick="$(this).toggle();">Klik hier&hellip;<br>'.$this->stdClassToString($this->response).'<div>');
+		$basicPage->writeLog($api_url.$command.($subcommand?' : '.$subcommand:''),'Input:'.$data.'<div onclick="$($(this).next()).toggle();">Response (klik hier):</div><div style="display: none;">'.$this->stdClassToString($this->response).'<div>');
 	}
 	
 	function stdClassToString($o,$depth=0) {

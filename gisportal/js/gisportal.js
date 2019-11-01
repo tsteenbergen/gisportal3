@@ -347,11 +347,14 @@ function admin_reset(func) {
 			$('#stap2msg').html();
 			$('#stap3msg').html();
 			$('#jaditwilikerror').html('').removeClass('error');
-			$('#stap2h2').html('3. Controle');
+			$('#stap2h2').html('3. Uitvoering');
+			$('#reset_akkoord').prop('disabled',true);
 			startGpidReset(0);
 			return;
 			break;
 		default:
+			$('.aknop2b').show(); // toon knop 'Uitvoeren'
+			$('#reset_akkoord').prop('disabled',false);
 			form_data.append('func', 'niets');
 			break;
 	}

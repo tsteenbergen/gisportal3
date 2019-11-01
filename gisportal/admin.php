@@ -68,6 +68,7 @@ if ($loggedIn && $is_admin){
 			}
 			break;
 		default:
+			$r.='<p style="margin-bottom: 20px;"><button onclick="document.location=\'admin-instellingen.php\';">Instellingen</button>';
 			$r.='<p style="margin-bottom: 20px;"><button onclick="document.location=\'admin-reset.php\';">Reset (bepaalde) geo-packages</button>';
 			$r.='<p style="margin-bottom: 20px;"><button onclick="document.location=\'admin.php?func=log\';">Logs bekijken</button>';
 			$r.='<p style="margin-bottom: 20px;"><button onclick="document.location=\'admin.php?func=phpinfo\';">PHP info</button>';

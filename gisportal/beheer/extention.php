@@ -171,12 +171,16 @@ class extention {
 				$filenaam=$def[3];
 			}
 		}
+$basicPage->writeLog('getFirstFilename 1 '.$filenaam);
 		foreach ($def[0] as $ext) {
+$basicPage->writeLog('getFirstFilename 2 '.$ext);
 			if ($filenaam=='') {
 				$files=glob($checkFilePath.'*.'.$ext);
+$basicPage->writeLog('getFirstFilename 3 '.var_export($files,true));
 				if ($files) {
 					if (file_exists($files[0])) {
 						$file=substr($files[0],strlen($checkFilePath));
+$basicPage->writeLog('getFirstFilename 4 '.$file);
 						return substr($file,0,strlen($file)-strlen($ext)-1);
 					}
 				}

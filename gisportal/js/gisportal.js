@@ -309,7 +309,7 @@ function show_kaart(kaart,kaartnaam) {
 				node=data.childNodes[t];
 				r+='<br>'+(t+1)+': '+node['localName'];
 			}
-			r+='<br><br>Kaart:<br><img style="border: solid 1px black;" src="/geo/'+kaart+'?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&BBOX=202786,7072992,2158959,7213746&SRS=EPSG:3857&WIDTH=250&HEIGHT=300&LAYERS='+kaartnaam+'&FORMAT=image/jpeg">';
+			r+='<br><br>Kaart:<br><img style="border: solid 1px black;" src="/geo/'+kaart+'?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&BBOX=0,300000,300000,600000&SRS=EPSG:3857&WIDTH=250&HEIGHT=300&LAYERS='+kaartnaam+'&FORMAT=image/jpeg">';
 			el.html(r);
 			console.log(data);
 		},
@@ -416,7 +416,7 @@ function startGpidReset(no) {
 		$('.aknop2a').show(); // toon 'Stel filter opnieuw in'
 		return;
 	}
-	el.html('Start reset');
+	el.html('<img src="/geo/portal/css/progress20x20.gif">');
 	id=el.attr('kaartid');
 	form_data.append('func', 'uitvoeren');
 	form_data.append('kaartid', id);

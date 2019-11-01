@@ -331,16 +331,23 @@ function admin_reset(func) {
 			form_data.append('del_uploads', $('#del_uploads').prop('checked')?'Ja':'Nee');
 			break;
 		case 'uitvoeren':
-			form_data.append('func', 'uitvoeren');
-			form_data.append('thema', $('#sel_themas').val());
-			form_data.append('kaart', $('#sel_kaarten').val());
-			form_data.append('del_uploads', $('#del_uploads').prop('checked')?'Ja':'Nee');
+			//form_data.append('func', 'uitvoeren');
+			//form_data.append('thema', $('#sel_themas').val());
+			//form_data.append('kaart', $('#sel_kaarten').val());
+			//form_data.append('del_uploads', $('#del_uploads').prop('checked')?'Ja':'Nee');
 			var reset_akkoord=$('#reset_akkoord').prop('checked')?'Ja':'Nee';
-			form_data.append('reset_akkoord', reset_akkoord);
+			//form_data.append('reset_akkoord', reset_akkoord);
 			if (reset_akkoord!='Ja') {
 				$('#jaditwilikerror').html('Geef je akkoord!').addClass('error');
 				return;
 			}
+			$('.aknop').prop('disabled',true);
+			$('.error').html();
+			$('#stap2msg').html();
+			$('#stap3msg').html();
+			$('#jaditwilikerror').html('').removeClass('error');
+			startGpidReset(0);
+			return;
 			break;
 		default:
 			form_data.append('func', 'niets');
@@ -386,6 +393,38 @@ function admin_reset(func) {
 					break;
 			}
 			$('.aknop').prop('disabled',false);
+		},
+		error: function(e) {
+			$('.error').html(e.responseText);
+			$('.aknop').prop('disabled',false);
+			console.log(e);
+		}          
+	});
+}
+
+function startGpidReset(no) {
+	var form_data=new FormData(), el=$('#kaart'+no), id;
+	
+	if (el.length!=1) {return;}
+	id=el.attr('kaartid');
+	form_data.append('func', 'uitvoeren');
+	form_data.append('kaartid', id);
+	form_data.append('del_uploads', $('#del_uploads').prop('checked')?'Ja':'Nee');
+	$.ajax({
+		url: '/geo/portal/admin-reset.php',
+		type: "POST",
+		data:  form_data,
+		contentType: false,
+		cache: false,
+		processData:false,
+		success: function(data) {
+			console.log(data);
+			if (data.indexOf('<b>Warning</b>')>=1) {
+				data={msg:data,error:true};
+			} else {
+				data=JSON.parse(data);
+			}
+			startGpidReset(no+1);
 		},
 		error: function(e) {
 			$('.error').html(e.responseText);

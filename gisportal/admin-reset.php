@@ -67,14 +67,9 @@ if ($loggedIn && $is_admin) {
 			if ($kaarten) {
 				$c=count($kaarten);
 				$msg='Er '.($c==1?'is 1 kaart die voldoet':'zijn '.$c.' kaarten die voldoen').' aan dit filter:<table style="margin: 12px 0;">';
-				for ($t=0;$t<50;$t++) {
-					if ($t<$c) {
-						$k=$kaarten[$t];
-						$msg.='<tr><td>'.htmlspecialchars($k['afdeling']).'</td><td>'.htmlspecialchars($k['thema']).'</td><td>'.htmlspecialchars($k['naam']).'</td><td>'.htmlspecialchars($k['kaartnaam']).'</td></tr>';
-					}
-				}
-				if ($c>50) {
-					$msg.='<tr><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td><td>&hellip;</td></tr>';
+				for ($t=0;$t<$c;$t++) {
+					$k=$kaarten[$t];
+					$msg.='<tr><td id="kaart'.$t.'" kaartid="'.$k['id'].'"></td><td>'.htmlspecialchars($k['afdeling']).'</td><td>'.htmlspecialchars($k['thema']).'</td><td>'.htmlspecialchars($k['naam']).'</td><td>'.htmlspecialchars($k['kaartnaam']).'</td></tr>';
 				}
 				$msg.='</table>';
 			} else {
@@ -86,40 +81,29 @@ if ($loggedIn && $is_admin) {
 			exit();
 			break;
 		case 'uitvoeren':
-			$thema=(int)$_POST['thema']; $kaart=(int)$_POST['kaart']; $del_uploads=$_POST['del_uploads']; $reset_akkoord=$_POST['reset_akkoord'];
-			if ($reset_akkoord=='Ja') {
-				require('openshift-api.php');
-				if ($thema>=1) {
-					if ($kaart>=1) { // 1 kaart
-						$kaarten=$db->select('geopackages AS a LEFT JOIN onderwerpen AS b ON b.id=a.onderwerp LEFT JOIN afdelingen AS c ON c.id=a.afdeling', 'a.id,a.version,a.onderwerp,a.naam,a.kaartnaam,b.naam as thema, c.naam as afdeling', 'a.id='.$kaart, 'c.naam,b.naam,a.naam,a.kaartnaam');
-					} else { // alle kaarten van dit thema
-						$kaarten=$db->select('geopackages AS a LEFT JOIN onderwerpen AS b ON b.id=a.onderwerp LEFT JOIN afdelingen AS c ON c.id=a.afdeling', 'a.id,a.version,a.onderwerp,a.naam,a.kaartnaam,b.naam as thema, c.naam as afdeling', 'a.onderwerp='.$thema, 'c.naam,b.naam,a.naam,a.kaartnaam');
-					}
-				} else { // alle kaarten
-					$kaarten=$db->select('geopackages AS a LEFT JOIN onderwerpen AS b ON b.id=a.onderwerp LEFT JOIN afdelingen AS c ON c.id=a.afdeling', 'a.id,a.version,a.onderwerp,a.naam,a.kaartnaam,b.naam as thema, c.naam as afdeling', 'a.id>=1', 'c.naam,b.naam,a.naam,a.kaartnaam');
+			$id=$_POST['kaartid']; $del_uploads=$_POST['del_uploads'];
+			$k=$db->selectOne('geopackages AS a LEFT JOIN onderwerpen AS b ON b.id=a.onderwerp LEFT JOIN afdelingen AS c ON c.id=a.afdeling', 'a.id,a.version,a.onderwerp,a.naam,a.kaartnaam,b.naam as thema, c.naam as afdeling', 'a.id='.$id, 'c.naam,b.naam,a.naam,a.kaartnaam');
+			$path = $basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$id.'/';
+			if ($k) {
+				if ($del_uploads=='Ja') {
+					$fs=glob($path.'*.*');
+					if (fs) foreach ($fs as $f) {unlink($f);}
 				}
-				$path = $basicPage->getConfig('geo-mappen').'/geo-packages/gpid-';
-				if ($kaarten) foreach ($kaarten as $k) {
-					if ($del_uploads=='Ja') {
-						$fs=glob($path.$k['id'].'/*.*');
-						if (fs) foreach ($fs as $f) {unlink($f);}
-					}
-					$openshift_api->deleteDeploymentConfig($k['id']);
-					$version=$db->selectOne('versions AS a LEFT JOIN images AS b ON b.id=a.image','b.image,a.version','a.id='.$k['version']);
-					$theme=$db->selectOne('onderwerpen','afkorting','id='.$k['onderwerp']);
-					$variables=[
-						'map-theme'=>$theme['afkorting'],
-						'map-name'=>$a['Qkaartnaam'],
-						'image-name'=>$version['image'],
-						'image-version'=>$version['version'],
-						'limit-cpu'=>'800m',
-						'limit-memory'=>'1200Mi',
-						'request-cpu'=>'80m',
-						'request-memory'=>'120Mi',
-					];
-					$openshift_api->createDeploymentConfig('',$k['id'],$variables);
-				}				
-				$r=['msg'=>'De geo-packages zijn gereset. Op de openshift console kan dit worden gemonitord.', 'error'=>false];
+				$openshift_api->deleteDeploymentConfig($id);
+				$version=$db->selectOne('versions AS a LEFT JOIN images AS b ON b.id=a.image','b.image,a.version','a.id='.$k['version']);
+				$theme=$db->selectOne('onderwerpen','afkorting','id='.$k['onderwerp']);
+				$variables=[
+					'map-theme'=>$theme['afkorting'],
+					'map-name'=>$a['Qkaartnaam'],
+					'image-name'=>$version['image'],
+					'image-version'=>$version['version'],
+					'limit-cpu'=>'800m',
+					'limit-memory'=>'1200Mi',
+					'request-cpu'=>'80m',
+					'request-memory'=>'120Mi',
+				];
+				$openshift_api->createDeploymentConfig('',$id,$variables);
+				$r=['msg'=>'De geo-package gpid-'.$id.' gereset. Op de openshift console kan dit worden gemonitord.', 'error'=>false];
 			} else {
 				$r=['msg'=>'De uitvoering is niet gestart.', 'error'=>true];
 			}

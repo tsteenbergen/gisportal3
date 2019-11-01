@@ -92,3 +92,5 @@ input {border: solid 1px #007bc7; font-family: "RO Sans",Calibri,sans-serif; fon
 
 .jaditwilikerror {display: none;}
 .jaditwilikerror.error {display: inline-block; border: solid 2px red; background-color: orange; padding: 12px 20px; margin: 0 0 0 32px;}
+
+.logklik {cursor: pointer; background-color: blue; color: white; padding: 2px 20px; border-radius: 8px; display: inline-block;}

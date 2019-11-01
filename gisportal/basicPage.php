@@ -367,7 +367,7 @@ class basicPage {
 	}
 	function render($titel,$content) {
 		global $loggedIn;
-		globas $basedir;
+		global $basedir;
 		
 		$r='<html>';
 		$r.='<head>';

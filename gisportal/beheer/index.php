@@ -61,7 +61,7 @@ if ($loggedIn && ($is_admin || $is_afd_admin)){
 		$mem='1'.var_export($openshift_api->response->kind,true).'<br>';
 		$mem.='1'.var_export($openshift_api->response,true).'<br>';
 		$mem.='2'.var_export($openshift_api->response->spec,true).'<br>';
-		$mem.='3'.var_export($openshift_api->response->spec['resources'],true).'<br>';
+		$mem.='3'.var_export($openshift_api->response->spec->resources,true).'<br>';
 		$mem.='4'.var_export($openshift_api->response->spec->resources->requests,true).'<br>';
 		$mem.='5'.var_export($openshift_api->response->spec->resources->requests->storage,true).'<br>';
 		$mem.=shell_exec(' df '.$path.' > '.$path.'/df.df').'<br>';

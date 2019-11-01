@@ -37,6 +37,13 @@ if ($loggedIn && ($is_admin || $is_afd_admin)){
 			}
 		}
 		$tabA.='</table></div>';
+
+
+
+		$tabB.='<div id="tabs-B1" style="vertical-align: top;">';
+		$tabB.='<table class="colored">';
+		$tabB.='<tr class="top-button"><td colspan="4"><a class="small-button" href="/geo/portal/beheer/image.php?id=0">Nieuw image</a></td></tr>';
+		$tabB.='</table></div>';
 		
 	}
 	
@@ -69,9 +76,11 @@ if ($loggedIn && ($is_admin || $is_afd_admin)){
 	$r.='<div id="tabs">';
 	$r.='<ul><li><a href="#tabs-P">Personen</a></li><li><a href="#tabs-O">Onderwerpen</a></li>';
 	if ($tabA!='') {$r.='<li><a href="#tabs-A">Afdelingen</a></li><li><a href="#tabs-A1">Images</a></li>';}
+	if ($tabB!='') {$r.='<li><a href="#tabs-B">Geheugen</a></li><li><a href="#tabs-B1">Geheugen</a></li>';}
 	$r.='</ul>';
 	$r.=$tabP.$tabO;
 	if ($tabA!='') {$r.=$tabA;}
+	if ($tabB!='') {$r.=$tabB;}
 	$r.='</div>';
 	$tab=$_GET['tab']; if ($tab=='') {$tab=0;}
 	$basicPage->add_js_ready('$( "#tabs" ).tabs({active: '.$tab.',heightStyle: \'auto\'});');

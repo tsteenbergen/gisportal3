@@ -58,13 +58,13 @@ if ($loggedIn && ($is_admin || $is_afd_admin)){
 		))
 */	
 		$path=$basicPage->getConfig('geo-mappen');
-		$mem='1'.var_export($openshift_api->kind,true).'<br>';
+		$mem='1'.var_export($openshift_api->response->kind,true).'<br>';
 		$mem.='1'.var_export($openshift_api->response,true).'<br>';
 		$mem.='2'.var_export($openshift_api->response->spec,true).'<br>';
 		$mem.='3'.var_export($openshift_api->response->spec['resources'],true).'<br>';
 		$mem.='4'.var_export($openshift_api->response->spec->resources->requests,true).'<br>';
 		$mem.='5'.var_export($openshift_api->response->spec->resources->requests->storage,true).'<br>';
-		$mem.=shell_exec(' df'.$path.' > '.$path.'/df.df').'<br>';
+		$mem.=shell_exec(' df '.$path.' > '.$path.'/df.df').'<br>';
 		$mem.='fd.fd:'.file_get_contents($path.'/df.df').'||||';
 		$tabA.='<tr><td>Geheugen persistent storage:</td><td>'.$mem.'</td></tr>';
 		$tabA.='</table></div>';

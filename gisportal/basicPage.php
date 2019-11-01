@@ -335,7 +335,7 @@ class basicPage {
 			$log='<table>';
 			if (!$truncate && file_exists($logfile)) {$log=file_get_contents($logfile); $log=substr($log,0,strlen($log)-8);}
 			$log.='<tr><td>'.date('j-n-y H:i:s').'</td><td>&nbsp;</td><td>'.$msg.'</td></tr>';
-			if ($submsg!='') {$log.='<tr'.($hide?' style="display: hidden;"':'').'><td></td><td>&nbsp;</td><td>'.$submsg.'</td></tr>';}
+			if ($submsg!='') {$log.='<tr'.($hide?' style="display: none;"':'').'><td></td><td>&nbsp;</td><td>'.$submsg.'</td></tr>';}
 			if (file_exists('/geo-mappen')) { // als de persisten storage bestaat...
 				file_put_contents($logfile,$log.'</table>');
 			}

@@ -95,7 +95,8 @@ class openshift_api_ {
 			$this->response=json_decode(json_encode(array('status'=>'Failure','message'=>'Not allowed')),false);
 		}
 		global $basicPage;
-		$basicPage->writeLog($api_url.$command.($subcommand?' : '.$subcommand:'').'<br>'.$data,var_export($this->response,true),false,true);
+		$basicPage->writeLog($api_url.$command.($subcommand?' : '.$subcommand:''),$data,false,true);
+		$basicPage->writeLog('Response',var_export($this->response,true),false,true);
 	}
 	
 	function succes() {

@@ -85,7 +85,7 @@ if ($loggedIn && $is_admin) {
 					$fs=glob($path.'*.*');
 					if ($fs) foreach ($fs as $f) {unlink($f);}
 				}
-				//$openshift_api->deleteDeploymentConfig($id);
+				$openshift_api->deleteDeploymentConfig($id);
 				$version=$db->selectOne('versions AS a LEFT JOIN images AS b ON b.id=a.image','b.image,a.version','a.id='.$k['version']);
 				$theme=$db->selectOne('onderwerpen','afkorting','id='.$k['onderwerp']);
 				$variables=[
@@ -98,7 +98,7 @@ if ($loggedIn && $is_admin) {
 					'request-cpu'=>'80m',
 					'request-memory'=>'120Mi',
 				];
-				$openshift_api->createDeploymentConfig($id,$variables,'all',true);
+				$openshift_api->createDeploymentConfig($id,$variables,'all');
 				$r=['msg'=>'De geo-package gpid-'.$id.' gereset. Op de openshift console kan dit worden gemonitord.', 'error'=>false];
 			} else {
 				$r=['msg'=>'De uitvoering is niet gestart.', 'error'=>true];

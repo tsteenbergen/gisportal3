@@ -240,47 +240,20 @@ class basicPage {
 	var $js_inline='';
 	var $fouten=[];
 	var $meldingen=[];
-	var $appname;
-	var $namespace;
-	var $otap;
-	var $endpoint;
+	var $namespace='ERROR-NO-NAMESPACE';
+	var $endpoint='ERROR-NO-ENDPOINT';
 	
 	function __construct() {
+		global $db;
+		
 		if (isset($_SESSION['fouten'])) {$this->fouten=$_SESSION['fouten'];}
 		if (isset($_SESSION['meldingen'])) {$this->meldingen=$_SESSION['meldingen'];}
 		unset($_SESSION['fouten']);
 		unset($_SESSION['meldingen']);
-		if (file_exists('/geo-mappen/endpoint.php')) {
-			eval(file_get_contents('/geo-mappen/endpoint.php'));
-			$this->appname=$appname;
-			$this->namespace=$namespace;
-			$this->otap=$otap;
-			$this->endpoint=$endpoint;
-		} else {
-			$elements=explode('.',$_SERVER['HTTP_HOST']);
-			if ($elements[1]=='apps' && $elements[2]=='ssc-campus' && $elements[3]=='nl') {
-				$this->namespace='sscc-geoweb-';
-				$pos=stripos($elements[0],'-'.$namespace);
-				if ($pos>=1) {
-					$this->appname=substr($elements[0],0,$pos);
-					$this->namespace.=substr($elements[0],$pos+strlen($this->namespace)+1,2);
-					$this->otap=substr($this->namespace,-1);
-					$this->endpoint='https://portaal.int.ssc-campus.nl:8443';
-				}
-			} else { // localhost
-				$elements0=explode('-',$elements[0]);
-				if (count($elements0)==2) {
-					$this->appname=$elements0[0];
-					$this->namespace=$elements0[1];
-					$this->otap='o';
-					$this->endpoint='https://192.168.99.100:8443';
-					$adr=explode('.',$_SERVER['SERVER_NAME']); // => 'gisportal-proj3.192.168.99.112.nip.io',
-					if ($adr[1]==192 && $adr[2]==168) {
-						$this->endpoint='https://192.168.'.$adr[3].'.'.$adr[4].':8443';
-					}
-				}
-			}
-			@file_put_contents('/geo-mappen/endpoint.php','$endpoint=\''.$this->endpoint.'\'; $appname=\''.$this->appname.'\'; $namespace=\''.$this->namespace.'\'; $otap=\''.$this->otap.'\';');
+		$insts=$db->selectOne('instellingen','instelling,var','id>=1');
+		foreach ($insts as $inst) {
+			if ($inst['var']=='endpoint') {$this->endpoint=$inst['instelling'];}
+			if ($inst['var']=='namespace') {$this->namespace=$inst['instelling'];}
 		}
 	}
 	

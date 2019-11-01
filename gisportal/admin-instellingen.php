@@ -20,7 +20,7 @@ if ($loggedIn && $is_admin) {
 				}
 			}
 		}
-		$basicPage->redirect('admin-instellingen');
+		$basicPage->redirect('admin-instellingen.php');
 	}
 	$r.='<div style="display: inline-block;"><form id="form" method="POST"><input type="hidden" name="func" id="func"><table>';
 	foreach ($instellingen as $instelling) {

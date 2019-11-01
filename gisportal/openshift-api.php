@@ -126,14 +126,17 @@ class openshift_api_ {
 	
 	function createDeploymentConfig($id, $variables, $todo_types=['deploymentconfig','autoscaler','service','route']) {
 		global $basedir;
+		global $db;
 		
+		$persistent_storage=$db->selectOne('instellingen','instelling','var=\'persistent_storage\'');
+		if ($persistent_storage) {$persistent_storage=$persistent_storage['instelling'];} else {$persistent_storage='ERROR-NO-PERSISTENT-STORAGE';}
 		foreach ($todo_types as $todo_type) {
 			$todo=$this->def[$todo_type];
 			$jsonString = file_get_contents($basedir.'json-templates/'.$todo_type.'.json');
 			// default replacements
 			$jsonString = str_replace('$host',$_SERVER['HTTP_HOST'],$jsonString);
 			$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
-			$jsonString = str_replace('$storage','geo-mappen',$jsonString);
+			$jsonString = str_replace('$storage',$persistent_storage,$jsonString);
 			$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
 			// aanvullende replacements
 			foreach ($variables as $variable=>$value) {

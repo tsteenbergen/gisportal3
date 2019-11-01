@@ -11,18 +11,16 @@ if ($loggedIn && $is_admin) {
 
 	$func=$_POST['func'];
 	$instellingen=$db->select('instellingen','id,label,var,instelling','id>=1');
-$r.='instellingen='.var_export($instellingen,true).'<br>';
 	if ($func=='opslaan') {
 		foreach ($_POST as $key=>$post) {
 			for ($t=0;$t<count($instellingen);$t++) {
 				$instelling=$instellingen[$t];
-$r.='key='.$key.'='.$post.'<br>';
 				if ($instelling['var']==$key) {
-$r.='Do update<br>';
 					$db->update('instellingen',array('Qinstelling'=>$post),'id='.$instelling['id']);
 				}
 			}
 		}
+		$basicPage->redirect('admin-instellingen');
 	}
 	$r.='<div style="display: inline-block;"><form id="form" method="POST"><input type="hidden" name="func" id="func"><table>';
 	foreach ($instellingen as $instelling) {

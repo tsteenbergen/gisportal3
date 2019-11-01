@@ -363,7 +363,9 @@ class basicPage {
 			if (!$truncate && file_exists($logfile)) {$log=file_get_contents($logfile); $log=substr($log,0,strlen($log)-8);}
 			$log.='<tr><td>'.date('j-n-y H:i:s').'</td><td>&nbsp;</td><td>'.$msg.'</td></tr>';
 			if ($submsg!='') {$log.='<tr><td></td><td>&nbsp;</td><td>'.$submsg.'</td></tr>';}
-			file_put_contents($logfile,$log.'</table>');
+			if (file_exists('/geo-mappen')) { // als de persisten storage bestaat...
+				file_put_contents($logfile,$log.'</table>');
+			}
 		}
 	}
 	function render($titel,$content) {

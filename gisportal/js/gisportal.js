@@ -425,7 +425,12 @@ function startGpidReset(no) {
 			} else {
 				data=JSON.parse(data);
 			}
-			startGpidReset(no+1);
+			if (data.error===false) {
+				startGpidReset(no+1);
+			} else {
+				$('.error').html(data.msg);
+				$('.aknop').prop('disabled',false);
+			}
 		},
 		error: function(e) {
 			$('.error').html(e.responseText);

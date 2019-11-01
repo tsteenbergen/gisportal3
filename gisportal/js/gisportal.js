@@ -341,7 +341,8 @@ function admin_reset(func) {
 				$('#jaditwilikerror').html('Geef je akkoord!').addClass('error');
 				return;
 			}
-			$('.aknop').prop('disabled',true);
+			$('.aknop').prop('disabled',true); // disable alle knoppen
+			$('.aknop2').hide(); // verberg 'Stel filter opnieuw in' en 'Uitvoeren'
 			$('.error').html();
 			$('#stap2msg').html();
 			$('#stap3msg').html();

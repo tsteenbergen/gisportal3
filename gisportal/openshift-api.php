@@ -124,10 +124,12 @@ class openshift_api_ {
 		return $r;
 	}
 	
-	function createDeploymentConfig($subpath, $id, $variables, $todo_types=['deploymentconfig','autoscaler','service','route']) {
+	function createDeploymentConfig($id, $variables, $todo_types=['deploymentconfig','autoscaler','service','route']) {
+		global $basedir;
+		
 		foreach ($todo_types as $todo_type) {
 			$todo=$this->def[$todo_type];
-			$jsonString = file_get_contents($subpath.'json-templates/'.$todo_type.'.json');
+			$jsonString = file_get_contents($basedir.'json-templates/'.$todo_type.'.json');
 			// default replacements
 			$jsonString = str_replace('$host',$_SERVER['HTTP_HOST'],$jsonString);
 			$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);

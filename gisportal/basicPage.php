@@ -233,6 +233,7 @@ $is_admin=$_SESSION['is_admin'];
 $my_afd=$_SESSION['afdeling'];
 
 $basedir=__DIR__;
+if (substr($basedir,-1)!='/') {$basedir.='/';}
 
 class basicPage {
 	var $js_ready='';
@@ -394,8 +395,6 @@ class basicPage {
 		}
 		$r.='<h1>'.$titel.'</h1>'.$content.'</div></div>';
 		$r.='<div class="footer"><div class="max-width">GIS portaal, in beheer bij RIVM/RDG</div></div>';
-//$r.='<div>'.var_export($_SERVER,true).'</div>';
-$r.='|'.$basedir.'|';
 		$r.='</body>';
 		$r.='</html>';
 		echo($r);

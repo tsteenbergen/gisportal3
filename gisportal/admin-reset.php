@@ -103,7 +103,7 @@ if ($loggedIn && $is_admin) {
 					'request-cpu'=>'80m',
 					'request-memory'=>'120Mi',
 				];
-				$openshift_api->createDeploymentConfig('',$id,$variables);
+				$openshift_api->createDeploymentConfig($id,$variables);
 				$r=['msg'=>'De geo-package gpid-'.$id.' gereset. Op de openshift console kan dit worden gemonitord.', 'error'=>false];
 			} else {
 				$r=['msg'=>'De uitvoering is niet gestart.', 'error'=>true];

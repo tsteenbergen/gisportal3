@@ -82,7 +82,7 @@ if ($loggedIn){
 							$a['Qbrongeopackage']=''; // Dit is nodig omdat het veld in de db verplicht is!!!! Dit moet ooit nog weg!!!!
 							$a['Qopmaak']='';         // Dit is nodig omdat het veld in de db verplicht is!!!! Dit moet ooit nog weg!!!!
 							$g['id']=$db->insert('geopackages',$a);
-							$openshift_api->createDeploymentConfig('../',$g['id'],$variables);
+							$openshift_api->createDeploymentConfig($g['id'],$variables);
 						} else {
 							if ($g['version']!=$a['version']) { // wijziging image? dan alles opneiuw aanmaken
 								$openshift_api->deleteDeploymentConfig($g['id']);
@@ -93,10 +93,10 @@ if ($loggedIn){
 							}
 							$db->update('geopackages',$a,'id='.$g['id']);
 							if ($g['version']!=$a['version']) { // wijziging image? dan alles opneiuw aanmaken
-								$openshift_api->createDeploymentConfig('../',$g['id'],$variables);
+								$openshift_api->createDeploymentConfig($g['id'],$variables);
 							} else { // wijziging thema? dan route opnieuw aanmaken
 								if ($g['kaartnaam']!=$a['Qkaartnaam'] || $g['onderwerp']!=$a['onderwerp']) {
-									$openshift_api->createDeploymentConfig('../',$g['id'],$variables,['route']);
+									$openshift_api->createDeploymentConfig($g['id'],$variables,['route']);
 								}
 							}
 						}

@@ -124,7 +124,7 @@ class openshift_api_ {
 		return $r;
 	}
 	
-	function createDeploymentConfig($id, $variables, $todo_types=['deploymentconfig','autoscaler','service','route']) {
+	function createDeploymentConfig($id, $variables, $todo_types=['deploymentconfig','autoscaler','service','route'],$update=false) {
 		global $basedir;
 		global $db;
 		
@@ -142,7 +142,7 @@ class openshift_api_ {
 			foreach ($variables as $variable=>$value) {
 				$jsonString = str_replace('$'.$variable,$value,$jsonString);
 			}
-			$this->command($todo['create-api'],$todo['type'],'POST',$jsonString);
+			$this->command($todo['create-api'],$todo['type'],$update?'PUT':'POST',$jsonString);
 			if ($todo_type=='deploymentconfig') { // wacht tot deploymentconfig er is
 				$maxAant=28; // wacht maximaal 28 seconden
 				while ($maxAant>0) {

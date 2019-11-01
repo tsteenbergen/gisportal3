@@ -95,20 +95,64 @@ class openshift_api_ {
 			$this->response=json_decode(json_encode(array('status'=>'Failure','message'=>'Not allowed')),false);
 		}
 		global $basicPage;
-		$basicPage->writeLog($api_url.$command.($subcommand?' : '.$subcommand:''),'Input: <div style="display: none;">'.$data.'</div><br>Response: <div style="display: none;">'.$this->stdClassToString($this->response).'<div>');
+		$basicPage->writeLog($api_url.$command.($subcommand?' : '.$subcommand:''),'Input: <div style="display: none;">'.$data.'</div><br>Response: <div style="display: none;">'.$this->prettyPrint(json_encode($this->response)).'<div>');
 	}
 	
-	function stdClassToString($o,$depth=0) {
-		$r='';
-		foreach ($o as $k=>$v) {
-			switch (gettype($v)) {
-				case 'array': case 'object': $r.=$this->stdClassToString($v,$depth+1); break;
-				default: $r.='<div style="padding-left: '.(20*$depth).'px;">'.$k.': '.$v.'</div>'; break;
-			}
-		}
-		return $r;
-	}
-	
+function prettyPrint( $json )
+{
+    $result = '';
+    $level = 0;
+    $in_quotes = false;
+    $in_escape = false;
+    $ends_line_level = NULL;
+    $json_length = strlen( $json );
+
+    for( $i = 0; $i < $json_length; $i++ ) {
+        $char = $json[$i];
+        $new_line_level = NULL;
+        $post = "";
+        if( $ends_line_level !== NULL ) {
+            $new_line_level = $ends_line_level;
+            $ends_line_level = NULL;
+        }
+        if ( $in_escape ) {
+            $in_escape = false;
+        } else if( $char === '"' ) {
+            $in_quotes = !$in_quotes;
+        } else if( ! $in_quotes ) {
+            switch( $char ) {
+                case '}': case ']':
+                    $level--;
+                    $ends_line_level = NULL;
+                    $new_line_level = $level;
+                    break;
+
+                case '{': case '[':
+                    $level++;
+                case ',':
+                    $ends_line_level = $level;
+                    break;
+
+                case ':':
+                    $post = " ";
+                    break;
+
+                case " ": case "\t": case "\n": case "\r":
+                    $char = "";
+                    $ends_line_level = $new_line_level;
+                    $new_line_level = NULL;
+                    break;
+            }
+        } else if ( $char === '\\' ) {
+            $in_escape = true;
+        }
+        if( $new_line_level !== NULL ) {
+            $result .= "\n".str_repeat( "\t", $new_line_level );
+        }
+        $result .= $char.$post;
+    }
+
+    return $result;	
 	function succes() {
 		return true;
 		if (property_exists($this->response,'status')) {

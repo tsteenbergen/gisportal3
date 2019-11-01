@@ -232,7 +232,7 @@ $is_afd_admin=$_SESSION['is_afd_admin'];
 $is_admin=$_SESSION['is_admin'];
 $my_afd=$_SESSION['afdeling'];
 
-$basedir=__DIR;
+$basedir=__DIR__;
 
 class basicPage {
 	var $js_ready='';

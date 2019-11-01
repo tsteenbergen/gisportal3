@@ -85,7 +85,7 @@ if ($loggedIn && $is_admin) {
 					$fs=glob($path.'*.*');
 					if ($fs) foreach ($fs as $f) {unlink($f);}
 				}
-				$openshift_api->deleteDeploymentConfig($id);
+				//$openshift_api->deleteDeploymentConfig($id);
 				$version=$db->selectOne('versions AS a LEFT JOIN images AS b ON b.id=a.image','b.image,a.version','a.id='.$k['version']);
 				$theme=$db->selectOne('onderwerpen','afkorting','id='.$k['onderwerp']);
 				$variables=[

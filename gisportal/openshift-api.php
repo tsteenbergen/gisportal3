@@ -124,10 +124,13 @@ class openshift_api_ {
 		return $r;
 	}
 	
-	function createDeploymentConfig($id, $variables, $todo_types=['deploymentconfig','autoscaler','service','route'],$update=false) {
+	// $todo_types   'all' wordt vertaald naar array met types
+	//				 je kunt ook zelf array met bepaalde types meegeven
+	function createDeploymentConfig($id, $variables, $todo_types='all',$update=false) {
 		global $basedir;
 		global $db;
 		
+		if ($todo_types=='all') {$todo_types=['deploymentconfig','autoscaler','service','route'];}
 		$persistent_storage=$db->selectOne('instellingen','instelling','var=\'persistent_storage\'');
 		if ($persistent_storage) {$persistent_storage=$persistent_storage['instelling'];} else {$persistent_storage='ERROR-NO-PERSISTENT-STORAGE';}
 		foreach ($todo_types as $todo_type) {

@@ -95,7 +95,7 @@ class openshift_api_ {
 			$this->response=json_decode(json_encode(array('status'=>'Failure','message'=>'Not allowed')),false);
 		}
 		global $basicPage;
-		$basicPage->writeLog($api_url.$command.($subcommand?' : '.$subcommand:''),'Input:'.$data.'<br>Response: '.$this->stdClassToString($this->response));
+		$basicPage->writeLog($api_url.$command.($subcommand?' : '.$subcommand:''),'Input: <div style="display: none;">'.$data.'</div><br>Response: <div style="display: none;">'.$this->stdClassToString($this->response).'<div>');
 	}
 	
 	function stdClassToString($o,$depth=0) {
@@ -103,7 +103,7 @@ class openshift_api_ {
 		foreach ($o as $k=>$v) {
 			switch (gettype($v)) {
 				case 'array': case 'object': $r.=$this->stdClassToString($v,$depth+1); break;
-				default: $r.='<span>'.$k.': '.$v.'</span>'; break;
+				default: $r.='<div style="padding-left: '.(20*$depth).'px;">'.$k.': '.$v.'</div>'; break;
 			}
 		}
 		return $r;

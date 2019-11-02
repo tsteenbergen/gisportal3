@@ -386,6 +386,7 @@ function admin_reset(func) {
 					$('#stap2').show();
 					$('#stap3').hide();
 					$('#stap2msg').html(data['msg']);
+					$('.aknop2').prop('disabled',false);
 					break;
 				case 'uitvoeren':
 					$('#stap1').hide();

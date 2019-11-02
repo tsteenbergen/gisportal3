@@ -40,7 +40,7 @@ if ($loggedIn && ($is_admin || $is_afd_admin)){
 		$tabA.='</table></div>';
 
 
-		require('memory.php');
+		require($basedir.'memory.php');
 		$tabA.='<div id="tabs-A2" style="vertical-align: top;">';
 		$tabA.='<table class="colored">';
 		$tabA.='<tr><td>Geheugen persistent storage vlgs. Openshift:</td><td style="text-align: right;">'.$memory->persistent_afk.'</td></tr>';

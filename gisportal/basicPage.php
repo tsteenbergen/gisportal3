@@ -309,7 +309,9 @@ class basicPage {
 		header('Location: '.$toPage);
 		exit();
 	}
-	function getConfig($name) {
+	function getConfig($name) 
+		global $db;
+		
 		switch($name) {
 			case 'geo-mappen': // De root, waarin alle geo-packages worden opgeslagen
 				return '/geo-mappen';

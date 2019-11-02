@@ -32,7 +32,7 @@ class memory  {
 		foreach ($df as $regel) {
 			$regels[]=explode(' ',preg_replace('/\s+/', ' ',$regel));
 		}
-		if (count($regels)>=2)) {
+		if (count($regels)>=2) {
 			for ($t=0;$t<count($regels[0]);$t++) {
 				switch ($regels[0][$t]) {
 					case 'Used': $this->used=intval($regels[1][$t]); break;

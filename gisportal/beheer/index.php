@@ -44,11 +44,11 @@ if ($loggedIn && ($is_admin || $is_afd_admin)){
 		$tabA.='<div id="tabs-A2" style="vertical-align: top;">';
 		$tabA.='<table class="colored">';
 		$tabA.='<tr><td>Geheugen persistent storage vlgs. Openshift:</td><td style="text-align: right;">'.$memory->persistent_afk.'</td></tr>';
-		$tabA.='<tr><td></td><td style="text-align: right;">'.$memory->persistent.'</td></tr>';
+		$tabA.='<tr><td></td><td style="text-align: right;">'.$memory->persistent.'</td><td style="text-align: right;">'.$memory->persistent_mb.'</td></tr>';
 		$tabA.='<tr><td>&nbsp;</td></tr>';
-		$tabA.='<tr><td>Geheugen in gebruik:</td><td style="text-align: right;">'.$memory->used.'</td></tr>';
-		$tabA.='<tr><td>Vrij geheugen:</td><td style="text-align: right;">'.$memory->available.'</td></tr>';
-		$tabA.='<tr><td>Totaal geheugen:</td><td style="text-align: right;">'.($memory->used+$memory->available).'</td></tr>';
+		$tabA.='<tr><td>Geheugen in gebruik:</td><td style="text-align: right;">'.$memory->used.'</td></><td style="text-align: right;">'.$memory->used_mb.'</td></tr>';
+		$tabA.='<tr><td>Vrij geheugen:</td><td style="text-align: right;">'.$memory->available.'</td><td style="text-align: right;">'.$memory->available_mb.'</td></tr>';
+		$tabA.='<tr><td>Totaal geheugen:</td><td style="text-align: right;">'.$memory->total.'</td><td style="text-align: right;">'.$memory->total_mb.'</td></tr>';
 		$tabA.='</table></div>';
 		
 	}

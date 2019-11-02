@@ -4,8 +4,13 @@ if (!isset($openshift_api)) {require('openshift_api.php');}
 class memory  {
 	var $persistent_afk='ERROR-NO-PERSITENT-STORAGE-FOUND';
 	var $persistent=0;
+	var $persistent_mb='';
 	var $used=0;
 	var $available=0;
+	var $total=0;
+	var $used_mb='';
+	var $available_mb='';
+	var $total_mb='';
 	
 	function __construct() {
 		global $openshift_api;
@@ -36,11 +41,16 @@ class memory  {
 		if (count($regels)>=2) {
 			for ($t=0;$t<count($regels[0]);$t++) {
 				switch ($regels[0][$t]) {
-					case 'Used': $this->used=intval($regels[1][$t]); break;
-					case 'Available	': $this->available	=intval($regels[1][$t]); break;
+					case 'Used': $this->used=1024*intval($regels[1][$t]); break;
+					case 'Available	': $this->available	=1024*intval($regels[1][$t]); break;
 				}
 			}
 		}
+		$this->total=$this->used+$this->available;
+		if ($this->persistent>=1) {$this->persistent_mb=round($this->persistent/1000000,1).' MB';}
+		if ($this->used>=1) {$this->used_mb=round($this->used/1000000,1).' MB';}
+		if ($this->available>=1) {$this->available_mb=round($this->available/1000000,1).' MB';}
+		if ($this->total>=1) {$this->total_mb=round($this->total/1000000,1).' MB';}
 	}
 }
 

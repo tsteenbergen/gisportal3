@@ -1,5 +1,5 @@
 <?php
-if (!isset($openshift_api)) {require('openshift_api.php');}
+if (!isset($openshift_api)) {require($basedir.'openshift_api.php');}
 
 class memory  {
 	var $persistent_afk='ERROR-NO-PERSITENT-STORAGE-FOUND';

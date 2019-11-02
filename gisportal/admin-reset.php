@@ -22,7 +22,7 @@ if ($loggedIn && $is_admin) {
 			
 			$r.='<div id="stap1"><h2>1. Filter instellen</h2>';
 			$r.='<div class="error"></div>';
-			$r.='<table>';
+			$r.='<table style="margin: 12px 0 40px 0;">';
 			$themas=$db->select('onderwerpen AS a LEFT JOIN afdelingen AS b ON b.id=a.afdeling','a.id,a.naam,a.afkorting,b.naam AS afdeling','a.id>=1');
 			$kaarten=$db->select('geopackages','id,naam,kaartnaam,onderwerp','id>=1');
 			$js='var kaarten=['; foreach ($kaarten as $kaart) {$js.='['.$kaart['id'].','.$kaart['onderwerp'].',\''.htmlspecialchars($kaart['naam'].' ('.$kaart['kaartnaam'].')\'').'],';} $js.='];';
@@ -40,7 +40,7 @@ if ($loggedIn && $is_admin) {
 			$r.='<div id="stap2" style="display: none;"><h2 id="stap2h2">2. Controle gevolgen</h2>';
 			$r.='<div class="error"></div>';
 			$r.='<div id="stap2msg"></div>';
-			$r.='<table style="margin: 12px 0;">';
+			$r.='<table style="margin: 12px 0 40px 0;">';
 			$r.='<tr><td></td><td><input type="checkbox" id="reset_akkoord"><label for="reset_akkoord"> Ja, dit wil ik</label><div id="jaditwilikerror" class="jaditwilikerror"></div></td></tr>';
 			$r.='</table>';
 			$r.='<button onclick="admin_reset(\'\');" class="aknop aknop2 aknop2a">Filter (opnieuw) instellen</button>';

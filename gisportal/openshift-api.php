@@ -175,6 +175,7 @@ class openshift_api_ {
 	}
 	function deleteDeploymentConfig($id,$todo_types=['replicationcontroller','autoscaler','deploymentconfig','pod','service','route']) {
 		$jsonString = '{"kind":"DeleteOptions","apiVersion":"v1","propagationPolicy":"Foreground","gracePeriodSeconds":0}';
+		$jsonString = '{}';
 		$checkItems=[];
 		foreach ($todo_types as $todo_type) {
 			$todo=$this->def[$todo_type];
@@ -186,7 +187,7 @@ class openshift_api_ {
 					$checkItems[]=['type'=>$todo['type'],'api'=>$todo['api'],'name'=>$this->response->items[$t]->metadata->name];
 				}
 				for ($t=0;$t<count($items);$t++) {
-					$this->command($todo['api'],$todo['type'].'/'.$items[$t],'DELETE',$jsonString);
+					$this->command($todo['api'],$todo['type'].'/'.$items[$t].'?propagationPolicy=Foreground&gracePeriodSeconds=0','DELETE',$jsonString);
 				}
 			}
 		}

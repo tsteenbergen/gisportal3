@@ -7,7 +7,7 @@ class memory  {
 	var $used=0;
 	var $available=0;
 	
-	function __construct($gpid,$checkFilePath=false) {
+	function __construct() {
 		global $openshift_api;
 		
 		$openshift_api->command('api','persistentvolumeclaims/'.$basicPage->getConfig('persistent_storage'));

@@ -52,6 +52,16 @@ class memory  {
 		if ($this->available>=1) {$this->available_mb=number_format($this->available/1000000,0,',','.').' MB';}
 		if ($this->total>=1) {$this->total_mb=number_format($this->total/1000000,0,',','.').' MB';}
 	}
+	function maxUploadsize() {
+		$r=$this->available;
+		$spare=1000000;
+		if ($r>=$spare) {
+			$r-=$spare;
+		} else {
+			$r=0;
+		}
+		return $r;
+	}
 }
 
 $memory=new memory();

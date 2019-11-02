@@ -43,7 +43,7 @@ if ($loggedIn && ($is_admin || $is_afd_admin)){
 
 		$tabA.='<div id="tabs-A2" style="vertical-align: top;">';
 		$tabA.='<table class="colored">';
-		$openshift_api->command('api','persistentvolumeclaims/'.$basicPage->persistent_storage);
+		$openshift_api->command('api','persistentvolumeclaims/'.$basicPage->getConfig('persistent_storage'));
 		$mem1.=$openshift_api->response->spec->resources->requests->storage;
 		$tabA.='<tr><td>Geheugen persistent storage vlgs. Openshift:</td><td>'.$mem1.'</td></tr>';
 		$path=$basicPage->getConfig('geo-mappen');

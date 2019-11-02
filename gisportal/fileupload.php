@@ -67,7 +67,7 @@ if ($loggedIn){
 				$r['msg']='Deze file past niet bij de versie van dit image.';
 			}
 		} else {
-			$r['msg']='Persistent storage /geo-mappen not found.';
+			$r['msg']='Persistent storage '.$path.' not found.';
 		}
 	} else {
 		$r['msg']='Invalid file '.var_export($_FILES,true);

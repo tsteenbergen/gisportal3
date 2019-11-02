@@ -240,9 +240,6 @@ class basicPage {
 	var $js_inline='';
 	var $fouten=[];
 	var $meldingen=[];
-	var $namespace='ERROR-NO-NAMESPACE';
-	var $endpoint='ERROR-NO-ENDPOINT';
-	var $persistent_storage='ERROR-NO-PERSISTENT-STORAGE';
 	
 	function __construct() {
 		global $db;
@@ -251,12 +248,6 @@ class basicPage {
 		if (isset($_SESSION['meldingen'])) {$this->meldingen=$_SESSION['meldingen'];}
 		unset($_SESSION['fouten']);
 		unset($_SESSION['meldingen']);
-		$insts=$db->select('instellingen','instelling,var','id>=1');
-		foreach ($insts as $inst) {
-			if ($inst['var']=='endpoint') {$this->endpoint=$inst['instelling'];}
-			if ($inst['var']=='namespace') {$this->namespace=$inst['instelling'];}
-			if ($inst['var']=='persistent_storage') {$this->persistent_storage=$inst['instelling'];}
-		}
 	}
 	
 	function add_js_inline($js) {
@@ -320,16 +311,22 @@ class basicPage {
 	}
 	function getConfig($name) {
 		switch($name) {
-			case 'geo-mappen': return '/geo-mappen'; break; 						 // De root, waarin alle geo-packages worden opgeslagen
+			case 'geo-mappen': // De root, waarin alle geo-packages worden opgeslagen
+				return '/geo-mappen';
+				break; 						 
 			case 'logfile': // De path/filename van de logfile waarin alle API-calls worden geschreven
 				if ($_SESSION['user']>=1) {
-					$r='/geo-mappen/api_command_'.$_SESSION['user'].'.html';
+					$r=$this->getConfig('geo-mappen').'/api_command_'.$_SESSION['user'].'.html';
 				} else {
-					$r='/geo-mappen/api_command_1.html';
+					$r=$this->getConfig('geo-mappen').'/api_command_1.html';
 				}
-				return $r;
+				break;
+			default:
+				$inst=$db->selectOne('instellingen','instelling,var','var=\''.$name.'\'');
+				if ($inst) {$r=$inst['instelling'];} else {$r=strtoupper('error-no-'.$name);}
 				break;
 		}
+		return $r;
 	}
 	function writeLog($msg,$submsg='',$truncate=false) {
 		if ($_SESSION['is_admin']) {
@@ -338,7 +335,7 @@ class basicPage {
 			if (!$truncate && file_exists($logfile)) {$log=file_get_contents($logfile); $log=substr($log,0,strlen($log)-8);}
 			$log.='<tr><td>'.date('j-n-y H:i:s').'</td><td>&nbsp;</td><td>'.$msg.'</td></tr>';
 			if ($submsg!='') {$log.='<tr><td></td><td>&nbsp;</td><td>'.$submsg.'</td></tr>';}
-			if (file_exists('/geo-mappen')) { // als de persisten storage bestaat...
+			if (file_exists($this->getConfig('geo-mappen'))) { // als de persisten storage bestaat...
 				file_put_contents($logfile,$log.'</table>');
 			}
 		}

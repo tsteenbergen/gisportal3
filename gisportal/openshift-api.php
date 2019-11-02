@@ -57,9 +57,9 @@ class openshift_api_ {
 		// $_SERVER['HTTP_HOST'] = 'appname__-namespace__-c?.apps.ssc-campus.nl'
 		//   het vraagteken staat voor o=Ontwikkel, t=Test, a=Acceptatie, p=Productie
 		if ($api!='api' && $api!='oapi') {
-			$api_url=$basicPage->endpoint.'/'.$api.'/namespaces/'.$basicPage->namespace.'/';
+			$api_url=$basicPage->getConfig('endpoint').'/'.$api.'/namespaces/'.$basicPage->getConfig('namespace').'/';
 		} else {
-			$api_url=$basicPage->endpoint.'/'.$api.'/v1/namespaces/'.$basicPage->namespace.'/';
+			$api_url=$basicPage->getConfig('endpoint').'/'.$api.'/v1/namespaces/'.$basicPage->getConfig('namespace').'/';
 		}
 		$bearer=getenv('gisbeheertoken');
 		if ($this->allowed) {
@@ -140,16 +140,16 @@ class openshift_api_ {
 	function createDeploymentConfig($id, $variables, $todo_types='all',$update=false) {
 		global $basedir;
 		global $db;
+		global $basicPage;
 		
 		if ($todo_types=='all') {$todo_types=['deploymentconfig','autoscaler','service','route'];}
-		$persistent_storage=$db->selectOne('instellingen','instelling','var=\'persistent_storage\'');
-		if ($persistent_storage) {$persistent_storage=$persistent_storage['instelling'];} else {$persistent_storage='ERROR-NO-PERSISTENT-STORAGE';}
+		$persistent_storage=$basicPage->getConfig('persistent_storage');
 		foreach ($todo_types as $todo_type) {
 			$todo=$this->def[$todo_type];
 			$jsonString = file_get_contents($basedir.'json-templates/'.$todo_type.'.json');
 			// default replacements
 			$jsonString = str_replace('$host',$_SERVER['HTTP_HOST'],$jsonString);
-			$jsonString = str_replace('$namespace',$basicPage->namespace,$jsonString);
+			$jsonString = str_replace('$namespace',$basicPage->getConfig('namespace'),$jsonString);
 			$jsonString = str_replace('$storage',$persistent_storage,$jsonString);
 			$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
 			// aanvullende replacements

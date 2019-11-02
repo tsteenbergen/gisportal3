@@ -1,12 +1,11 @@
 <?php  //Start the Session
 
+require('basicPage.php');
 require($basedir.'memory.php');
 require($basedir.'beheer/extention.php');
-require($basedir.'basicPage.php');
 
 $r=array('error'=>true,'msg'=>'Unauthorised action');
 
-$basicPage.writeLog(var_export($_FILES,true));
 if ($loggedIn){
 	if ($_FILES['uploadfile']) {
 		$extradata=explode(',',$_POST['extradata']);

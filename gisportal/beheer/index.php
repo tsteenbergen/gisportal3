@@ -40,22 +40,15 @@ if ($loggedIn && ($is_admin || $is_afd_admin)){
 		$tabA.='</table></div>';
 
 
-
+		require('memory.php');
 		$tabA.='<div id="tabs-A2" style="vertical-align: top;">';
 		$tabA.='<table class="colored">';
-		$openshift_api->command('api','persistentvolumeclaims/'.$basicPage->getConfig('persistent_storage'));
-		$mem1.=$openshift_api->response->spec->resources->requests->storage;
-		$tabA.='<tr><td>Geheugen persistent storage vlgs. Openshift:</td><td>'.$mem1.'</td></tr>';
-		$path=$basicPage->getConfig('geo-mappen');
-		shell_exec(' df '.$path.' > '.$path.'/df.df');
-		$df=file_get_contents($path.'/df.df'); $df=str_ireplace(chr(13).chr(10),chr(13),$df); $df=str_ireplace(chr(10),chr(13),$df); $df=explode(chr(13),$df);
-		$mem2='<table>';
-		foreach ($df as $regel) {
-			$regel=preg_replace('/\s+/', ' ',$regel);
-			$mem2.='<tr><td>'.implode('</td><td>',explode(' ',$regel)).'</td></tr>';
-		}
-		$mem2.='</table>';
-		$tabA.='<tr><td>Geheugen persistent storage vlgs. Linux:</td><td>'.$mem2.'</td></tr>';
+		$tabA.='<tr><td>Geheugen persistent storage vlgs. Openshift:</td><td style="text-align: right;">'.$memory->persistent_afk.'</td></tr>';
+		$tabA.='<tr><td></td><td style="text-align: right;">'.$memory->persistent.'</td></tr>';
+		$tabA.='<tr><td>&nbsp;</td></tr>';
+		$tabA.='<tr><td>Geheugen in gebruik:</td><td style="text-align: right;">'.$memory->used.'</td></tr>';
+		$tabA.='<tr><td>Vrij geheugen:</td><td style="text-align: right;">'.$memory->available.'</td></tr>';
+		$tabA.='<tr><td>Totaal geheugen:</td><td style="text-align: right;">'.($memory->used+$memory->available).'</td></tr>';
 		$tabA.='</table></div>';
 		
 	}

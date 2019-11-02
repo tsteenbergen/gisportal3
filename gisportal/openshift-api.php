@@ -187,12 +187,12 @@ class openshift_api_ {
 					$checkItems[]=['type'=>$todo['type'],'api'=>$todo['api'],'name'=>$this->response->items[$t]->metadata->name];
 				}
 				for ($t=0;$t<count($items);$t++) {
-					$this->command($todo['api'],$todo['type'].'/'.$items[$t].'?propagationPolicy=Foreground&gracePeriodSeconds=0','DELETE',$jsonString);
+					$this->command($todo['api'],$todo['type'].'/'.$items[$t].'?propagationPolicy=Foreground&gracePeriodSeconds=0&includeUninitialized=true&watch=true','DELETE',$jsonString);
 				}
 			}
 		}
 		// Wacht tot alles echt verwijderd is
-		$maxAant=20; // wacht maximaal 20 seconden
+/*		$maxAant=20; // wacht maximaal 20 seconden
 		while (count($checkItems)>0 && $maxAant>0) {
 			for ($t=count($checkItems)-1;$t>=0;$t--) {
 				$item=$checkItems[$t];
@@ -205,7 +205,7 @@ class openshift_api_ {
 			$maxAant--;
 			// usleep(100000); // 100.000 microseconden is 0.1 seconde
 			sleep(1); // 1 seconde
-		}
+		}*/
 	}
 }
 

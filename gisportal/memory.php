@@ -9,6 +9,7 @@ class memory  {
 	
 	function __construct() {
 		global $openshift_api;
+		global $basicPage;
 		
 		$openshift_api->command('api','persistentvolumeclaims/'.$basicPage->getConfig('persistent_storage'));
 		$this->persistent_afk=$openshift_api->response->spec->resources->requests->storage;

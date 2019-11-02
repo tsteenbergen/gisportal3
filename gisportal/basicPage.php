@@ -309,7 +309,7 @@ class basicPage {
 		header('Location: '.$toPage);
 		exit();
 	}
-	function getConfig($name) 
+	function getConfig($name) {
 		global $db;
 		
 		switch($name) {

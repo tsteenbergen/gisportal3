@@ -349,6 +349,7 @@ function admin_reset(func) {
 			$('#jaditwilikerror').html('').removeClass('error');
 			$('#stap2h2').html('3. Uitvoering');
 			$('#reset_akkoord').prop('disabled',true);
+			$('.kaartTD').html('Reset pending');
 			startGpidReset(0);
 			return;
 			break;

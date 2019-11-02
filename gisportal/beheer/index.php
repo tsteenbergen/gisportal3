@@ -42,9 +42,10 @@ if ($loggedIn && ($is_admin || $is_afd_admin)){
 
 		require($basedir.'memory.php');
 		$tabA.='<div id="tabs-A2" style="vertical-align: top;">';
+		$tabA.='Persistent storage vlgs Openshift: '.$memory->persistent_afk.'<br><br>';
 		$tabA.='<table class="colored">';
-		$tabA.='<tr><td>Geheugen persistent storage vlgs. Openshift:</td><td style="text-align: right;">'.$memory->persistent_afk.'</td></tr>';
-		$tabA.='<tr><td></td><td style="text-align: right;">'.$memory->persistent.'</td><td style="text-align: right;">'.$memory->persistent_mb.'</td></tr>';
+		$tabA.='<tr><td></td><td style="text-align: right;">b</td><td style="text-align: right;">Mb</td></tr>';
+		$tabA.='<tr><td>Openshift:</td><td style="text-align: right;">'.$memory->persistent.'</td><td style="text-align: right;">'.$memory->persistent_mb.'</td></tr>';
 		$tabA.='<tr><td>&nbsp;</td></tr>';
 		$tabA.='<tr><td>Geheugen in gebruik:</td><td style="text-align: right;">'.$memory->used.'</td></><td style="text-align: right;">'.$memory->used_mb.'</td></tr>';
 		$tabA.='<tr><td>Vrij geheugen:</td><td style="text-align: right;">'.$memory->available.'</td><td style="text-align: right;">'.$memory->available_mb.'</td></tr>';

@@ -47,10 +47,10 @@ class memory  {
 			}
 		}
 		$this->total=$this->used+$this->available;
-		if ($this->persistent>=1) {$this->persistent_mb=number_format($this->persistent/1000000,0,',','.').' MB';}
-		if ($this->used>=1) {$this->used_mb=number_format($this->used/1000000,0,',','.').' MB';}
-		if ($this->available>=1) {$this->available_mb=number_format($this->available/1000000,0,',','.').' MB';}
-		if ($this->total>=1) {$this->total_mb=number_format($this->total/1000000,0,',','.').' MB';}
+		if ($this->persistent>=1) {$this->persistent_mb=number_format($this->persistent/1000000,0,',','.').' Mb';}
+		if ($this->used>=1) {$this->used_mb=number_format($this->used/1000000,0,',','.').' Mb';}
+		if ($this->available>=1) {$this->available_mb=number_format($this->available/1000000,0,',','.').' Mb';}
+		if ($this->total>=1) {$this->total_mb=number_format($this->total/1000000,0,',','.').' Mb';}
 	}
 	function maxUploadsize() {
 		$r=$this->available;

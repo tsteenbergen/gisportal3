@@ -51,11 +51,11 @@ if ($loggedIn){
 						$r['tabel']=$extention->tabel();
 						
 					} else {
-						if (file_exists($tmp)) {unlink(tmp);}
+						if (file_exists($tmp)) {unlink($tmp);}
 						$r['msg']='Error moving tmp file';
 					}
 				} else {
-					if (file_exists($tmp)) {unlink(tmp);}
+					if (file_exists($tmp)) {unlink($tmp);}
 					$r['msg']='Deze file past niet bij de versie van dit image.';
 				}
 			} else {

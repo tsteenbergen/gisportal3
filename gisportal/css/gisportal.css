@@ -65,6 +65,7 @@ a.small-button, a.small-button:link, a.small-button:visited, a.small-button:hove
 .button-right {float: right; margin-top: 20px;}
 form {display: inline-block;}
 input {border: solid 1px #007bc7; font-family: "RO Sans",Calibri,sans-serif; font-size: 1em; background-color: white; padding: 0 4px;}
+input[type=button] {background-color: #007bc7; font-family: "RO Sans",Calibri,sans-serif; font-size: 1em; color: white; padding: 4px 12px; cursor: pointer;}
 
 .ui-dialog {border: solid 1px #007bc7; background-color: #ddeff8;}
 .ui-dialog-titlebar {background-color: #007bc7; height: 32px; color: white; font-weight: bold;}

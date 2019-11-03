@@ -216,7 +216,7 @@ function initFileuploads() {
 function fileuploadMessage(el,error,msg,progressPercent,data) {
 	if (msg=='') {msg='File upload failed; Unknown error.';}
 	$(el).find('.bar').removeClass('hidden').css('width',parseInt(progressPercent,10)+'%');
-	$(el).find('.msg').removeClass('hidden').html(msg);
+	$(el).find('.msg').removeClass('hidden').removeClass('error').addClass(error?'error':'noerror').html(msg);
 	$(el).find('.spinner').removeClass('hidden').html('Upload in progress');
 	if (progressPercent==100) {
 		data=JSON.parse(data);

@@ -50,6 +50,7 @@ a.mainmenu-item:hover {text-decoration: underline;}
 .melding {border: solid 1px #007bc7; background-color: lightgreen; padding: 12px 20px 4px 20px; margin-bottom: 12px;}
 .fout-onderwerp, .melding-onderwerp {display: inline-block; margin-right: 40px; font-weight: bold; padding-bottom: 8px;}
 .fout-melding, .melding-melding {display: inline-block; padding-bottom: 8px;}
+.msg.error {border: solid 2px red; background-color: orange; display: inline-block; padding: 12px 20px;}
 
 .content {margin: 40px 0;}
 h1 {color: #007bc7; margin: 0 0 20px 0; fint-size: 2em; font-weight: bold;}

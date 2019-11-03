@@ -62,9 +62,10 @@ if ($loggedIn && $is_admin) {
 			if ($kaarten) {
 				$c=count($kaarten);
 				$msg='Er '.($c==1?'is 1 kaart die voldoet':'zijn '.$c.' kaarten die voldoen').' aan dit filter:<table style="margin: 12px 0;">';
+				$msg.='<tr><th></th><th>Afdeling</th><th>Thema</th><th>Kaartnaam</th></tr>';
 				for ($t=0;$t<$c;$t++) {
 					$k=$kaarten[$t];
-					$msg.='<tr><td class="kaartTD" id="kaart'.$t.'" kaartid="'.$k['id'].'"></td><td>'.htmlspecialchars($k['afdeling']).'</td><td>'.htmlspecialchars($k['thema']).'</td><td>'.htmlspecialchars($k['naam']).'</td><td>'.htmlspecialchars($k['kaartnaam']).'</td></tr>';
+					$msg.='<tr><td class="kaartTD" id="kaart'.$t.'" kaartid="'.$k['id'].'"></td><td>'.htmlspecialchars($k['afdeling']).'</td><td>'.htmlspecialchars($k['thema']).'</td><td>'.htmlspecialchars($k['kaartnaam']).'</td></tr>';
 				}
 				$msg.='</table>';
 			} else {

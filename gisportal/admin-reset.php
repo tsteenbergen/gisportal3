@@ -41,10 +41,10 @@ if ($loggedIn && $is_admin) {
 			$r.='<div class="error"></div>';
 			$r.='<div id="stap2msg"></div>';
 			$r.='<table style="margin: 12px 0 40px 0;">';
-			$r.='<tr><td></td><td><input type="checkbox" id="reset_akkoord"><label for="reset_akkoord"> Ja, dit wil ik</label><div id="jaditwilikerror" class="jaditwilikerror"></div></td></tr>';
+			$r.='<tr><td></td><td><input type="checkbox" id="reset_akkoord" onchange="$(\'.kaartTD\').html($(this).prop(\'checked\')?\'Reset pending\':\'\');"><label for="reset_akkoord"> Ja, dit wil ik</label><div id="jaditwilikerror" class="jaditwilikerror"></div></td></tr>';
 			$r.='</table>';
-			$r.='<button onclick="admin_reset(\'\');" class="aknop aknop2 aknop2a">Filter (opnieuw) instellen</button>';
-			$r.='<button style="margin-left: 40px;" onclick="admin_reset(\'uitvoeren\');" class="aknop aknop2 aknop2b">Uitvoeren</button>';
+			$r.='<input type="button" onclick="admin_reset(\'\');" class="aknop aknop2 aknop2a" value="Filter (opnieuw) instellen">';
+			$r.='<input type="button" style="margin-left: 40px;" onclick="admin_reset(\'uitvoeren\');" class="aknop aknop2 aknop2b" value="Uitvoeren">';
 			$r.='</div>';
 			break;
 		case 'controle':

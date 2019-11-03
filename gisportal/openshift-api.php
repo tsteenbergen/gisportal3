@@ -191,7 +191,7 @@ class openshift_api_ {
 			}
 		}
 		// Wacht tot alles echt verwijderd is
-		$maxAant=20; // wacht maximaal 20 seconden
+		$maxAant=100; // wacht maximaal 10 seconden
 		while (count($checkItems)>0 && $maxAant>0) {
 			for ($t=count($checkItems)-1;$t>=0;$t--) {
 				$item=$checkItems[$t];
@@ -202,8 +202,8 @@ class openshift_api_ {
 				
 			}
 			$maxAant--;
-			// usleep(100000); // 100.000 microseconden is 0.1 seconde
-			sleep(1); // 1 seconde
+			usleep(100000); // 100.000 microseconden is 0.1 seconde
+			//sleep(1); // 1 seconde
 		}
 	}
 }

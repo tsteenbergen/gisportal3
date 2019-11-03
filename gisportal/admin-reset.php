@@ -34,7 +34,7 @@ if ($loggedIn && $is_admin) {
 			$r.='<tr><td>Kies kaart:</td><td><select id="sel_kaarten"></select></td></tr>';
 			$r.='<tr><td></td><td><input type="checkbox" id="del_uploads"><label for="del_uploads"> Verwijder uploads</label></td></tr>';
 			$r.='</table>';
-			$r.='<button onclick="admin_reset(\'controle\');" class="aknop aknop1">Controle gevolgen</button>';
+			$r.='<input type="button" onclick="admin_reset(\'controle\');" class="aknop aknop1" value="Controle gevolgen">';
 			$r.='</div>';
 			
 			$r.='<div id="stap2" style="display: none;"><h2 id="stap2h2">2. Controle gevolgen</h2>';

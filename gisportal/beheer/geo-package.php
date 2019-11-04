@@ -139,7 +139,7 @@ if ($loggedIn){
 				$js='var onderwerpen=[';
 				if ($a) {$t=0; foreach ($a as $b) {$js.=($t==0?'':',').'['.$b['id'].','.$b['afdeling'].',\''.htmlspecialchars($b['naam']).'\']'; $t++;}}
 				$basicPage->add_js_inline($js.'];');
-				$basicPage->add_js_ready('depententSelect(\'onderwerp\',\'afdeling\',onderwerpen,\''.$g['onderwerp'].'\','.($id==0 && $t>1?'\'\'':'false').');');
+				$basicPage->add_js_ready('depententSelect(\'onderwerp\',\'afdeling\',onderwerpen,\''.$g['onderwerp'].'\','.($id==0 && $t>1?'\'\'':'false').',\'\');');
 				
 				$back=explode(chr(1),base64_decode($_GET['back']));
 				if (count($back)==3) {$back='?a='.$back[0].'&ond='.$back[1].'&naam='.$back[2];} else {$back='';}

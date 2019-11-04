@@ -19,7 +19,7 @@ class openshift_api_ {
 		],
 		'autoscaler'=>[
 			'type' => 'horizontalpodautoscalers',
-			'array' => 'HorizontalPodAutoscaler',
+			'array' => 'HorizontalPodAutoscalerList',
 			'api' =>'apis/autoscaling/v1',
 			'create-api'=>'apis/autoscaling/v1'
 		],

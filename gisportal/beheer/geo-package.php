@@ -310,16 +310,16 @@ if ($loggedIn){
 					$tab2.='<tr><td>Benodigde files:</td><td id="filetabel">'.$ext->tabel().'</td></tr>';
 					$tab2.='</table>';
 					
-					$tab2.='<br><table><tr><td colspan="">Files die nu voor dit geopackage bestaan:</td></tr>';
-					$tab2.='<tr><th>File</th><th>Modification</th><th>Changed</th><th>Accessed</th><th style="text-align: right;">Size</th></tr>';
 					$pad=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/';
 					$files=glob($pad.'*.*');
 					if ($files) {
+						$tab2.='<br><br><table class="colored">';
+						$tab2.='<tr><th>File</th><th>Modification</th><th>Changed</th><th>Accessed</th><th style="text-align: right;">Size</th></tr>';
 						foreach ($files as $file) {
 							$tab2.='<tr><td>'.substr($file,strlen($pad)).'</td><td>'.date('d-m-Y H:i:s',filemtime($file)).'</td><td>'.date('d-m-Y H:i:s',filectime($file)).'</td><td>'.date('d-m-Y H:i:s',fileatime($file)).'</td><td style="text-align: right;">'.number_format(filesize($file)/1000000,1,',','.').'</td></tr>';
 						}
+						$tab2.='</table>';
 					}
-					$tab2.='</table>';
 					
 					$tab2.='</div>';
 					

@@ -66,6 +66,12 @@ if ($loggedIn){
 					if (!($a['onderwerp']>=1)) {$db->foutMeldingen[]=['onderwerp','Er is geen onderwerop gekozen'];}
 					// velden die niet gespooft mogen worden
 					if (!$db->foutMeldingen) {
+						$ex=$db->select('geopackages','id','onderwerp='.$a['onderwerp'].' AND kaartnaam=\''.$a['Qkaartnaam'].'\' AND id!='.$g['id']);
+						if ($ex) {
+							$db->foutMeldingen[]=['kaartnaam','De combinatie onderwerp-kaartnaam is niet uniek'];
+						}
+					}
+					if (!$db->foutMeldingen) {
 						$version=$db->selectOne('versions AS a LEFT JOIN images AS b ON b.id=a.image','b.image,a.version','a.id='.$a['version']);
 						$theme=$db->selectOne('onderwerpen','afkorting','id='.$a['onderwerp']);
 						$variables=[

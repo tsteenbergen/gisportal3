@@ -310,13 +310,16 @@ if ($loggedIn){
 					$tab2.='<tr><td>Benodigde files:</td><td id="filetabel">'.$ext->tabel().'</td></tr>';
 					$tab2.='</table>';
 					
-					$tab2.='<br><br>TBV ontwikkeling/controle de files die nu voor dit geopackage bestaan:';
-					$files=glob($basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/*.*');
+					$tab2.='<br><table><tr><td colspan="">Files die nu voor dit geopackage bestaan:</td></tr>';
+					$tab2.='<tr><th>File</td><td>Modification</td><td>Changed</td><td>Accessed</td></tr>';
+					$pad=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/';
+					$files=glob($pad.'*.*');
 					if ($files) {
 						foreach ($files as $file) {
-							$tab2.='<br>'.$file;
+							$tab2.='<tr><td>'.substr($file,strlen($pad)).'</td><td>'.date('d-m-Y H:i:s',filemtime($file)).'</td><td>'.date('d-m-Y H:i:s',filectime($file)).'</td><td>'.date('d-m-Y H:i:s',fileatime($file)).'</td></tr>';
 						}
 					}
+					$tab2.='</table>';
 					
 					$tab2.='</div>';
 					

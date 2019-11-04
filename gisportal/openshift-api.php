@@ -158,18 +158,26 @@ class openshift_api_ {
 			}
 			$this->command($todo['create-api'],$todo['type'],$update?'PUT':'POST',$jsonString);
 			if ($todo_type=='deploymentconfig') { // wacht tot deploymentconfig er is
-				/*$maxAant=28; // wacht maximaal 28 seconden
+				$maxAant=28; // wacht maximaal 28 seconden
 				while ($maxAant>0) {
 					$this->command($todo['api'],$todo['type'].'/gpid-'.$id);
 					if ($this->response->kind=='DeploymentConfig') {
-						$maxAant=0;
-					} else {
-						$maxAant--;
+						$todo2=$this->def['replicationcontroller'];
+						$this->command($todo2['api'],$todo2['type'].'/gpid-'.$id);
+						if ($this->response->kind=='ReplicationController') {
+							$maxAant=0;
+						}
+					}
+					$maxAant--;
+					if ($maxAant>0) {
 						// usleep(100000); // 100.000 microseconden is 0.1 seconde
 						sleep(1); // 1 seconde
 					}
-				}*/
-				sleep(10);
+				}
+				if ($maxAant==0) {
+					$basicPage->writeLog('DeploymentConfig en ReplicationController gpid-'.&id.' not properly created.');
+				}
+				//sleep(10);
 			}
 		}
 	}

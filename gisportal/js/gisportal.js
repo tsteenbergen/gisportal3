@@ -208,7 +208,7 @@ function initFileuploads() {
 				$('#extradata').val($(this).attr('uploadfile'));
 				$('#uploadfile').click();
 			});
-			el.after('<div id="progress_'+no+'"><div class="bar hidden"></div><div class="spinner hidden"></div><div class="msg"></div></div>');
+			el.after('<div id="progress_'+no+'"><div class="bar hidden"></div><div class="msg"></div></div>');
 			no++;
 		}
 	}
@@ -216,13 +216,12 @@ function initFileuploads() {
 function fileuploadMessage(el,error,msg,progressPercent,data) {
 	if (msg=='') {msg='File upload failed; Unknown error.';}
 	$(el).find('.bar').removeClass('hidden').css('width',parseInt(progressPercent,10)+'%');
-	$(el).find('.msg').removeClass('hidden').removeClass('error').addClass(error?'error':'noerror').html(msg);
-	$(el).find('.spinner').removeClass('hidden');
+	$(el).find('.msg').removeClass('hidden').removeClass('error').addClass(error?'error':'noerror').addClass('spinner').html(msg);
 	if (progressPercent==100) {
 		data=JSON.parse(data);
 		$(el).find('.bar').addClass('hidden');
-		$(el).find('.spinner').addClass('hidden');
 		if (!error) {$(el).find('.msg').html('').addClass('hidden');}
+		$(el).find('.msg').removeClass('spinner');
 		var el=$($(el).parent()).find('[uploadFile]');
 		if (!error) {
 			if (typeof(data.tabel)!='undefined') {

@@ -158,7 +158,7 @@ class openshift_api_ {
 			}
 			$this->command($todo['create-api'],$todo['type'],$update?'PUT':'POST',$jsonString);
 			if ($todo_type=='deploymentconfig') { // wacht tot deploymentconfig er is
-				$maxAant=28; // wacht maximaal 28 seconden
+				/*$maxAant=28; // wacht maximaal 28 seconden
 				while ($maxAant>0) {
 					$this->command($todo['api'],$todo['type'].'/gpid-'.$id);
 					if ($this->response->kind=='DeploymentConfig') {
@@ -168,8 +168,8 @@ class openshift_api_ {
 						// usleep(100000); // 100.000 microseconden is 0.1 seconde
 						sleep(1); // 1 seconde
 					}
-				}
-				//sleep(10);
+				}*/
+				sleep(10);
 			}
 		}
 	}

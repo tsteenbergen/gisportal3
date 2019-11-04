@@ -84,11 +84,13 @@ if ($loggedIn){
 							'request-cpu'=>'80m',
 							'request-memory'=>'120Mi',
 						];
+						$toFileTab=false;
 						if ($g['id']==0) {
 							$a['Qbrongeopackage']=''; // Dit is nodig omdat het veld in de db verplicht is!!!! Dit moet ooit nog weg!!!!
 							$a['Qopmaak']='';         // Dit is nodig omdat het veld in de db verplicht is!!!! Dit moet ooit nog weg!!!!
 							$g['id']=$db->insert('geopackages',$a);
 							$openshift_api->createDeploymentConfig($g['id'],$variables);
+							$toFileTab=true;
 						} else {
 							if ($g['version']!=$a['version']) { // wijziging image? dan alles opneiuw aanmaken
 								$openshift_api->deleteDeploymentConfig($g['id']);
@@ -107,7 +109,7 @@ if ($loggedIn){
 							}
 						}
 						if ($func=='opslaan') {
-							$basicPage->redirect('/geo/portal/geo-packages.php',false,'Opslaan','De geopackage is opgeslagen.');
+							$basicPage->redirect('/geo/portal/geo-packages.php'.($toFileTab?'?id='.$g['id'].'&tab=file':''),false,'Opslaan','De geopackage is opgeslagen.');
 						} else {
 							$basicPage->redirect('/geo/portal/beheer/geo-package.php?id='.$g['id'],false,'Opslaan','De geopackage is opgeslagen.');
 						}
@@ -334,7 +336,8 @@ if ($loggedIn){
 				$r.=$tab1;
 				if ($tab2) {$r.=$tab2;}
 				$r.='</div>';
-				$basicPage->add_js_ready('$( "#tabs" ).tabs({heightStyle: \'auto\'});');
+				$active=$_GET['tab']=='file'?1:0;
+				$basicPage->add_js_ready('$( "#tabs" ).tabs({heightStyle: \'auto\',active: '.$active.'});');
 			} else {
 				$basicPage->fout('Internal error','Geopackage niet gevonden.');
 			}

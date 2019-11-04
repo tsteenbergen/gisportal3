@@ -111,7 +111,7 @@ if ($loggedIn){
 						}
 						if ($func=='opslaan') {
 							if ($toFileTab) {
-								$basicPage->redirect('/geo/portal/geo-package.php?id='.$g['id'].'&tab=file',false,'Opslaan','De geopackage is opgeslagen.');
+								$basicPage->redirect('/geo/portal/beheer/geo-package.php?id='.$g['id'].'&tab=file',false,'Opslaan','De geopackage is opgeslagen.');
 							} else {
 								$basicPage->redirect('/geo/portal/geo-packages.php',false,'Opslaan','De geopackage is opgeslagen.');
 							}

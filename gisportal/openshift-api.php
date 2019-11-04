@@ -142,8 +142,7 @@ class openshift_api_ {
 		global $db;
 		global $basicPage;
 		
-//		if ($todo_types=='all') {$todo_types=['replicationcontroller','deploymentconfig','autoscaler','service','route'];}
-		if ($todo_types=='all') {$todo_types=['deploymentconfig','route'];}
+		if ($todo_types=='all') {$todo_types=['replicationcontroller','deploymentconfig','autoscaler','service','route'];}
 		$persistent_storage=$basicPage->getConfig('persistent_storage');
 		foreach ($todo_types as $todo_type) {
 			$todo=$this->def[$todo_type];
@@ -157,17 +156,17 @@ class openshift_api_ {
 			foreach ($variables as $variable=>$value) {
 				$jsonString = str_replace('$'.$variable,$value,$jsonString);
 			}
-			if ($todo['type']=='deploymentconfig') {
-				$this->command('apis/apps.openshift.io/v1',$todo['type'].'/gpid-'.$id/instantiate,'POST',$jsonString);
-			} else {
-				$this->command($todo['create-api'],$todo['type'],'POST',$jsonString);
-			}
+			$this->command($todo['create-api'],$todo['type'],$update?'PUT':'POST',$jsonString);
 			if ($todo_type=='deploymentconfig') { // wacht tot deploymentconfig er is
 				$maxAant=28; // wacht maximaal 28 seconden
 				while ($maxAant>0) {
 					$this->command($todo['api'],$todo['type'].'/gpid-'.$id);
 					if ($this->response->kind=='DeploymentConfig') {
-						$maxAant=0;
+						$todo2=$this->def['replicationcontroller'];
+						$this->command($todo2['api'],$todo2['type'].'/gpid-'.$id);
+						if ($this->response->kind=='ReplicationController') {
+							$maxAant=0;
+						}
 					}
 					$maxAant--;
 					if ($maxAant>0) {
@@ -176,7 +175,7 @@ class openshift_api_ {
 					}
 				}
 				if ($maxAant==0) {
-					$basicPage->writeLog('DeploymentConfig gpid-'.$id.' not properly created.');
+					$basicPage->writeLog('DeploymentConfig en ReplicationController gpid-'.$id.' not properly created.');
 				}
 				//sleep(10);
 			}

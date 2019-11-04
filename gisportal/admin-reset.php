@@ -89,11 +89,9 @@ if ($loggedIn && $is_admin) {
 				$openshift_api->deleteDeploymentConfig($id);
 				$version=$db->selectOne('versions AS a LEFT JOIN images AS b ON b.id=a.image','b.image,a.version','a.id='.$k['version']);
 				$theme=$db->selectOne('onderwerpen','afkorting','id='.$k['onderwerp']);
-$basicPage->writeLog(var_export($k,true));
-$basicPage->writeLog(var_export($theme,true));
 				$variables=[
 					'map-theme'=>$theme['afkorting'],
-					'map-name'=>$a['Qkaartnaam'],
+					'map-name'=>$k['kaartnaam'],
 					'image-name'=>$version['image'],
 					'image-version'=>$version['version'],
 					'limit-cpu'=>'800m',

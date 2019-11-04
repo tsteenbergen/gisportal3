@@ -162,11 +162,11 @@ class openshift_api_ {
 				while ($maxAant>0) {
 					$this->command($todo['api'],$todo['type'].'/gpid-'.$id);
 					if ($this->response->kind=='DeploymentConfig') {
-						$todo2=$this->def['replicationcontroller'];
-						$this->command($todo2['api'],$todo2['type'].'/gpid-'.$id);
-						if ($this->response->kind=='ReplicationController') {
+//						$todo2=$this->def['replicationcontroller'];
+//						$this->command($todo2['api'],$todo2['type'].'/gpid-'.$id);
+//						if ($this->response->kind=='ReplicationController') {
 							$maxAant=0;
-						}
+//						}
 					}
 					$maxAant--;
 					if ($maxAant>0) {
@@ -182,7 +182,6 @@ class openshift_api_ {
 		}
 	}
 	function deleteDeploymentConfig($id,$todo_types=['replicationcontroller','deploymentconfig','autoscaler','pod','service','route']) {
-		return;
 		$jsonString = '{"kind":"DeleteOptions","apiVersion":"v1","propagationPolicy":"Background","gracePeriodSeconds":0,"includeUninitialized":true,"watch":true}';
 		$checkItems=[];
 		foreach ($todo_types as $todo_type) {

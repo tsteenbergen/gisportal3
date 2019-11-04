@@ -315,7 +315,7 @@ if ($loggedIn){
 					if ($memory->uploadAllowed()) {
 						$tab2.='<tr><td colspan="2"><button style="float: right;" id="uploadknop" uploadFile="geo-package,'.$g['id'].'">Upload file</button></td></tr>';
 					} else {
-						$tab2.='<tr><td colspan="2">Fout: Op dit moment is er onvoldoende opslagcapaciteit. Daarom kunnen er geen files worden geupload. Waarschuw de beheersders: <a href="mailto:geodata@rivm.nl">geodata@rivm.nl</a></td></tr>';
+						$tab2.='<tr><td colspan="2"><div class="fout">Fout: Op dit moment is er onvoldoende opslagcapaciteit. Daarom kunnen er geen files worden geupload. Waarschuw de beheersders: <a href="mailto:geodata@rivm.nl">geodata@rivm.nl</a></div></td></tr>';
 					}
 					$tab2.='<tr><td>&nbsp;</td></tr>';
 					$ext=new extention($g['id'],true);

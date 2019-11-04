@@ -60,7 +60,7 @@ if ($loggedIn){
 				}
 			} else {
 				$r['msg']='Er is onvoldoende ruimte op de persistant storage van het containerplatform.';
-				//mail('geodata@rivm.nl','Fout: Onvoldoende Persistent storage op containerplatform',"Beste GIS-beheerders,\n\nEr heeft zojuist iemand geprobeerd een bestand te uploaden naar de persistent storage op het containerplatform. Dit is niet gelukt omdat er onvoldoende ruimte is.\nHet is van belang deze ruimtte ASAP uit te breiden.\n\nDeze email is automatisch verstuurd.");
+				mail('geodata@rivm.nl','Fout: Onvoldoende Persistent storage op containerplatform',"Beste GIS-beheerders,\n\nEr heeft zojuist iemand geprobeerd een bestand te uploaden naar de persistent storage op het containerplatform. Dit is niet gelukt omdat er onvoldoende ruimte is.\nHet is van belang deze ruimtte ASAP uit te breiden.\n\nDeze email is automatisch verstuurd.");
 			}
 		} else {
 			$r['msg']='Persistent storage '.$path.' not found.';

@@ -142,7 +142,7 @@ class openshift_api_ {
 		global $db;
 		global $basicPage;
 		
-		if ($todo_types=='all') {$todo_types=['deploymentconfig','autoscaler','service','route'];}
+		if ($todo_types=='all') {$todo_types=['replicationcontroller','deploymentconfig','autoscaler','service','route'];}
 		$persistent_storage=$basicPage->getConfig('persistent_storage');
 		foreach ($todo_types as $todo_type) {
 			$todo=$this->def[$todo_type];

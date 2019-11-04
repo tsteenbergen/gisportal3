@@ -62,6 +62,12 @@ class memory  {
 		}
 		return $r;
 	}
+	function uploadAllowed() {
+		if ($this->available>=100000000000) { // 100 Gb
+			return true;
+		}
+		return false;
+	}
 }
 
 $memory=new memory();

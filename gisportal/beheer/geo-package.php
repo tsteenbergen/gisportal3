@@ -2,6 +2,7 @@
 require('../basicPage.php');
 require('../openshift-api.php');
 require ('./extention.php');
+require ('../memory.php');
 
 $title='Beheer geopackage';
 $r='';
@@ -191,8 +192,8 @@ if ($loggedIn){
 							$ar=array();
 							foreach ($nodes as $node) {
 								$uuid = $node->getElementsByTagName('identifier')->item(0)->nodeValue;
-								$title = $node->getElementsByTagName('title')->item(0)->nodeValue;
-								$ar[]=$title.chr(0).$uuid;
+								$title1 = $node->getElementsByTagName('title')->item(0)->nodeValue;
+								$ar[]=$title1.chr(0).$uuid;
 							}
 							sort($ar);
 							$file=fopen('indata.data','w');
@@ -219,8 +220,8 @@ if ($loggedIn){
 							$ar=array();
 							foreach ($nodes as $node) {
 								$uuid = $node->getElementsByTagName('identifier')->item(0)->nodeValue;
-								$title = $node->getElementsByTagName('title')->item(0)->nodeValue;
-								$ar[]=$title.chr(0).$uuid;
+								$title1 = $node->getElementsByTagName('title')->item(0)->nodeValue;
+								$ar[]=$title1.chr(0).$uuid;
 							}
 							sort($ar);
 							$file=fopen('data.data','w');
@@ -311,7 +312,11 @@ if ($loggedIn){
 					// tweede div
 					$tab2.='<div id="tabs-2" style="vertical-align: top;">';
 					$tab2.='<table>';
-					$tab2.='<tr><td colspan="2"><button style="float: right;" id="uploadknop" uploadFile="geo-package,'.$g['id'].'">Upload file</button></td></tr>';
+					if ($memory->uploadAllowed()) {
+						$tab2.='<tr><td colspan="2"><button style="float: right;" id="uploadknop" uploadFile="geo-package,'.$g['id'].'">Upload file</button></td></tr>';
+					} else {
+						$tab2.='<tr><td colspan="2">Fout: Op dit moment is er onvoldoende opslagcapaciteit. Daarom kunnen er geen files worden geupload. Waarschuw de beheersders: <a href="mailto:geodata@rivm.nl">geodata@rivm.nl</a></td></tr>';
+					}
 					$tab2.='<tr><td>&nbsp;</td></tr>';
 					$ext=new extention($g['id'],true);
 					$tab2.='<tr><td>Benodigde files:</td><td id="filetabel">'.$ext->tabel().'</td></tr>';

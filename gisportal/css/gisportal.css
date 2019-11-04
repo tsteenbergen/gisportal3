@@ -27,7 +27,7 @@ h2.table-header {margin: 0 0 -32px 0;}
 table.colored {border-collapse: collapse; border-bottom: solid 1px #ddeff8;}
 table.colored tr.header {background-color: #ddeff8;}
 table.colored tr.header td {font-weight: bold;}
-table.colored th {text-align: left; font-weight: bold;}
+table.colored th {text-align: left; font-weight: bold; padding: 3px 10px; border-left: solid 1px #ddeff8; border-right: solid 1px #ddeff8;}
 table.colored td {padding: 3px 10px; border-left: solid 1px #ddeff8; border-right: solid 1px #ddeff8;}
 table.colored tr.top-button td {border-left: solid 0px white; border-right: solid 0px white; text-align: right; padding-bottom: 20px;}
 

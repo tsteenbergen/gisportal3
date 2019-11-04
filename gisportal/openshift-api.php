@@ -173,7 +173,7 @@ class openshift_api_ {
 			}
 		}
 	}
-	function deleteDeploymentConfig($id,$todo_types=['replicationcontroller','autoscaler','deploymentconfig','pod','service','route']) {
+	function deleteDeploymentConfig($id,$todo_types=['replicationcontroller','deploymentconfig','autoscaler','pod','service','route']) {
 		$jsonString = '{"kind":"DeleteOptions","apiVersion":"v1","propagationPolicy":"Background","gracePeriodSeconds":0,"includeUninitialized":true,"watch":true}';
 		$checkItems=[];
 		foreach ($todo_types as $todo_type) {

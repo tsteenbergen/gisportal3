@@ -20,6 +20,7 @@ if ($loggedIn){
 			$title='Nieuw geopackage';
 		}
 		if ($func=='delete') {
+			$basicPage->writeLog('Delete geopackage id='.$g['id']);
 			if ($g['id']>=1) {
 				$db->delete('geopackages','id='.$g['id']);
 				$delfs=glob($basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/*.*');
@@ -109,7 +110,11 @@ if ($loggedIn){
 							}
 						}
 						if ($func=='opslaan') {
-							$basicPage->redirect('/geo/portal/geo-packages.php'.($toFileTab?'?id='.$g['id'].'&tab=file':''),false,'Opslaan','De geopackage is opgeslagen.');
+							if ($toFileTab) {
+								$basicPage->redirect('/geo/portal/geo-package.php?id='.$g['id'].'&tab=file',false,'Opslaan','De geopackage is opgeslagen.');
+							} else {
+								$basicPage->redirect('/geo/portal/geo-packages.php',false,'Opslaan','De geopackage is opgeslagen.');
+							}
 						} else {
 							$basicPage->redirect('/geo/portal/beheer/geo-package.php?id='.$g['id'],false,'Opslaan','De geopackage is opgeslagen.');
 						}
@@ -147,7 +152,7 @@ if ($loggedIn){
 				if ($a) {foreach ($a as $b) {$afds[]=$b['id'].'='.htmlspecialchars($b['naam']);}}
 				$tab1.='<form id="form" method="POST"><input type="hidden" name="id" value="'.$id.'"><input type="hidden" name="func" id="func"><table style="margin-bottom: 20px;">';
 				$basicPage->add_js_ready('autoForm(\'form\','.($g['id']==0?'true':'false').',\'#form-edit\',\'#form-delete,#uploadknop\',\'#form-save,#helpindata,#helpdata\');');
-				$tab1.='<tr><td colspan="2"><a class="small-button" id="form-save" onclick="$(\'#func\').val(\'opslaan\'); $(\'#form\').submit();" style="margin-right: 20px;">Opslaan</a><a id="form-edit" class="small-button">Bewerken</a><a id="form-delete" style="float: right;" class="small-button" onclick="areYouSure(\'Verwijderen\',\'Dit geopackage verwijderen?<br><br>NB: Dit kan niet ongedaan worden gemaakt.\',function () {$(\'[name=id]\').removeAttr(\'disabled\'); $(\'#func\').removeAttr(\'disabled\').val(\'delete\'); $(\'#form\').submit();});">Verwijderen</a></td></tr>';
+				$tab1.='<tr><td colspan="2"><a class="small-button" id="form-save" onclick="$(\'#func\').val(\'opslaan\'); $(\'#form\').submit();" style="margin-right: 20px;">Opslaan</a><a id="form-edit" class="small-button">Bewerken</a><a id="form-delete" style="float: right;" class="small-button" onclick="areYouSure(\'Verwijderen\',\'Dit geopackage verwijderen?<br><br>NB: Dit kan niet ongedaan worden gemaakt.\',function () {$(\'[name=id]\').removeAttr(\'disabled\'); $(\'#func\').removeAttr(\'disabled\').val(\'delete\'); console.log(1234); $(\'#form\').submit(); console.log(12345);});">Verwijderen</a></td></tr>';
 				$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
 				$t=time();
 				$tab1.='<tr><td>Afdeling:</td><td>'.$basicPage->getSelect('afdeling',$g['afdeling'],$afds,!$is_admin).'</td></tr>';

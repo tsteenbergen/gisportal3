@@ -45,8 +45,8 @@ $r.='</table>';
 
 $r.='<h2>Perisisent storage</h2>';
 $r.='<table style="margin-bottom: 32px;"><tr><th>Test</th><th>Resultaat</th></tr>';
-$r.='<tr><td>Root map /geo-mappen:</td><td>'.(file_exists('/geo-mappen')?'Exists':'Does not exist').'</td></tr>';
-$r.='<tr><td colspan="2">Persistent storage vlgs Openshift:</td><td style="text-align: right;">'.$memory->persistent_afk.'</td></tr>';
+$r.='<tr><td colspan="2">Root map /geo-mappen:</td><td>'.(file_exists('/geo-mappen')?'Exists':'<div class="test-error">Does not exist</div>').'</td></tr>';
+$r.='<tr><td colspan="2">Persistent storage vlgs Openshift:</td><td style="text-align: right;">'.($memory->persistent_afk>' '?$memory->persistent_afk:'<div class="test-error">Not retrieved</div>').'</td></tr>';
 $r.='<tr><td>Openshift:</td><td style="text-align: right;">'.$memory->persistent.' b</td><td style="text-align: right;">'.$memory->persistent_mb.'</td></tr>';
 $r.='<tr><td>Geheugen in gebruik:</td><td style="text-align: right;">'.$memory->used.' b</td></><td style="text-align: right;">'.$memory->used_mb.'</td></tr>';
 $r.='<tr><td>Vrij geheugen:</td><td style="text-align: right;">'.$memory->available.' b</td><td style="text-align: right;">'.$memory->available_mb.'</td></tr>';
@@ -56,8 +56,8 @@ $r.='</table>';
 $r.='<h2>MYSQL</h2>';
 $r.='<table style="margin-bottom: 32px;"><tr><th>Test</th><th>Resultaat</th></tr>';
 $r.='<tr><td>Connect status:</td><td>'.dbTest().'</td></tr>';
-$gps=$db->select('geopackages','id','id>=1');
-$r.='<tr><td>SELECT count(id) FROM geopackages:</td><td>'.($gps?'Error: No result':count($gps).' records').'</td></tr>';
+$gps=$db->select('afdelingen','id','id>=1');
+$r.='<tr><td>SELECT count(id) FROM afdelingen:</td><td>'.($gps?'<div class="test-error">No result</div>':count($gps).' records').'</td></tr>';
 $r.='</table>';
 
 

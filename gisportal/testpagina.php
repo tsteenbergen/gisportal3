@@ -37,7 +37,7 @@ $r.='Deze testpagina checkt een aantal zaken...<br><br>';
 
 $r.='<h2>Connectie met internet</h2>';
 $r.='<table style="margin-bottom: 32px;"><tr><th>Site</th><th>fsockopen, poort 80</th><th>Ping</th></tr>';
-$sites_to_check=['Domein-dat-echt-niet-bestaat.nl','google.com','github.com','nu.nl'];
+$sites_to_check=['google.com','github.com'];
 foreach ($sites_to_check as $site) {
 	$r.='<tr><td>'.$site.'</td><td>'.is_connected_fsockopen($site).'</td><td>'.is_connected_ping($site).'</td></tr>';
 }

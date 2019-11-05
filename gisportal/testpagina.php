@@ -8,12 +8,12 @@ function is_connected_fsockopen($www) {
         fclose($connected);
 		return 'Connected';
     }
-    return '<span class="test-error>"Not connected</span>';
+    return '<div class="test-error">Not connected</div>';
 }
 
 function is_connected_ping($www) {
 	exec('ping -n 4 '.$www.' 2>&1', $output, $retval);
-	if ($retval != 0) {return '<span class="test-error>"Not connected</span>';}
+	if ($retval != 0) {return '<div class="test-error">Not connected</div>';}
 	return 'Connected'; 
 }
 

@@ -36,24 +36,7 @@ function dbTest() {
 	$mysqli->query('USE '.$dbname);
 	return 'Connected to database '.$dbname;
 }
-function dbTest2() {
-	global $mysqli;
-	
-	$r='<div class="test-error">No result</div>';
-	if ($mysqli) {
-		$result = $mysqli->query('SELECT count(id) AS aantal FROM geopackages WHERE id>=1');
-		$r=var_export($result,true);
-		if ($result && $result!==true) {
-			if ($result->fetch_assoc) {
-				//$r=$result->fetch_assoc();
-				//$r=$r['aantal'].' records';
-			}
-			$result->free();
-		}
-	}
-	return $r;
-}
-  
+ 
 
 $r.='Deze testpagina checkt een aantal zaken...<br><br>';
 
@@ -67,7 +50,7 @@ $r.='</table>';
 
 $r.='<h2>Perisisent storage</h2>';
 $r.='<table style="margin-bottom: 32px;"><tr><th>Test</th><th>Resultaat</th></tr>';
-$r.='<tr><td colspan="2">Root map /geo-mappen:</td><td>'.(file_exists('/geo-mappen')?'Exists':'<div class="test-error">Does not exist</div>').'</td></tr>';
+$r.='<tr><td colspan="2">Root map /geo-mappen:</td><td style="text-align: right;">'.(file_exists('/geo-mappen')?'Exists':'<div class="test-error">Does not exist</div>').'</td></tr>';
 $r.='<tr><td colspan="2">Persistent storage vlgs Openshift:</td><td style="text-align: right;">'.($memory->persistent_afk>' '?$memory->persistent_afk:'<div class="test-error">Not retrieved</div>').'</td></tr>';
 $r.='<tr><td>Openshift:</td><td style="text-align: right;">'.$memory->persistent.' b</td><td style="text-align: right;">'.$memory->persistent_mb.'</td></tr>';
 $r.='<tr><td>Geheugen in gebruik:</td><td style="text-align: right;">'.$memory->used.' b</td></><td style="text-align: right;">'.$memory->used_mb.'</td></tr>';
@@ -78,7 +61,6 @@ $r.='</table>';
 $r.='<h2>MYSQL</h2>';
 $r.='<table style="margin-bottom: 32px;"><tr><th>Test</th><th>Resultaat</th></tr>';
 $r.='<tr><td>Connect status:</td><td>'.dbTest().'</td></tr>';
-$r.='<tr><td>SELECT count(id) FROM geopackages:</td><td>'.dbTest2().'</td></tr>';
 $r.='</table>';
 
 

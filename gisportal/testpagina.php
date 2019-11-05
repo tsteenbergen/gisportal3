@@ -33,6 +33,7 @@ function dbTest() {
 		$mysqli=false;
 		return '<div class="test-error">Database connect failed: '.mysqli_connect_error().'</div>';
 	}
+	$mysqli('USE '.$dbname);
 	return 'Connected to database '.$dbname;
 }
 function dbTest2() {
@@ -40,7 +41,7 @@ function dbTest2() {
 	
 	$r='<div class="test-error">No result</div>';
 	if ($mysqli) {
-		$result = $mysqli->query('SELECT id FROM geopackages WHERE id>=1');
+		$result = $mysqli->query('SELECT count(id) AS aantal FROM geopackages WHERE id>=1');
 		$r=var_export($result,true);
 		if ($result && $result!==true) {
 			if ($result->fetch_assoc) {

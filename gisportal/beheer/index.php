@@ -43,7 +43,7 @@ if ($loggedIn && ($is_admin || $is_afd_admin)){
 		require($basedir.'memory.php');
 		$tabA.='<div id="tabs-A2" style="vertical-align: top;">';
 		$tabA.='<table class="colored">';
-		$tabA.='<tr><td colspam="2">Persistent storage vlgs Openshift:</td><td style="text-align: right;">'.$memory->persistent_afk.'</td></tr>';
+		$tabA.='<tr><td colspan="2">Persistent storage vlgs Openshift:</td><td style="text-align: right;">'.$memory->persistent_afk.'</td></tr>';
 		$tabA.='<tr><td>&nbsp;</td></tr>';
 		$tabA.='<tr><td>Openshift:</td><td style="text-align: right;">'.$memory->persistent.' b</td><td style="text-align: right;">'.$memory->persistent_mb.'</td></tr>';
 		$tabA.='<tr><td>&nbsp;</td></tr>';

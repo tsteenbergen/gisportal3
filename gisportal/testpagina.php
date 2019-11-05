@@ -24,7 +24,7 @@ function dbTest() {
 	$dbuser=getenv('databaseuser');
 	$dbpassword=getenv('databasepassword');
 	if ($dbhost!='' && $dbname!='' && $dbuser!='' && $dbpassword!='') {
-		$this->mysqli = mysqli_connect($dbhost, $dbuser, $dbpassword, $dbname, (int)$dbport);
+		$mysqli = mysqli_connect($dbhost, $dbuser, $dbpassword, $dbname, (int)$dbport);
 	}
 	if (mysqli_connect_errno()) {
 	  return '<div class="test-error">Database connect failed: '.mysqli_connect_error().'</div>';

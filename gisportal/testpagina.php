@@ -12,7 +12,7 @@ function is_connected_fsockopen($www) {
 }
 
 function is_connected_ping($www) {
-	exec('ping -n 4 $ip 2>&1', $output, $retval);
+	exec('ping -n 4 '.$www.' 2>&1', $output, $retval);
 	if ($retval != 0) {return 'Not connected';}
 	return 'Connected'; 
 }

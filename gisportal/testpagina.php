@@ -57,7 +57,7 @@ $test0.='<tr><td>Test API-call (list endpoints):</td><td>'.$endpts.'</td></tr>';
 $test0.='</table>';
 
 $test1.='<h2>Connectie met internet</h2>Er moeten kaart- en metadatagegevens vanaf het internet kunnen worden opgehaald. Ook moet github bereikbaar zijn voor Dockerfiles e.d.';
-test1$sites_to_check=['google.com','github.com'];
+$sites_to_check=['google.com','github.com'];
 foreach ($sites_to_check as $site) {
 	$test1.='<tr><td>'.$site.'</td><td>'.is_connected_fsockopen($site).'</td><td>'.is_connected_ping($site).'</td></tr>';
 }

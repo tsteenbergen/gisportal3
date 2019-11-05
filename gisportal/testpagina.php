@@ -44,7 +44,7 @@ function dbTest2() {
 		if ($result && $result!==true) {
 			if ($result->fetch_assoc) {
 				$r=$result->fetch_assoc();
-				$r=$r['aantal'];
+				$r=$r['aantal'].' records';
 			}
 			$result->free();
 		}
@@ -76,7 +76,7 @@ $r.='</table>';
 $r.='<h2>MYSQL</h2>';
 $r.='<table style="margin-bottom: 32px;"><tr><th>Test</th><th>Resultaat</th></tr>';
 $r.='<tr><td>Connect status:</td><td>'.dbTest().'</td></tr>';
-$r.='<tr><td>SELECT count(id) FROM afdelingen:</td><td>'.dbTest2().' records').'</td></tr>';
+$r.='<tr><td>SELECT count(id) FROM geopackages:</td><td>'.dbTest2().'</td></tr>';
 $r.='</table>';
 
 

@@ -17,6 +17,22 @@ function is_connected_ping($www) {
 	return 'Connected'; 
 }
 
+function dbTest() {
+	$dbhost=getenv('MYSQL_SERVICE_HOST');
+	$dbport=getenv('MYSQL_SERVICE_PORT');
+	$dbname=getenv('databasename');
+	$dbuser=getenv('databaseuser');
+	$dbpassword=getenv('databasepassword');
+	if ($dbhost!='' && $dbname!='' && $dbuser!='' && $dbpassword!='') {
+		$this->mysqli = mysqli_connect($dbhost, $dbuser, $dbpassword, $dbname, (int)$dbport);
+	}
+	if (mysqli_connect_errno()) {
+	  return '<div class="test-error">Database connect failed: '.mysqli_connect_error().'</div>';
+	}
+	return 'Connected to database '.$dbname;
+}
+  
+
 $r.='Deze testpagina checkt een aantal zaken...<br><br>';
 
 $r.='<h2>Connectie met internet</h2>';
@@ -39,7 +55,7 @@ $r.='</table>';
 
 $r.='<h2>MYSQL</h2>';
 $r.='<table style="margin-bottom: 32px;"><tr><th>Test</th><th>Resultaat</th></tr>';
-$r.='<tr><td>Connect status:</td><td>'.$db->dbTest().'</td></tr>';
+$r.='<tr><td>Connect status:</td><td>'.dbTest().'</td></tr>';
 $gps=$db->select('geopackages','id','id>=1');
 $r.='<tr><td>SELECT count(id) FROM geopackages:</td><td>'.($gps?'Error: No result':count($gps).' records').'</td></tr>';
 $r.='</table>';

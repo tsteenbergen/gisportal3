@@ -41,10 +41,11 @@ function dbTest2() {
 	$r='<div class="test-error">No result</div>';
 	if ($mysqli) {
 		$result = $mysqli->query('SELECT count(id) AS aantal FROM geopackages WHERE id>=1');
+		$r=var_export($result,true);
 		if ($result && $result!==true) {
 			if ($result->fetch_assoc) {
-				$r=$result->fetch_assoc();
-				$r=$r['aantal'].' records';
+				//$r=$result->fetch_assoc();
+				//$r=$r['aantal'].' records';
 			}
 			$result->free();
 		}

@@ -23,6 +23,7 @@ body {font-family: "RO Sans",Calibri,sans-serif; font-size: 1.125rem; line-heigh
 
 body, div, p, table, tr, td, form {margin: 0; padding: 0; border: solid 0px black;}
 td {padding: 3px 20px 3px 0; vertical-align: top;}
+th {padding: 3px 20px 3px 0; vertical-align: top; text-align: left; font-weight: bold;}
 h2.table-header {margin: 0 0 -32px 0;}
 table.colored {border-collapse: collapse; border-bottom: solid 1px #ddeff8;}
 table.colored tr.header {background-color: #ddeff8;}
@@ -97,3 +98,5 @@ input[type=button] {background-color: #007bc7; font-family: "RO Sans",Calibri,sa
 .jaditwilikerror.error {display: inline-block; border: solid 2px red; background-color: orange; padding: 12px 20px; margin: 0 0 0 32px;}
 
 .logklik {cursor: pointer; background-color: blue; color: white; padding: 2px 20px; border-radius: 8px; display: inline-block;}
+
+.test-error {background-color: red; color: white; font-weight: bold; margin: -2px -4px; padding: 2px 4px;}

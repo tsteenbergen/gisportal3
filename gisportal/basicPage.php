@@ -39,10 +39,38 @@ class db_ {
 		}
 		if (mysqli_connect_errno()) {
 		  $this->mysqli=false;
-		  die('Database connect failed: '.mysqli_connect_error().'<br>$dbhost: '.$dbhost.'<br>$dbname: '.$dbname.'<br>$dbuser: '.$dbuser.'<br>$dbpassword: '.$dbpassword.'<br>$this->host: '.$this->dbhost.'<br>$this->port: '.$this->dbport.'<br>$this->dbname: '.$this->dbname.'<br>$this->dbuser: '.$this->dbuser.'<br>$this->dbpassword: '.$this->dbpassword);
+		  //die('Database connect failed: '.mysqli_connect_error().'<br>$dbhost: '.$dbhost.'<br>$dbname: '.$dbname.'<br>$dbuser: '.$dbuser.'<br>$dbpassword: '.$dbpassword.'<br>$this->host: '.$this->dbhost.'<br>$this->port: '.$this->dbport.'<br>$this->dbname: '.$this->dbname.'<br>$this->dbuser: '.$this->dbuser.'<br>$this->dbpassword: '.$this->dbpassword);
+		  die('Database connect failed.');
 		} else {
 			$this->query('USE '.$this->dbname);
 		}
+	}
+	
+	function dbTest() {
+		$dbhost=getenv('MYSQL_SERVICE_HOST');
+		$dbport=getenv('MYSQL_SERVICE_PORT');
+		$dbname=getenv('databasename');
+		$dbuser=getenv('databaseuser');
+		$dbpassword=getenv('databasepassword');
+		if ($dbhost!='' && $dbname!='' && $dbuser!='' && $dbpassword!='') {
+			$this->dbhost = $dbhost;
+			$this->dbport = $dbport;
+			$this->dbname = $dbname;
+			$this->dbuser = $dbuser;
+			$this->dbpassword = $dbpassword;
+			$this->mysqli = mysqli_connect($this->dbhost, $this->dbuser, $this->dbpassword, $this->dbname, (int)$this->dbport);
+		} else {
+			$this->dbname='gisportal';
+			$this->dbhost = 'localhost';
+			$this->dbuser = 'root';
+			$this->dbpassword = 'usbw';
+			$this->mysqli = new mysqli($this->dbhost, $this->dbuser, $this->dbpassword);
+		}
+		if (mysqli_connect_errno()) {
+		  $this->mysqli=false;
+		  return 'Database connect failed: '.mysqli_connect_error();
+		}
+		return 'Connected to database '.$dbname;
 	}
   
 	// $fields is associatief array, string- en datumvelden beginnen met een Q

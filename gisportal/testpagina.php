@@ -39,8 +39,9 @@ $r.='</table>';
 
 $r.='<h2>MYSQL</h2>';
 $r.='<table style="margin-bottom: 32px;"><tr><th>Test</th><th>Resultaat</th></tr>';
-$gps=$db->selectOne('geopackages','count(id) AS aantal','id>=1');
-$r.='<tr><td>SELECT count(id) FROM geopackages</td><td>'.($gps?'Error: No result':$gps['aantal'].' records').'</td></tr>';
+$r.='<tr><td>Connect status:</td><td>'.$db->dbTest().'</td></tr>';
+$gps=$db->select('geopackages','id','id>=1');
+$r.='<tr><td>SELECT count(id) FROM geopackages:</td><td>'.($gps?'Error: No result':count($gps).' records').'</td></tr>';
 $r.='</table>';
 
 

@@ -33,7 +33,7 @@ function dbTest() {
 		$mysqli=false;
 		return '<div class="test-error">Database connect failed: '.mysqli_connect_error().'</div>';
 	}
-	$mysqli('USE '.$dbname);
+	$mysqli->query('USE '.$dbname);
 	return 'Connected to database '.$dbname;
 }
 function dbTest2() {

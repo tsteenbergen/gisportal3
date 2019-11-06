@@ -126,7 +126,7 @@ $basicPage->writelog($type.' geeft: '.var_export($todo,true));
 			$this->response=json_decode(json_encode(array('status'=>'Failure','message'=>'Not allowed')),false);
 		}
 		global $basicPage;
-		$basicPage->writeLog($curlrequest.' '.$api_url.$command,'Input:'.$data.'<br><div onclick="$($(this).next()).toggle();" class="logklik">Response</div><div style="display: none;">'.$this->stdClassToString($this->response).'<div>');
+		$basicPage->writeLog($curlrequest.' '.$api_url,'Input:'.$data['parms'].'<br><div onclick="$($(this).next()).toggle();" class="logklik">Response</div><div style="display: none;">'.$this->stdClassToString($this->response).'<div>');
 	}
 	
 	function stdClassToString($o,$depth=0) {
@@ -187,7 +187,6 @@ $basicPage->writelog($type.' geeft: '.var_export($todo,true));
 			foreach ($variables as $variable=>$value) {
 				$jsonString = str_replace('$'.$variable,$value,$jsonString);
 			}
-$basicPage->writeLog('$jsonString='.$jsonString);
 			$this->command($update?'PUT':'POST',$todo_type,['parms'=>$jsonString]);
 			if ($todo_type=='deploymentconfig') { // wacht tot deploymentconfig er is
 				$maxAant=28; // wacht maximaal 28 seconden

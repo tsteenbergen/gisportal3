@@ -46,7 +46,7 @@ class openshift_api_ {
 		$this->response=json_decode(json_encode(array('status'=>'Failure','message'=>'Not allowed')),false);
 	}
 	
-	function command($api,$command,$curlrequest,$data=false) {
+	function command($curlrequest,$api,$command,$data=false) {
 		global $basicPage;
 		global $is_admin;
 		

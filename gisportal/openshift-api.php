@@ -93,7 +93,7 @@ $basicPage->writelog($type.' geeft: '.var_export($todo,true));
 		if (isset($data['labelSelector'])) {$api_url.='?labelSelector='.$data['labelSelector'];}
 
 		$bearer=getenv('gisbeheertoken');
-		if ($this->allowed) {
+		if ($this->allowed || $type=='endpoint') {
 			if ($api_url!='' && $bearer!='') {
 				$headers = [
 					'Authorization: Bearer '.$bearer,

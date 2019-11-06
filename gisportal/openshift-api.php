@@ -106,7 +106,7 @@ $basicPage->writelog($type.' geeft: '.var_export($todo,true));
 				curl_setopt($curl, CURLOPT_URL, $api_url);
 				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $curlrequest);
 				curl_setopt($curl, CURLOPT_POST, false);
-				if ($data) {curl_setopt($curl, CURLOPT_POSTFIELDS, $data);}
+				if (isset($data['parms'])) {curl_setopt($curl, CURLOPT_POSTFIELDS, $data['parms']);}
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 				$this->response=curl_exec($curl);

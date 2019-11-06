@@ -65,10 +65,12 @@ foreach ($sites_to_check as $site) {
 $test1.='</table>';
 
 $test2.='<h2>Perisisent storage</h2>Persistent storage is nodig om alle bestanden (kaarten) op te slaan.';
-$test2.='<table style="margin-bottom: 32px;"><tr><th>Test</th><th>Resultaat</th></tr>';
-$test2.='<tr><td colspan="2">Root map /geo-mappen:</td><td style="text-align: right;">'.(file_exists('/geo-mappen')?'Exists':'<div class="test-error">Does not exist</div>').'</td></tr>';
-$test2.='<tr><td colspan="2">Persistent storage vlgs Openshift:</td><td style="text-align: right;">'.($memory->persistent_afk>' '?$memory->persistent_afk:'<div class="test-error">Not retrieved</div>').'</td></tr>';
-$test2.='<tr><td>Openshift:</td><td style="text-align: right;">'.$memory->persistent.' b</td><td style="text-align: right;">'.$memory->persistent_mb.'</td></tr>';
+$test2.='<table style="margin-bottom: 32px;"><tr><th>Test</th><th style="text-align: right;">Resultaat</th></tr>';
+$test2.='<tr><td>Root map /geo-mappen:</td><td></td><td style="text-align: right;">'.(file_exists('/geo-mappen')?'Exists':'<div class="test-error">Does not exist</div>').'</td></tr>';
+$test2.='<tr><td>Persistent storage vlgs Openshift:</td><td></td><td style="text-align: right;">'.($memory->persistent_afk>' '?$memory->persistent_afk:'<div class="test-error">Not retrieved</div>').'</td></tr>';
+if ($memory->persistent_afk>' ') {
+	$test2.='<tr><td>'.$memory->persistent_afk.':</td><td style="text-align: right;">'.$memory->persistent.' b</td><td style="text-align: right;">'.$memory->persistent_mb.'</td></tr>';
+}
 $test2.='<tr><td>Geheugen in gebruik:</td><td style="text-align: right;">'.$memory->used.' b</td></><td style="text-align: right;">'.$memory->used_mb.'</td></tr>';
 $test2.='<tr><td>Vrij geheugen:</td><td style="text-align: right;">'.$memory->available.' b</td><td style="text-align: right;">'.$memory->available_mb.'</td></tr>';
 $test2.='<tr><td>Totaal geheugen:</td><td style="text-align: right;">'.$memory->total.' b</td><td style="text-align: right;">'.$memory->total_mb.'</td></tr>';

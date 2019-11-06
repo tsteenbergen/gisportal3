@@ -58,6 +58,7 @@ $test0.='</table>';
 
 $test1.='<h2>Connectie met internet</h2>Er moeten kaart- en metadatagegevens vanaf het internet kunnen worden opgehaald. Ook moet github bereikbaar zijn voor Dockerfiles e.d.';
 $sites_to_check=['google.com','github.com'];
+$test0.='<table style="margin-bottom: 32px;"><tr><th>Domein</th><th>fsockopen poort 80</th><th>Ping</th></tr>';
 foreach ($sites_to_check as $site) {
 	$test1.='<tr><td>'.$site.'</td><td>'.is_connected_fsockopen($site).'</td><td>'.is_connected_ping($site).'</td></tr>';
 }

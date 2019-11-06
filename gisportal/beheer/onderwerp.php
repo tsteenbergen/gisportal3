@@ -60,7 +60,7 @@ if ($loggedIn && ($is_afd_admin || $is_admin)){
 										// Wacht tot route weg is
 										$maxAant=3; // wacht maximaal 0.3 seconden
 										while ($maxAant>0) {
-											$openshift_api->command('apis/route.openshift.io/v1','routes'.'/gpid-'.$route['id']);
+											$openshift_api->command('GET','apis/route.openshift.io/v1','routes'.'/gpid-'.$route['id']);
 											if ($openshift_api->response->status=='Failure' && $openshift_api->response->reason=='NotFound') {
 												$maxAant=0;
 											} else {

@@ -21,7 +21,7 @@ if ($loggedIn && $is_admin){
 			$r.='<p>Api call: <select id="api"><option'.($api=='api'?' selected="selected"':'').'>api</option><option'.($api=='oapi'?' selected="selected"':'').'>oapi</option><option'.($api=='apis'?' selected="selected"':'').'>apis</option></select><input id="apicall" style="width: calc(100% - 250px);" value="'.$apicall.'"><select id="apisub"><option value="false"'.($apisub=='false'?' selected="selected"':'').'>(false)</option><option'.($apisub=='POST'?' selected="selected"':'').'>POST</option><option'.($apisub=='PUT'?' selected="selected"':'').'>PUT</option><option'.($apisub=='DELETE'?' selected="selected"':'').'>DELETE</option></select><a onclick="document.location=\'admin.php?func=apicall&go=\'+$(\'#api\').val()+\'|\'+$(\'#apicall\').val()+\'|\'+$(\'#apisub\').val();" class="small-button" style="margin-left: 12px;">Go</a></p>';
 			if ($apicall!='') {
 				require('openshift-api.php');
-				$result=$openshift_api->command($api,$apicall,$apisub==='false'?false:$apisub);
+				$result=$openshift_api->command($apisub==='false'?'GET':$apisub,$api,$apicall);
 				$r.='<p>'.$openshift_api->responseToString().'</p>';
 			}
 			break;

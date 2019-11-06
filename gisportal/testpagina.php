@@ -41,13 +41,13 @@ function dbTest() {
 		return wrapError('Database connect failed: '.mysqli_connect_error());
 	}
 	$mysqli->query('USE '.$dbname);
-	return 'Connected to database '.$dbname;
+	return 'Connected to \''.$dbname.'\'';
 }
  
 
 $test0.='<h2>Interne API-calls</h2>Het gisportaal moet API-calls kunnen doen om kaarten via het containerplatform beschikbaar te stellen (deploymentconfig, service, route, etc.).';
 $test0.='<table style="margin-bottom: 32px;"><tr><th>Test</th><th>Resultaat</th></tr>';
-$openshift_api->command('api','endpoints');
+$openshift_api->command('GET','api','endpoints');
 if ($openshift_api->response->kind=='EndpointsList') {
 	$endpts='API accessible';
 } else {
@@ -65,7 +65,7 @@ foreach ($sites_to_check as $site) {
 $test1.='</table>';
 
 $test2.='<h2>Perisisent storage</h2>Persistent storage is nodig om alle bestanden (kaarten) op te slaan.';
-$test2.='<table style="margin-bottom: 32px;"><tr><th>Test</th><th style="text-align: right;">Resultaat</th></tr>';
+$test2.='<table style="margin-bottom: 32px;"><tr><th>Test</th><th></th><th style="text-align: right;">Resultaat</th></tr>';
 $test2.='<tr><td>Root map /geo-mappen:</td><td></td><td style="text-align: right;">'.(file_exists('/geo-mappen')?'Exists':'<div class="test-error">Does not exist</div>').'</td></tr>';
 $test2.='<tr><td>Persistent storage vlgs Openshift:</td><td></td><td style="text-align: right;">'.($memory->persistent_afk>' '?$memory->persistent_afk:'<div class="test-error">Not retrieved</div>').'</td></tr>';
 if ($memory->persistent_afk>' ') {
@@ -78,7 +78,7 @@ $test2.='</table>';
 
 $test3.='<h2>MYSQL</h2>Er moet een MYSQL-database zijn waarin alle kaartdefinities staan.';
 $test3.='<table style="margin-bottom: 32px;"><tr><th>Test</th><th>Resultaat</th></tr>';
-$test3.='<tr><td>Connect status:</td><td>'.dbTest().'</td></tr>';
+$test3.='<tr><td>Connect with database:</td><td>'.dbTest().'</td></tr>';
 $test3.='</table>';
 
 if ($errors==0) {

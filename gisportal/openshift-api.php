@@ -46,7 +46,7 @@ class openshift_api_ {
 		$this->response=json_decode(json_encode(array('status'=>'Failure','message'=>'Not allowed')),false);
 	}
 	
-	function command($api,$command,$subcommand=false,$data=false) {
+	function command($api,$command,$curlrequest,$data=false) {
 		global $basicPage;
 		global $is_admin;
 		
@@ -73,7 +73,7 @@ class openshift_api_ {
 				$curl = curl_init();
 				curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 				curl_setopt($curl, CURLOPT_URL, $api_url.$command);
-				if ($subcommand) {curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $subcommand);}
+				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $curlrequest);
 				curl_setopt($curl, CURLOPT_POST, false);
 				if ($data) {curl_setopt($curl, CURLOPT_POSTFIELDS, $data);}
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -95,7 +95,7 @@ class openshift_api_ {
 			$this->response=json_decode(json_encode(array('status'=>'Failure','message'=>'Not allowed')),false);
 		}
 		global $basicPage;
-		$basicPage->writeLog($api_url.$command.($subcommand?' : '.$subcommand:''),'Input:'.$data.'<br><div onclick="$($(this).next()).toggle();" class="logklik">Response</div><div style="display: none;">'.$this->stdClassToString($this->response).'<div>');
+		$basicPage->writeLog($curlrequest.' '.$api_url.$command,'Input:'.$data.'<br><div onclick="$($(this).next()).toggle();" class="logklik">Response</div><div style="display: none;">'.$this->stdClassToString($this->response).'<div>');
 	}
 	
 	function stdClassToString($o,$depth=0) {
@@ -156,14 +156,14 @@ class openshift_api_ {
 			foreach ($variables as $variable=>$value) {
 				$jsonString = str_replace('$'.$variable,$value,$jsonString);
 			}
-			$this->command($todo['create-api'],$todo['type'],$update?'PUT':'POST',$jsonString);
+			$this->command($update?'PUT':'POST',$todo['create-api'],$todo['type'],$jsonString);
 			if ($todo_type=='deploymentconfig') { // wacht tot deploymentconfig er is
 				$maxAant=28; // wacht maximaal 28 seconden
 				while ($maxAant>0) {
-					$this->command($todo['api'],$todo['type'].'/gpid-'.$id);
+					$this->command('GET',$todo['api'],$todo['type'].'/gpid-'.$id);
 					if ($this->response->kind=='DeploymentConfig') {
 //						$todo2=$this->def['replicationcontroller'];
-//						$this->command($todo2['api'],$todo2['type'].'/gpid-'.$id);
+//						$this->command('GET',$todo2['api'],$todo2['type'].'/gpid-'.$id);
 //						if ($this->response->kind=='ReplicationController') {
 							$maxAant=0;
 //						}
@@ -186,7 +186,7 @@ class openshift_api_ {
 		$checkItems=[];
 		foreach ($todo_types as $todo_type) {
 			$todo=$this->def[$todo_type];
-			$this->command($todo['api'],$todo['type'].'?labelSelector=name=gpid-'.$id,'GET','{"includeUninitialized":true}');
+			$this->command('GET',$todo['api'],$todo['type'].'?labelSelector=name=gpid-'.$id,'{"includeUninitialized":true}');
 			if ($this->response->kind==$todo['array']) {
 				$items=[];
 				for ($t=0;$t<count($this->response->items);$t++) {
@@ -194,7 +194,7 @@ class openshift_api_ {
 					$checkItems[]=['type'=>$todo['type'],'api'=>$todo['api'],'name'=>$this->response->items[$t]->metadata->name];
 				}
 				for ($t=0;$t<count($items);$t++) {
-					$this->command($todo['api'],$todo['type'].'/'.$items[$t],'DELETE',$jsonString);
+					$this->command('DELETE',$todo['api'],$todo['type'].'/'.$items[$t],$jsonString);
 				}
 			}
 		}
@@ -203,7 +203,7 @@ class openshift_api_ {
 		while (count($checkItems)>0 && $maxAant>0) {
 			for ($t=count($checkItems)-1;$t>=0;$t--) {
 				$item=$checkItems[$t];
-				$this->command($item['api'],$item['type'].'/'.$item['name']);
+				$this->command('GET',$item['api'],$item['type'].'/'.$item['name']);
 				if ($this->response->status=='Failure' && $this->response->reason=='NotFound') {
 					array_splice($checkItems,$t,1);
 				}

@@ -64,11 +64,8 @@ if (isset($_POST['username']) and isset($_POST['password'])){
 			// Uitvoeren diverse testen
 			require ('openshift-api.php');
 			// Test bestaan api
-			$openshift_api->command('api','endpoints');
+			$openshift_api->command('GET','api','endpoints');
 			$basicPage->writeLog($openshift_api->response->kind=='EndpointsList'?'API is ok.':'<b style="background-color: red;color: white;padding: 0px 8px;">Error:</b> API not available. Check $api_url in openshift-api.php and/or the permissions of the serviceaccount gisbeheer.');
-			// Test bestaan apis
-			$openshift_api->command('apis','endpoints');
-			$basicPage->writeLog($openshift_api->response->kind=='EndpointsList'?'APIS is ok.':'<b style="background-color: red;color: white;padding: 0px 8px;">Error:</b> APIS not available. Check $api_url in openshift-api.php and/or the permissions of the serviceaccount gisbeheer.');
 //				$fs=array();
 //				rGlobs($basicPage->getConfig('geo-mappen'),$fs);
 //				$logs.='<tr><td>'.date('j-n-y H:i:s').'</td><td>&nbsp;</td><td>'.implode('<br>',$fs).'</td></tr>';

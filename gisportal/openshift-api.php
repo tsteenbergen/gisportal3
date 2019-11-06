@@ -6,6 +6,11 @@ class openshift_api_ {
 			'array'=>'EndpointsList',
 			'get-api'=>'api/v1',
 		],	
+		'persistentvolumeclaim'=>[
+			'type'=>'persistentvolumeclaims',
+			'array'=>'PersistentVolumeClaimList',
+			'get-api'=>'api/v1',
+		],
 		'replicationcontroller'=>[
 			'type'=>'replicationcontrollers',
 			'array'=>'ReplicationControllerList',

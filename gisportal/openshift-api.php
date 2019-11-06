@@ -81,7 +81,6 @@ class openshift_api_ {
 		}*/
 		
 		$todo=$this->def[$type];
-$basicPage->writelog($type.' geeft: '.var_export($todo,true));
 		$api_url=$basicPage->getConfig('endpoint').'/';
 		switch ($curlrequest) {
 			case 'GET': $api_url.=$todo['get-api']; break;

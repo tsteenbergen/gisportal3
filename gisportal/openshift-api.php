@@ -1,39 +1,50 @@
 <?php
 class openshift_api_ {
 	var $def=[
+		'endpoint'=>[
+			'type'=>'endpoints',
+			'array'=>'EndpointsList',
+			'get-api'=>'api/v1',
+		],	
 		'replicationcontroller'=>[
 			'type'=>'replicationcontrollers',
 			'array'=>'ReplicationControllerList',
-			'api'=>'api'
+			'get-api'=>'api/v1',
+			'delete-api'=>'api/v1',
 		],	
 		'deploymentconfig'=>[
 			'type'=>'deploymentconfigs',
 			'array'=>'DeploymentConfigList',
-			'api'=>'apis/apps.openshift.io/v1',
-			'create-api'=>'oapi'
+			'get-api'=>'apis/apps.openshift.io/v1',
+			'post-api'=>'oapi/v1',
+			'delete-api'=>'apis/apps.openshift.io/v1',
 		],	
 		'pod'=>[
 			'type' => 'pods',
 			'array' => 'PodList',
-			'api' =>'api'
+			'get-api'=>'api/v1',
+			'delete-api'=>'api/v1',
 		],
 		'autoscaler'=>[
 			'type' => 'horizontalpodautoscalers',
 			'array' => 'HorizontalPodAutoscalerList',
-			'api' =>'apis/autoscaling/v1',
-			'create-api'=>'apis/autoscaling/v1'
+			'get-api'=>'apis/autoscaling/v1',
+			'post-api'=>'apis/autoscaling/v1',
+			'delete-api'=>'apis/autoscaling/v1',
 		],
 		'service'=>[
 			'type' => 'services',
 			'array' => 'ServiceList',
-			'api' =>'api',
-			'create-api'=>'api'
+			'get-api'=>'api/v1',
+			'post-api'=>'api/v1',
+			'delete-api'=>'api/v1',
 		],
 		'route'=>[
 			'type' => 'routes',
 			'array' => 'RouteList',
-			'api' =>'apis/route.openshift.io/v1',
-			'create-api'=>'oapi'
+			'get-api'=>'apis/route.openshift.io/v1',
+			'post-api'=>'oapi/v1',
+			'delete-api'=>'apis/route.openshift.io/v1',
 		],
 	];
 
@@ -46,7 +57,8 @@ class openshift_api_ {
 		$this->response=json_decode(json_encode(array('status'=>'Failure','message'=>'Not allowed')),false);
 	}
 	
-	function command($curlrequest,$api,$command,$data=false) {
+	// $curlrequest GET, POST, of DELETE
+	function command($curlrequest,$type,$data=false) {
 		global $basicPage;
 		global $is_admin;
 		
@@ -56,11 +68,24 @@ class openshift_api_ {
 		// $_SERVER['HTTP_HOST'] = 'gisportal-sscc-geoweb-co.apps.ssc-campus.nl'
 		// $_SERVER['HTTP_HOST'] = 'appname__-namespace__-c?.apps.ssc-campus.nl'
 		//   het vraagteken staat voor o=Ontwikkel, t=Test, a=Acceptatie, p=Productie
-		if ($api!='api' && $api!='oapi') {
+
+		/*if ($api!='api' && $api!='oapi') {
 			$api_url=$basicPage->getConfig('endpoint').'/'.$api.'/namespaces/'.$basicPage->getConfig('namespace').'/';
 		} else {
 			$api_url=$basicPage->getConfig('endpoint').'/'.$api.'/v1/namespaces/'.$basicPage->getConfig('namespace').'/';
+		}*/
+		
+		$todo=$this->def[$type];
+		$api_url=$basicPage->getConfig('endpoint').'/';
+		switch ($curlrequest) {
+			case 'GET': $api_url.=$todo['api-get']; break;
+			case 'POST': $api_url.=$todo['api-post']; break;
+			case 'DELETE': $api_url.=$todo['api-delete']; break;
 		}
+		$api_url.='/namespaces/'.$basicPage->getConfig('namespace');
+		if (isset($data['name'])) {$api_url.='/'.$data['name'];}
+		if (isset($data['labelSelector'])) {$api_url.='?labelSelector='.$data['labelSelector'];}
+
 		$bearer=getenv('gisbeheertoken');
 		if ($this->allowed) {
 			if ($api_url!='' && $bearer!='') {
@@ -72,7 +97,7 @@ class openshift_api_ {
 
 				$curl = curl_init();
 				curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-				curl_setopt($curl, CURLOPT_URL, $api_url.$command);
+				curl_setopt($curl, CURLOPT_URL, $api_url);
 				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $curlrequest);
 				curl_setopt($curl, CURLOPT_POST, false);
 				if ($data) {curl_setopt($curl, CURLOPT_POSTFIELDS, $data);}
@@ -156,14 +181,14 @@ class openshift_api_ {
 			foreach ($variables as $variable=>$value) {
 				$jsonString = str_replace('$'.$variable,$value,$jsonString);
 			}
-			$this->command($update?'PUT':'POST',$todo['create-api'],$todo['type'],$jsonString);
+			$this->command($update?'PUT':'POST',$todo['type'],['parms'=>$jsonString]);
 			if ($todo_type=='deploymentconfig') { // wacht tot deploymentconfig er is
 				$maxAant=28; // wacht maximaal 28 seconden
 				while ($maxAant>0) {
-					$this->command('GET',$todo['api'],$todo['type'].'/gpid-'.$id);
+					$this->command('GET',$todo['type'],['name'=>'/gpid-'.$id]);
 					if ($this->response->kind=='DeploymentConfig') {
 //						$todo2=$this->def['replicationcontroller'];
-//						$this->command('GET',$todo2['api'],$todo2['type'].'/gpid-'.$id);
+//						$this->command('GET',$todo2['type'],['name'=>'gpid-'.$id]);
 //						if ($this->response->kind=='ReplicationController') {
 							$maxAant=0;
 //						}
@@ -186,7 +211,7 @@ class openshift_api_ {
 		$checkItems=[];
 		foreach ($todo_types as $todo_type) {
 			$todo=$this->def[$todo_type];
-			$this->command('GET',$todo['api'],$todo['type'].'?labelSelector=name=gpid-'.$id,'{"includeUninitialized":true}');
+			$this->command('GET',$todo['type'],[labelSelector=>'name=gpid-'.$id,'parms'=>'{"includeUninitialized":true}']);
 			if ($this->response->kind==$todo['array']) {
 				$items=[];
 				for ($t=0;$t<count($this->response->items);$t++) {
@@ -194,7 +219,7 @@ class openshift_api_ {
 					$checkItems[]=['type'=>$todo['type'],'api'=>$todo['api'],'name'=>$this->response->items[$t]->metadata->name];
 				}
 				for ($t=0;$t<count($items);$t++) {
-					$this->command('DELETE',$todo['api'],$todo['type'].'/'.$items[$t],$jsonString);
+					$this->command('DELETE',$todo['type'],['name'=>$items[$t],'parms'=>$jsonString]);
 				}
 			}
 		}
@@ -203,7 +228,7 @@ class openshift_api_ {
 		while (count($checkItems)>0 && $maxAant>0) {
 			for ($t=count($checkItems)-1;$t>=0;$t--) {
 				$item=$checkItems[$t];
-				$this->command('GET',$item['api'],$item['type'].'/'.$item['name']);
+				$this->command('GET',$item['type'],['name'=>$item['name']]);
 				if ($this->response->status=='Failure' && $this->response->reason=='NotFound') {
 					array_splice($checkItems,$t,1);
 				}

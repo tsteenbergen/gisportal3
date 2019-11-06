@@ -47,7 +47,7 @@ function dbTest() {
 
 $test0.='<h2>Interne API-calls</h2>Het gisportaal moet API-calls kunnen doen om kaarten via het containerplatform beschikbaar te stellen (deploymentconfig, service, route, etc.).';
 $test0.='<table style="margin-bottom: 32px;"><tr><th>Test</th><th>Resultaat</th></tr>';
-$openshift_api->command('GET','api','endpoints');
+$openshift_api->command('GET','endpoint');
 if ($openshift_api->response->kind=='EndpointsList') {
 	$endpts='API accessible';
 } else {

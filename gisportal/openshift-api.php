@@ -187,6 +187,7 @@ $basicPage->writelog($type.' geeft: '.var_export($todo,true));
 			foreach ($variables as $variable=>$value) {
 				$jsonString = str_replace('$'.$variable,$value,$jsonString);
 			}
+$basicPage->writeLog('$jsonString='.$jsonString);
 			$this->command($update?'PUT':'POST',$todo_type,['parms'=>$jsonString]);
 			if ($todo_type=='deploymentconfig') { // wacht tot deploymentconfig er is
 				$maxAant=28; // wacht maximaal 28 seconden

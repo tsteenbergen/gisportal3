@@ -187,14 +187,14 @@ $basicPage->writelog($type.' geeft: '.var_export($todo,true));
 			foreach ($variables as $variable=>$value) {
 				$jsonString = str_replace('$'.$variable,$value,$jsonString);
 			}
-			$this->command($update?'PUT':'POST',$todo['type'],['parms'=>$jsonString]);
+			$this->command($update?'PUT':'POST',$todo_type,['parms'=>$jsonString]);
 			if ($todo_type=='deploymentconfig') { // wacht tot deploymentconfig er is
 				$maxAant=28; // wacht maximaal 28 seconden
 				while ($maxAant>0) {
-					$this->command('GET',$todo['type'],['name'=>'/gpid-'.$id]);
+					$this->command('GET',$todo_type,['name'=>'/gpid-'.$id]);
 					if ($this->response->kind=='DeploymentConfig') {
 //						$todo2=$this->def['replicationcontroller'];
-//						$this->command('GET',$todo2['type'],['name'=>'gpid-'.$id]);
+//						$this->command('GET','replicationcontroller',['name'=>'gpid-'.$id]);
 //						if ($this->response->kind=='ReplicationController') {
 							$maxAant=0;
 //						}
@@ -222,10 +222,10 @@ $basicPage->writelog($type.' geeft: '.var_export($todo,true));
 				$items=[];
 				for ($t=0;$t<count($this->response->items);$t++) {
 					$items[]=$this->response->items[$t]->metadata->name;
-					$checkItems[]=['type'=>$todo['type'],'api'=>$todo['api'],'name'=>$this->response->items[$t]->metadata->name];
+					$checkItems[]=['type'=>$todo_type,'name'=>$this->response->items[$t]->metadata->name];
 				}
 				for ($t=0;$t<count($items);$t++) {
-					$this->command('DELETE',$todo['type'],['name'=>$items[$t],'parms'=>$jsonString]);
+					$this->command('DELETE',$todo_type,['name'=>$items[$t],'parms'=>$jsonString]);
 				}
 			}
 		}

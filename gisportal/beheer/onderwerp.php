@@ -34,7 +34,7 @@ if ($loggedIn && ($is_afd_admin || $is_admin)){
 					$afd=($is_admin?$_POST['afdeling']:$my_afd);
 					$a=array(
 						'Qnaam'=>$db->validateString($_POST['naam'],'naam',1,64,'Er is geen naam opgegeven','De naam is te lang (max 64 tekens)',array('onderwerpen','naam=\''.$_POST['naam'].'\' AND afdeling='.$afd.' AND id<>'.$ond['id'],'Dit onderwerp komt al in de database voor')),
-						'Qafkorting'=>$db->validateString($_POST['afkorting'],'afkorting',1,32,'Er is geen afkorting opgegeven','De afkorting is te lang (max 32 tekens)',array('onderwerpen','afkorting=\''.$_POST['afkorting'].'\' AND afdeling='.$afd.' AND id<>'.$ond['id'],'Deze afkorting komt al in de database voor')),
+						'Qafkorting'=>$db->validateString(strtolower($_POST['afkorting']),'afkorting',1,32,'Er is geen afkorting opgegeven','De afkorting is te lang (max 32 tekens)',array('onderwerpen','afkorting=\''.$_POST['afkorting'].'\' AND afdeling='.$afd.' AND id<>'.$ond['id'],'Deze afkorting komt al in de database voor')),
 						'afdeling'=>$afd
 					);
 					if ($a['Qafkorting']!='') {

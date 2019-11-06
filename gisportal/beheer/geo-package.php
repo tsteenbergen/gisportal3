@@ -44,7 +44,7 @@ if ($loggedIn){
 					}
 					$a=array(
 						'Qnaam'=>$db->validateString($_POST['naam'],'naam',1,64,'Er is geen naam opgegeven','De naam is te lang (max 64 tekens).'),
-						'Qkaartnaam'=>$db->validateString($_POST['kaartnaam'],'kaartnaam',1,64,'Er is geen naam opgegeven','De naam is te lang (max 64 tekens).'),
+						'Qkaartnaam'=>$db->validateString(strtolower($_POST['kaartnaam']),'kaartnaam',1,64,'Er is geen naam opgegeven','De naam is te lang (max 64 tekens).'),
 						'afdeling'=>($is_admin?$_POST['afdeling']:$my_afd),
 						'onderwerp'=>$_POST['onderwerp'],
 						'Qsoort'=>$_POST['soort'],

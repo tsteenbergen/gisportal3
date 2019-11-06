@@ -49,9 +49,9 @@ $test0.='<h2>Interne API-calls</h2>Het gisportaal moet API-calls kunnen doen om 
 $test0.='<table style="margin-bottom: 32px;"><tr><th>Test</th><th>Resultaat</th></tr>';
 $openshift_api->command('api','endpoints');
 if ($openshift_api->response->kind=='EndpointsList') {
-	$endpts='API accesseble';
+	$endpts='API accessible';
 } else {
-	$endpts=wrapError('API not accesseble');
+	$endpts=wrapError('API not accessible');
 }
 $test0.='<tr><td>Test API-call (list endpoints):</td><td>'.$endpts.'</td></tr>';
 $test0.='</table>';

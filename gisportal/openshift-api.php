@@ -87,7 +87,7 @@ class openshift_api_ {
 			case 'POST': $api_url.=$todo['api-post']; break;
 			case 'DELETE': $api_url.=$todo['api-delete']; break;
 		}
-		$api_url.='/namespaces/'.$basicPage->getConfig('namespace');
+		$api_url.='/namespaces/'.$basicPage->getConfig('namespace').'/'.$todo['type'];
 		if (isset($data['name'])) {$api_url.='/'.$data['name'];}
 		if (isset($data['labelSelector'])) {$api_url.='?labelSelector='.$data['labelSelector'];}
 
@@ -216,7 +216,7 @@ class openshift_api_ {
 		$checkItems=[];
 		foreach ($todo_types as $todo_type) {
 			$todo=$this->def[$todo_type];
-			$this->command('GET',$todo['type'],[labelSelector=>'name=gpid-'.$id,'parms'=>'{"includeUninitialized":true}']);
+			$this->command('GET',$todo['type'],['labelSelector'=>'name=gpid-'.$id,'parms'=>'{"includeUninitialized":true}']);
 			if ($this->response->kind==$todo['array']) {
 				$items=[];
 				for ($t=0;$t<count($this->response->items);$t++) {

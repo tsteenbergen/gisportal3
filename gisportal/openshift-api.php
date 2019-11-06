@@ -83,9 +83,9 @@ class openshift_api_ {
 		$todo=$this->def[$type];
 		$api_url=$basicPage->getConfig('endpoint').'/';
 		switch ($curlrequest) {
-			case 'GET': $api_url.=$todo['api-get']; break;
-			case 'POST': $api_url.=$todo['api-post']; break;
-			case 'DELETE': $api_url.=$todo['api-delete']; break;
+			case 'GET': $api_url.=$todo['get-api']; break;
+			case 'POST': $api_url.=$todo['post-api']; break;
+			case 'DELETE': $api_url.=$todo['delete-api']; break;
 		}
 		$api_url.='/namespaces/'.$basicPage->getConfig('namespace').'/'.$todo['type'];
 		if (isset($data['name'])) {$api_url.='/'.$data['name'];}

@@ -217,7 +217,7 @@ $basicPage->writelog($type.' geeft: '.var_export($todo,true));
 		$checkItems=[];
 		foreach ($todo_types as $todo_type) {
 			$todo=$this->def[$todo_type];
-			$this->command('GET',$todo['type'],['labelSelector'=>'name=gpid-'.$id,'parms'=>'{"includeUninitialized":true}']);
+			$this->command('GET',$todo_type,['labelSelector'=>'name=gpid-'.$id,'parms'=>'{"includeUninitialized":true}']);
 			if ($this->response->kind==$todo['array']) {
 				$items=[];
 				for ($t=0;$t<count($this->response->items);$t++) {

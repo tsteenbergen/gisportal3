@@ -7,7 +7,7 @@ if (isset($_GET['thema']) && isset($_GET['kaart'])) {
 		if ($loggedIn) {
 			$basicPage->redirect('/geo/portal/beheer/geo-package.php?id='.$id['id']);
 		} else {
-			$basicPage->redirect('/geo/portal.login.php?to=geo-package,'.$id['id']);
+			$basicPage->redirect('/geo/portal/login.php?to=geo-package,'.$id['id']);
 		}
 	}
 }

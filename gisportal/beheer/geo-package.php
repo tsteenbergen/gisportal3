@@ -170,8 +170,11 @@ if ($loggedIn){
 				} else {
 					$tab1.='<tr><td colspan="2">&nbsp;<input type="hidden" value="'.$g['version'].'" name="version"></a></td></tr>';
 				}
+/*
 				$tab1.='<tr><td>Soort:</td><td>'.$basicPage->getSelect('soort',$g['soort'],array('Raster','Vector')).'</td></tr>';
-				$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
+				$tab1.='<tr><td colspan="2">&nbsp;</td></tr>';
+*/			
+/*				
 				if (file_exists('indata.data')) {
 					if (time()-filemtime('indata.data')>60*60) {unlink('indata.data');} // gooi weg als ouder dan een uur
 				}
@@ -266,7 +269,10 @@ if ($loggedIn){
                     $basicPage->fout('Inlezen metadata records', 'De metadata records kunnen niet van data.rivm.nl worden ingelezen.');
                 }
 				$js.='];';
+*/
+$js='var indatarecs=[];var datarecs=[];';
 				$basicPage->add_js_inline($js);
+/*
                 $tab1.='<tr><td>Metadata indata.rivm.nl:</td><td><span style="display: inline-block; width: 160px;">Verfijn op zoekterm:</span><input style="width: calc(100% - 230px);" onkeyup="setMetadatalink(false);" id="zoekindata"><a id="helpindata" class="small-button" onclick="metadatalinkhelp(false);" style="float: right;">Help</a></td></tr>';
                 $tab1.='<tr><td></td><td><select name="indatalink" style="width: 100%;"><option value="'.$g['indatalink'].'">'.$current_indatalink.'</option></select></td></tr>';
 				if ($id>=1) {
@@ -305,7 +311,10 @@ if ($loggedIn){
 					}
 				}
 				$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
+				*/
+				/*
                 $tab1.='<tr><td>Services:</td><td>'.$basicPage->checkbox('wms',$g['wms']=='J','WMS').'<br>'.$basicPage->checkbox('wfs',$g['wfs']=='J','WFS').'<br>'.$basicPage->checkbox('wcs',$g['wcs']=='J','WCS').'<br>'.$basicPage->checkbox('wmts',$g['wmts']=='J','WMTS').'</td></tr>';
+				*/
 				$tab1.='</table></form></div>';
 				
 				if ($id>=1) {

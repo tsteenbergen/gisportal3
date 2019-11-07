@@ -4,7 +4,11 @@ require('basicPage.php');
 if (isset($_GET['thema']) && isset($_GET['kaart'])) {
 	$id=$db->selectOne('geopackages AS a LEFT JOIN onderwerpen AS b ON b.id=a.onderwerp','a.id','a.kaartnaam=\''.$_GET['kaart'].'\' AND b.afkorting=\''.$_GET['thema'].'\'');
 	if ($id && $id['id']>=1) {
-		$basicPage->redirect('beheer/geo-package.php?id='.$id['id']);
+		if ($loggedIn) {
+			$basicPage->redirect('/geo/portal/beheer/geo-package.php?id='.$id['id']);
+		} else {
+			$basicPage->redirect('/geo/portal.login.php?to=geo-package,'.$id['id']);
+		}
 	}
 }
 

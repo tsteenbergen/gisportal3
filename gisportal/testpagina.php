@@ -71,6 +71,8 @@ $test2.='<tr><td>Persistent storage vlgs Openshift:</td><td></td><td style="text
 if ($memory->persistent_afk>' ') {
 	$test2.='<tr><td>'.$memory->persistent_afk.':</td><td style="text-align: right;">'.$memory->persistent.' b</td><td style="text-align: right;">'.$memory->persistent_mb.'</td></tr>';
 }
+$test2.='<tr><td>&nbsp;</td></tr>';
+$test2.='<tr><td colspan="3">Linux meldt:</td></tr>';
 $test2.='<tr><td>Geheugen in gebruik:</td><td style="text-align: right;">'.$memory->used.' b</td></><td style="text-align: right;">'.$memory->used_mb.'</td></tr>';
 $test2.='<tr><td>Vrij geheugen:</td><td style="text-align: right;">'.$memory->available.' b</td><td style="text-align: right;">'.$memory->available_mb.'</td></tr>';
 $test2.='<tr><td>Totaal geheugen:</td><td style="text-align: right;">'.$memory->total.' b</td><td style="text-align: right;">'.$memory->total_mb.'</td></tr>';

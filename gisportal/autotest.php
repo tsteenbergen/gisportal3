@@ -49,7 +49,7 @@ $sites_to_check=['google.com','github.com'];
 $site_check=true;
 foreach ($sites_to_check as $site) {
 	if (!is_connected_fsockopen($site)) {$site_check=false;}
-	if (!is_connected_ping($site))) {$site_check=false;}
+	if (!is_connected_ping($site)) {$site_check=false;}
 }
 
 $mem_check=false;

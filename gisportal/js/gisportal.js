@@ -451,3 +451,9 @@ function startGpidReset(no) {
 		}          
 	});
 }
+
+function regel_kaart_url() {
+	var thema=jQuery('#onderwerp').val(), kaart=jQuery('[name=kaartnaam]').val();
+	thema=jQuery('#onderwerp').find('[value='+thema+']').html();
+	jQuery('#kaart-url').val(''+thema+'/'+kaart);
+}

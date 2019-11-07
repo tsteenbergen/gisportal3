@@ -159,8 +159,10 @@ if ($loggedIn){
 				$tab1.='<tr><td>Afdeling:</td><td>'.$basicPage->getSelect('afdeling',$g['afdeling'],$afds,!$is_admin).'</td></tr>';
 				$tab1.='<tr><td>Onderwerp:</td><td><select name="onderwerp" id="onderwerp"></select></td></tr>';
 				$tab1.='<tr><td>Naam:</td><td><input name="naam" value="'.htmlspecialchars($g['naam']).'" size="32"></td></tr>';
-				$tab1.='<tr><td>Kaartaam (in URL):</td><td><input name="kaartnaam" value="'.htmlspecialchars($g['kaartnaam']).'" size="32"></td></tr>';
-				$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
+				$tab1.='<tr><td>Kaartaam (in URL):</td><td><input name="kaartnaam" value="'.htmlspecialchars($g['kaartnaam']).'" size="32" onchange="regel_kaart_url();"></td></tr>';
+				$tab1.='<tr><td colspan="2">&nbsp;</td></tr>';
+				$tab1.='<tr><td>URL:</td><td><input style="width: 100%;" id="kaart-url" onchange="regel_kaart_url();"></td></tr>';
+				$basicPage->add_js_ready('regel_kaart_url();');
 				if ($is_admin) {
 					$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
 					$version2a=array();

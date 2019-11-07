@@ -1,6 +1,12 @@
 <?php
 require('basicPage.php');
 
+if (isset($_GET['thema']) && isset($_GET['kaart'])) {
+	$id=$db->selectOne('geopackages AS a LEFT JOIN onderwerpen AS b ON b.id=a.onderwerp','a.id','a.kaartnaam=\''.$_GET['kaart'].'\' AND b.afkorting=\''.$_GET['thema'].'\'')
+	if ($id && $id['id']>=1) {
+		$basicPage->redirect('beheer/geo-package.php?id='.$id['id']);
+	}
+}
 
 $r='<div style="background-image: url(css/78799.png); background-repeat: no-repeat; background-position: top right; padding-right: 400px; min-height: 310px;">';
 $r.='Het GIS-portaal stelt gebruikers in staat om zelf kaarten te publiceren. Hiervoor dienen de volgende zaken te worden ingevoerd:';

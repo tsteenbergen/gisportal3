@@ -322,7 +322,7 @@ $js='var indatarecs=[];var datarecs=[];';
 					$tab2.='<div id="tabs-2" style="vertical-align: top;">';
 					$tab2.='<table>';
 					if ($memory->uploadAllowed()) {
-						$tab2.='<tr><td colspan="2"><button style="float: right;" id="uploadknop" uploadFile="geo-package,'.$g['id'].'">Upload file</button></td></tr>';
+						$tab2.='<tr><td colspan="2"><button style="margin-bottom: 20px;;" id="uploadknop" uploadFile="geo-package,'.$g['id'].'">Upload file</button></td></tr>';
 					} else {
 						$tab2.='<tr><td colspan="2"><div class="fout">Fout: Op dit moment is er onvoldoende opslagcapaciteit. Daarom kunnen er geen files worden geupload. Waarschuw de beheersders: <a href="mailto:geodata@rivm.nl">geodata@rivm.nl</a></div></td></tr>';
 					}

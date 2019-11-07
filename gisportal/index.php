@@ -2,7 +2,7 @@
 require('basicPage.php');
 
 if (isset($_GET['thema']) && isset($_GET['kaart'])) {
-	$id=$db->selectOne('geopackages AS a LEFT JOIN onderwerpen AS b ON b.id=a.onderwerp','a.id','a.kaartnaam=\''.$_GET['kaart'].'\' AND b.afkorting=\''.$_GET['thema'].'\'')
+	$id=$db->selectOne('geopackages AS a LEFT JOIN onderwerpen AS b ON b.id=a.onderwerp','a.id','a.kaartnaam=\''.$_GET['kaart'].'\' AND b.afkorting=\''.$_GET['thema'].'\'');
 	if ($id && $id['id']>=1) {
 		$basicPage->redirect('beheer/geo-package.php?id='.$id['id']);
 	}

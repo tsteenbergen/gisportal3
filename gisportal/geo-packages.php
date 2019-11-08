@@ -43,6 +43,7 @@ if ($loggedIn){
 		}
 	}
 	$r.='</table>';
+	$r.=var_export($_SERVER,true);
 } else {
     $basicPage->fout('Autorisatie','Je bent niet ingelogd.');
 }

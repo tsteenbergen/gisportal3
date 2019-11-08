@@ -455,12 +455,38 @@ function startGpidReset(no) {
 function regel_kaart_url() {
 	var thema=jQuery('#onderwerp').val(), kaart=jQuery('[name=kaartnaam]').val();
 	thema=jQuery('#onderwerp').find('[value='+thema+']').html();
-	jQuery('#kaart-url').val(location.origin+'/geo/'+thema+'/'+kaart);
+	jQuery('#kaart-url').html(location.origin+'/geo/'+thema+'/'+kaart);
 }
 
-function copyKaart() {
-	var copyText = document.getElementById('kaart-url');
-	copyText.select(); 
-	copyText.setSelectionRange(0, 99999); /*For mobile devices*/
-	document.execCommand("copy");
+function copyTextToClipboard(text) {
+  var textArea = document.createElement("textarea");
+  textArea.style.position = 'fixed';
+  textArea.style.top = 0;
+  textArea.style.left = 0;
+  textArea.style.width = '2em';
+  textArea.style.height = '2em';
+  textArea.style.padding = 0;
+  textArea.style.border = 'none';
+  textArea.style.outline = 'none';
+  textArea.style.boxShadow = 'none';
+  textArea.style.background = 'transparent';
+  textArea.value = text;
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  try {
+    var successful = document.execCommand('copy');
+    var msg = successful ? 'successful' : 'unsuccessful';
+    console.log('Copying text command was ' + msg);
+  } catch (err) {
+    console.log('Oops, unable to copy');
+  }
+  document.body.removeChild(textArea);
 }
+
+
+function copyKaart() {
+	regel_kaart_url();
+	copyTextToClipboard(jQuery('#kaart-url').html());
+}
+

@@ -453,10 +453,11 @@ function startGpidReset(no) {
 }
 
 function regel_kaart_url() {
-	var thema=jQuery('#onderwerp').val(), kaart=jQuery('[name=kaartnaam]').val();
+	var thema=jQuery('#onderwerp').val(), kaart=jQuery('[name=kaartnaam]').val(), t, thema_url='';
+	for (t=0;t<onderwerpen.length;t++) if (onderwerpen[t][0]==thema) {thema_url=onderwerpen[t][3]; t=onderwerpen.length;}
 	thema=jQuery('#onderwerp').find('[value='+thema+']').html();
-	if (thema!='' && kaart!='') {
-		jQuery('#kaart-url').html(location.origin+'/geo/'+thema+'/'+kaart);
+	if (thema_url!='' && kaart!='') {
+		jQuery('#kaart-url').html(location.origin+'/geo/'+thema_url+'/'+kaart);
 		jQuery('#kaart-url-knop').show();
 	} else {
 		jQuery('#kaart-url').html('');

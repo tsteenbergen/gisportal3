@@ -39,11 +39,10 @@ if ($loggedIn){
 	$r.='<tr class="header"><td>Afdeling</td><td>Onderwerp</td><td>Naam</td><td></td></tr>';
 	if ($gs) {
 		foreach ($gs as $g) {
-			$r.='<tr><td>'.htmlspecialchars($g['afd_naam']).'</td><td>'.htmlspecialchars($g['thema']).'</td><td>'.htmlspecialchars($g['naam']).'</td><td><a class="small-button" href="/geo/portal/beheer/geo-package.php?id='.$g['id'].'&back='.$back.'">Bewerk</a><a class="small-button" style="margin-left: 20px;" href="kaart.php?id='.$g['id'].'&back='.$back.'">Kaart</a><a class="small-button" onclick="copyTextToClipboard(\''.$_SERVER['HTTP_HOST'].'/geo/'.$g['afkorting'].'/'.$g['kaartnaam'].'\');" style="margin-left: 20px;" href="#">Kopi&euml;er URL</a></td></tr>';
+			$r.='<tr><td>'.htmlspecialchars($g['afd_naam']).'</td><td>'.htmlspecialchars($g['thema']).'</td><td>'.htmlspecialchars($g['naam']).'</td><td><a class="small-button" href="/geo/portal/beheer/geo-package.php?id='.$g['id'].'&back='.$back.'">Bewerk</a><a class="small-button" style="margin-left: 20px;" href="kaart.php?id='.$g['id'].'&back='.$back.'">Kaart</a><a class="small-button" onclick="copyTextToClipboard(\'https://'.$_SERVER['HTTP_HOST'].'/geo/'.$g['afkorting'].'/'.$g['kaartnaam'].'\');" style="margin-left: 20px;" href="#">Kopi&euml;er URL</a></td></tr>';
 		}
 	}
 	$r.='</table>';
-	$r.=var_export($_SERVER,true);
 } else {
     $basicPage->fout('Autorisatie','Je bent niet ingelogd.');
 }

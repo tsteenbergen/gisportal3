@@ -136,9 +136,9 @@ if ($loggedIn){
 						$g['version']=$a['version'];
 					}
 				}
-				$a=$db->select('onderwerpen','id,afdeling,naam','id>=1');
+				$a=$db->select('onderwerpen','id,afdeling,naam,afkorting','id>=1');
 				$js='var onderwerpen=[';
-				if ($a) {$t=0; foreach ($a as $b) {$js.=($t==0?'':',').'['.$b['id'].','.$b['afdeling'].',\''.htmlspecialchars($b['naam']).'\']'; $t++;}}
+				if ($a) {$t=0; foreach ($a as $b) {$js.=($t==0?'':',').'['.$b['id'].','.$b['afdeling'].',\''.htmlspecialchars($b['naam']).'\',\''.htmlspecialchars($b['afkorting']).'\']'; $t++;}}
 				$basicPage->add_js_inline($js.'];');
 				$basicPage->add_js_ready('depententSelect(\'onderwerp\',\'afdeling\',onderwerpen,\''.$g['onderwerp'].'\','.($id==0 && $t>1?'\'\'':'false').',\'\');');
 				

@@ -18,7 +18,7 @@ if ($loggedIn && ($is_admin || $is_afd_admin)){
 		$tabA.='</table></div>';
 
 		$tabA.='<div id="tabs-A1" style="vertical-align: top;">';
-		$imgs=$db->select('images','id,image,repo,deflt','id>=1','image');
+		$imgs=$db->select('images','id,image,repo,deflt','id>=1','deflt,image');
 		$tabA.='<table class="colored">';
 		$tabA.='<tr class="top-button"><td colspan="4"><a class="small-button" href="/geo/portal/beheer/image.php?id=0">Nieuw image</a></td></tr>';
 		$tabA.='<tr class="header"><td></td><td style="min-width: 160px;">Image</td><td>Repo</td><td></td><td style="width: 20px;"></td><td>Versions</td></tr>';

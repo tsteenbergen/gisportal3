@@ -322,14 +322,14 @@ $js='var indatarecs=[];var datarecs=[];';
 				if ($id>=1) {
 					// tweede div
 					$tab2.='<div id="tabs-2" style="vertical-align: top;">';
-					if ($memory->uploadAllowed()) {
-						$tab2.='<div><button style="margin-bottom: 20px;;" id="uploadknop" uploadFile="geo-package,'.$g['id'].'">Upload file</button></div>';
-					} else {
+					if (!$memory->uploadAllowed()) {
 						$tab2.='<div><div class="fout">Fout: Op dit moment is er onvoldoende opslagcapaciteit. Daarom kunnen er geen files worden geupload. Waarschuw de beheersders: <a href="mailto:geodata@rivm.nl">geodata@rivm.nl</a></div></div>';
 					}
 					$ext=new extention($g['id'],true);
 					$tab2.='<h2>Benodigde files</h2>'.$ext->tabel(true);
-					
+					if ($memory->uploadAllowed()) {
+						$tab2.='<div><button style="font-size: 12px; padding: 2px 12px; margin-left: 450px;" id="uploadknop" uploadFile="geo-package,'.$g['id'].'">Upload file</button></div>';
+					}
 					$pad=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/';
 					$files=glob($pad.'*.*');
 					$tab2.='<br><h2>Files op persistent storage</h2>';

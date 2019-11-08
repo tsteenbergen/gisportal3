@@ -328,17 +328,20 @@ $js='var indatarecs=[];var datarecs=[];';
 						$tab2.='<div><div class="fout">Fout: Op dit moment is er onvoldoende opslagcapaciteit. Daarom kunnen er geen files worden geupload. Waarschuw de beheersders: <a href="mailto:geodata@rivm.nl">geodata@rivm.nl</a></div></div>';
 					}
 					$ext=new extention($g['id'],true);
-					$tab2.=$ext->tabel(true);
+					$tab2.='<h2>Benodigde files</h2>'.$ext->tabel(true);
 					
 					$pad=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/';
 					$files=glob($pad.'*.*');
+					$tab2.='<br><h2>Files op persistent storage</h2>';
 					if ($files) {
-						$tab2.='<br><br><table class="colored">';
+						$tab2.='<table class="colored">';
 						$tab2.='<tr><th>File</th><th>Modification</th><th>Changed</th><th>Accessed</th><th style="text-align: right;">Size</th></tr>';
 						foreach ($files as $file) {
 							$tab2.='<tr><td>'.substr($file,strlen($pad)).'</td><td>'.date('d-m-Y H:i:s',filemtime($file)).'</td><td>'.date('d-m-Y H:i:s',filectime($file)).'</td><td>'.date('d-m-Y H:i:s',fileatime($file)).'</td><td style="text-align: right;">'.number_format(filesize($file)/1000000,1,',','.').' Mb</td></tr>';
 						}
 						$tab2.='</table>';
+					} else {
+						$tab2.='-- geen files gevonden --';
 					}
 					
 					$tab2.='</div>';

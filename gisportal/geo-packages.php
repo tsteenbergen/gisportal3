@@ -31,14 +31,14 @@ if ($loggedIn){
 
 	$r.='<div class="seperator"></div>';
 
-	$gs=$db->select('geopackages AS a LEFT JOIN afdelingen AS b ON a.afdeling=b.id LEFT JOIN onderwerpen AS c ON a.onderwerp=c.id','a.id,a.naam,c.afkorting,b.naam AS afd_naam','a.id>=1'.($afd>=1?' AND a.afdeling='.$afd:'').($ond>=1?' AND a.onderwerp='.$ond:'').($naam==''?'':' AND a.naam LIKE \'%'.$naam.'%\''));
+	$gs=$db->select('geopackages AS a LEFT JOIN afdelingen AS b ON a.afdeling=b.id LEFT JOIN onderwerpen AS c ON a.onderwerp=c.id','a.id,a.naam,c.naam AS thema,b.naam AS afd_naam','a.id>=1'.($afd>=1?' AND a.afdeling='.$afd:'').($ond>=1?' AND a.onderwerp='.$ond:'').($naam==''?'':' AND a.naam LIKE \'%'.$naam.'%\''));
 
 	
 	$r.='<table class="colored">';
 	$r.='<tr class="header"><td>Afdeling</td><td>Onderwerp</td><td>Naam</td><td></td></tr>';
 	if ($gs) {
 		foreach ($gs as $g) {
-			$r.='<tr><td>'.htmlspecialchars($g['afd_naam']).'</td><td>'.htmlspecialchars($g['afkorting']).'</td><td>'.htmlspecialchars($g['naam']).'</td><td><a class="small-button" href="/geo/portal/beheer/geo-package.php?id='.$g['id'].'&back='.$back.'">Bewerk</a><a class="small-button" style="margin-left: 20px;" href="kaart.php?id='.$g['id'].'&back='.$back.'">Kaart</a></td></tr>';
+			$r.='<tr><td>'.htmlspecialchars($g['afd_naam']).'</td><td>'.htmlspecialchars($g['thema']).'</td><td>'.htmlspecialchars($g['naam']).'</td><td><a class="small-button" href="/geo/portal/beheer/geo-package.php?id='.$g['id'].'&back='.$back.'">Bewerk</a><a class="small-button" style="margin-left: 20px;" href="kaart.php?id='.$g['id'].'&back='.$back.'">Kaart</a></td></tr>';
 		}
 	}
 	$r.='</table>';

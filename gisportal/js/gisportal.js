@@ -457,3 +457,10 @@ function regel_kaart_url() {
 	thema=jQuery('#onderwerp').find('[value='+thema+']').html();
 	jQuery('#kaart-url').val(location.origin+'/geo/'+thema+'/'+kaart);
 }
+
+function copyKaart() {
+	var copyText = document.getElementById('kaart-url');
+	copyText.select(); 
+	copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+	document.execCommand("copy");
+}

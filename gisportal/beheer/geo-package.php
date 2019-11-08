@@ -161,7 +161,7 @@ if ($loggedIn){
 				$tab1.='<tr><td>Naam:</td><td><input name="naam" value="'.htmlspecialchars($g['naam']).'" size="32"></td></tr>';
 				$tab1.='<tr><td>Kaartaam (in URL):</td><td><input name="kaartnaam" value="'.htmlspecialchars($g['kaartnaam']).'" size="32" onchange="regel_kaart_url();"></td></tr>';
 				$tab1.='<tr><td colspan="2">&nbsp;</td></tr>';
-				$tab1.='<tr><td>URL:</td><td><span id="kaart-url" margin-right: 20px;></span><a id="kaart-url-knop" href="#" class="small-button" onclick="copyKaart()">Copi&euml;er URL</a></td></tr>';
+				$tab1.='<tr><td>URL:</td><td><span id="kaart-url" style="margin-right: 20px;"></span><a id="kaart-url-knop" href="#" class="small-button" onclick="copyKaart()">Copi&euml;er URL</a></td></tr>';
 				$basicPage->add_js_ready('regel_kaart_url();');
 				if ($is_admin) {
 					$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';

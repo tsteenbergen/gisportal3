@@ -4,7 +4,8 @@ require('basicPage.php');
 
 if ($loggedIn){
 	
-	$r.='<div style="background-image: url(css/99669.png); background-repeat: no-repeat; float: right; z-index: -1; margin-top: -64px; width: 450px; height: 300px;"></div><div style="text-align: right; max-width: 500px; margin-top: -52px; margin-bottom: 20px;"><a class="small-button" href="/geo/portal/beheer/geo-package.php?id=0">Nieuw geopackage</a></div>';
+//	$r.='<div style="background-image: url(css/99669.png); background-repeat: no-repeat; float: right; z-index: -1; margin-top: -64px; width: 450px; height: 300px;"></div>';
+	$r.='<div style="text-align: right; max-width: 500px; margin-top: -52px; margin-bottom: 20px;"><a class="small-button" href="/geo/portal/beheer/geo-package.php?id=0">Nieuw geopackage</a></div>';
 	$basicPage->add_js_ready('$(\'.content\').css(\'min-height\',\'320px\');');
 	
 	if ($is_admin) {
@@ -31,14 +32,14 @@ if ($loggedIn){
 
 	$r.='<div class="seperator"></div>';
 
-	$gs=$db->select('geopackages AS a LEFT JOIN afdelingen AS b ON a.afdeling=b.id LEFT JOIN onderwerpen AS c ON a.onderwerp=c.id','a.id,a.naam,c.naam AS thema,b.naam AS afd_naam','a.id>=1'.($afd>=1?' AND a.afdeling='.$afd:'').($ond>=1?' AND a.onderwerp='.$ond:'').($naam==''?'':' AND a.naam LIKE \'%'.$naam.'%\''));
+	$gs=$db->select('geopackages AS a LEFT JOIN afdelingen AS b ON a.afdeling=b.id LEFT JOIN onderwerpen AS c ON a.onderwerp=c.id','a.id,a.naam,a.kaartnaam,c.afkorting,c.naam AS thema,b.naam AS afd_naam','a.id>=1'.($afd>=1?' AND a.afdeling='.$afd:'').($ond>=1?' AND a.onderwerp='.$ond:'').($naam==''?'':' AND a.naam LIKE \'%'.$naam.'%\''));
 
 	
 	$r.='<table class="colored">';
 	$r.='<tr class="header"><td>Afdeling</td><td>Onderwerp</td><td>Naam</td><td></td></tr>';
 	if ($gs) {
 		foreach ($gs as $g) {
-			$r.='<tr><td>'.htmlspecialchars($g['afd_naam']).'</td><td>'.htmlspecialchars($g['thema']).'</td><td>'.htmlspecialchars($g['naam']).'</td><td><a class="small-button" href="/geo/portal/beheer/geo-package.php?id='.$g['id'].'&back='.$back.'">Bewerk</a><a class="small-button" style="margin-left: 20px;" href="kaart.php?id='.$g['id'].'&back='.$back.'">Kaart</a></td></tr>';
+			$r.='<tr><td>'.htmlspecialchars($g['afd_naam']).'</td><td>'.htmlspecialchars($g['thema']).'</td><td>'.htmlspecialchars($g['naam']).'</td><td><a class="small-button" href="/geo/portal/beheer/geo-package.php?id='.$g['id'].'&back='.$back.'">Bewerk</a><a class="small-button" style="margin-left: 20px;" href="kaart.php?id='.$g['id'].'&back='.$back.'">Kaart</a><a class="small-button" onclick="copyTextToClipboard(\''.$_SERVER['HTTP_HOST'].'/geo/'.$g['afkorting'].'/'.$g['kaartnaam'].'\');" style="margin-left: 20px;" href="#">Kopi&euml;er URL</a></td></tr>';
 		}
 	}
 	$r.='</table>';

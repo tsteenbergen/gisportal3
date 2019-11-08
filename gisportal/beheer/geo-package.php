@@ -161,7 +161,7 @@ if ($loggedIn){
 				$tab1.='<tr><td>Naam:</td><td><input name="naam" value="'.htmlspecialchars($g['naam']).'" size="32"></td></tr>';
 				$tab1.='<tr><td>Kaartaam (in URL):</td><td><input name="kaartnaam" value="'.htmlspecialchars($g['kaartnaam']).'" size="32" onchange="regel_kaart_url();"></td></tr>';
 				$tab1.='<tr><td colspan="2">&nbsp;</td></tr>';
-				$tab1.='<tr><td>URL:</td><td><span id="kaart-url" style="margin-right: 20px;"></span><a id="kaart-url-knop" href="#" class="small-button" onclick="copyKaart()">Copi&euml;er URL</a></td></tr>';
+				$tab1.='<tr><td>URL:</td><td><span id="kaart-url" style="margin-right: 20px;"></span><a id="kaart-url-knop" href="#" class="small-button" onclick="copyKaart()">Kopi&euml;er URL</a></td></tr>';
 				$basicPage->add_js_ready('regel_kaart_url();');
 				if ($is_admin) {
 					$tab1.='<tr><td colspan="2">&nbsp;</a></td></tr>';
@@ -322,16 +322,13 @@ $js='var indatarecs=[];var datarecs=[];';
 				if ($id>=1) {
 					// tweede div
 					$tab2.='<div id="tabs-2" style="vertical-align: top;">';
-					$tab2.='<table>';
 					if ($memory->uploadAllowed()) {
-						$tab2.='<tr><td colspan="2"><button style="margin-bottom: 20px;;" id="uploadknop" uploadFile="geo-package,'.$g['id'].'">Upload file</button></td></tr>';
+						$tab2.='<div><button style="margin-bottom: 20px;;" id="uploadknop" uploadFile="geo-package,'.$g['id'].'">Upload file</button></div>';
 					} else {
-						$tab2.='<tr><td colspan="2"><div class="fout">Fout: Op dit moment is er onvoldoende opslagcapaciteit. Daarom kunnen er geen files worden geupload. Waarschuw de beheersders: <a href="mailto:geodata@rivm.nl">geodata@rivm.nl</a></div></td></tr>';
+						$tab2.='<div><div class="fout">Fout: Op dit moment is er onvoldoende opslagcapaciteit. Daarom kunnen er geen files worden geupload. Waarschuw de beheersders: <a href="mailto:geodata@rivm.nl">geodata@rivm.nl</a></div></div>';
 					}
-					$tab2.='<tr><td>&nbsp;</td></tr>';
 					$ext=new extention($g['id'],true);
-					$tab2.='<tr><td>Benodigde files:</td><td id="filetabel">'.$ext->tabel().'</td></tr>';
-					$tab2.='</table>';
+					$tab2.=$ext->tabel(true);
 					
 					$pad=$basicPage->getConfig('geo-mappen').'/geo-packages/gpid-'.$g['id'].'/';
 					$files=glob($pad.'*.*');

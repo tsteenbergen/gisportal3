@@ -76,7 +76,7 @@ class extention {
 		}
     }
 	
-	function tabel() {
+	function tabel($header=false) {
 		global $basicPage;
 		global $db;
 		
@@ -89,6 +89,9 @@ class extention {
 			if (count($f)==2) {$orgfs[$f[0]]=$f[1];}
 		}
 		$r='<table>';
+		if ($header) {
+			$r.='<tr><th>Type</th><th>Extentie</th><th>File</th></tr>';
+		}
 		$t=0;
 		foreach ($this->defs as $def) {
 			$r.='<tr><td>'.$def[4].'</td><td>'.implode('/',$def[0]).'</td><td>';

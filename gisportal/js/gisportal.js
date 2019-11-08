@@ -455,7 +455,13 @@ function startGpidReset(no) {
 function regel_kaart_url() {
 	var thema=jQuery('#onderwerp').val(), kaart=jQuery('[name=kaartnaam]').val();
 	thema=jQuery('#onderwerp').find('[value='+thema+']').html();
-	jQuery('#kaart-url').html(location.origin+'/geo/'+thema+'/'+kaart);
+	if (thema!='' && kaart!='') {
+		jQuery('#kaart-url').html(location.origin+'/geo/'+thema+'/'+kaart);
+		jQuery('#kaart-url-knop').show();
+	} else {
+		jQuery('#kaart-url').html('');
+		jQuery('#kaart-url-knop').hide();
+	}
 }
 
 function copyTextToClipboard(text) {

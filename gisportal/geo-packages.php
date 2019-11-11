@@ -4,7 +4,7 @@ require('basicPage.php');
 
 if ($loggedIn){
 	
-	$r.='<div style="background-image: url(css/99669.png); background-repeat: no-repeat; float: right; z-index: -1; margin-top: -64px; width: 450px; height: 300px;"></div>';
+//	$r.='<div style="background-image: url(css/99669.png); background-repeat: no-repeat; float: right; z-index: -1; margin-top: -64px; width: 450px; height: 300px;"></div>';
 	$r.='<div style="text-align: right; max-width: 500px; margin-top: -52px; margin-bottom: 20px;"><a class="small-button" href="/geo/portal/beheer/geo-package.php?id=0">Nieuw geopackage</a></div>';
 	$basicPage->add_js_ready('$(\'.content\').css(\'min-height\',\'320px\');');
 	

@@ -345,8 +345,9 @@ $js='var indatarecs=[];var datarecs=[];';
 					}
 					
 					$tab2.='</div>';
+					
 					$checks=$openshift_api->healthChecks($g['id']);
-					$tab3='<div><table>';
+					$tab3='<div id="tabs-3" style="vertical-align: top;"><table>';
 					foreach ($checks as $todo_type => $check) {
 						$tab3.='<tr><td>'.$todo_type.'</td><td>'.$check['msg'].'</td></tr>';
 					}

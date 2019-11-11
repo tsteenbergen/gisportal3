@@ -243,6 +243,11 @@ class openshift_api_ {
 		}
 	}
 	
+	function getStatus($o) {
+		foreach ($o as $item) {
+			
+		}
+	}
 	function healthChecks($id, $todo_types=['replicationcontroller','deploymentconfig','autoscaler','pod','service','route']) {
 		$r=[];
 		foreach ($todo_types as $todo_type) {
@@ -251,11 +256,32 @@ class openshift_api_ {
 			$this->command('GET',$todo_type,['labelSelector'=>'name=gpid-'.$id,'parms'=>'{"includeUninitialized":true}']);
 			if ($this->response->kind==$todo['array']) {
 				$t1=count($this->response->items);
-				$r[$todo_type]['msg']=$t1.($t1==1?' item':' items').' found: ';
-//				$r[$todo_type]['items']=[];
-				for ($t=0;$t<$t1;$t++) {
-					$r[$todo_type]['msg'].=($t==0?'':($t<$t1-1?', ':' and ')).$this->response->items[$t]->metadata->name;
-//					$r[$todo_type]['items'][]=$this->response->items[$t]->metadata->name;
+				if ($t1>=1) {
+					$r[$todo_type]['msg']=$t1.($t1==1?' item':' items').' found: ';
+					for ($t=0;$t<$t1;$t++) {
+						$r[$todo_type]['msg'].=($t==0?'':($t<$t1-1?', ':' and ')).$this->response->items[$t]->metadata->name;
+					}
+				} else {
+					switch($todo_type) {
+						case 'replicationcontroller':
+							$r[$todo_type]['msg']='Error: At least 1 replicationcontroller should be present.<br>This may be coused by a missing/incorrect image name.';
+							break;
+						case 'deploymentconfig':
+							$r[$todo_type]['msg']='Error: At least 1 deploymentconfig should be present.';
+							break;
+						case 'autoscaler':
+							$r[$todo_type]['msg']='Error: At least 1 autoscaler should be present.';
+							break;
+						case 'pod':
+							$r[$todo_type]['msg']='Possible error: No pods found. Pods can be scaled down to 0 to free resources for other pods.';
+							break;
+						case 'service':
+							$r[$todo_type]['msg']='Error: No service found.';
+							break;
+						case 'route':
+							$r[$todo_type]['msg']='Error: No route found.';
+							break;
+					}
 				}
 			} else {
 				$r[$todo_type]['error']=true;

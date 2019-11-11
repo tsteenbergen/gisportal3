@@ -245,7 +245,7 @@ class openshift_api_ {
 	
 	function healthChecks($id, $todo_types=['replicationcontroller','deploymentconfig','autoscaler','pod','service','route']) {
 		$r=[];
-		foreach ($todo_type as $todo_types) {
+		foreach ($todo_types as $todo_type) {
 			$todo=$this->def[$todo_type];
 			$r[$todo_type]=['error'=>false];
 			$this->command('GET',$todo_type,['labelSelector'=>'name=gpid-'.$id,'parms'=>'{"includeUninitialized":true}']);

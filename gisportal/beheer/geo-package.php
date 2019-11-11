@@ -345,17 +345,25 @@ $js='var indatarecs=[];var datarecs=[];';
 					}
 					
 					$tab2.='</div>';
-					
+					$checks=$openshift_api->healthChecks($g['id']);
+					$tab3='<div><table>';
+					foreach ($checks as $todo_type => $check) {
+						$tab3.='<tr><td>'.$todo_type.'</td><td>'.$check['msg'].'</td></tr>';
+					}
+					$tab3.='</table></div>';
 				} else {
 					$tab2=false;
+					$tab3=false;
 				}
 				
 				$r.='<div id="tabs">';
 				$r.='<ul><li><a href="#tabs-1">Algemene gegevens</a></li>';
 				if ($tab2) {$r.='    <li><a href="#tabs-2">Files</a></li>';}
+				if ($tab3) {$r.='    <li><a href="#tabs-3">Health checks</a></li>';}
 				$r.='</ul>';
 				$r.=$tab1;
 				if ($tab2) {$r.=$tab2;}
+				if ($tab3) {$r.=$tab3;}
 				$r.='</div>';
 				$active=$_GET['tab']=='file'?1:0;
 				$basicPage->add_js_ready('$( "#tabs" ).tabs({heightStyle: \'auto\',active: '.$active.'});');

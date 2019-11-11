@@ -194,11 +194,7 @@ class openshift_api_ {
 				while ($maxAant>0) {
 					$this->command('GET',$todo_type,['name'=>'gpid-'.$id]);
 					if ($this->response->kind=='DeploymentConfig') {
-//						$todo2=$this->def['replicationcontroller'];
-//						$this->command('GET','replicationcontroller',['name'=>'gpid-'.$id]);
-//						if ($this->response->kind=='ReplicationController') {
-							$maxAant=0;
-//						}
+						$maxAant=0;
 					}
 					$maxAant--;
 					if ($maxAant>0) {
@@ -245,6 +241,32 @@ class openshift_api_ {
 			usleep(100000); // 100.000 microseconden is 0.1 seconde
 			//sleep(1); // 1 seconde
 		}
+	}
+	
+	function healthChecks($id, $todo_types=['replicationcontroller','deploymentconfig','autoscaler','pod','service','route']) {
+		$r=[];
+		foreach ($todo_type in $todo_types) {
+			$todo=$this->def[$todo_type];
+			$r[$todo_type]=['error'=>false];
+			$this->command('GET',$todo_type,['labelSelector'=>'name=gpid-'.$id,'parms'=>'{"includeUninitialized":true}']);
+			if ($this->response->kind==$todo['array']) {
+				$t1=count($this->response->items);
+				$r[$todo_type]['msg']=$t1.($t1==1?' item':' items').' found: ';
+//				$r[$todo_type]['items']=[];
+				for ($t=0;$t<$t1;$t++) {
+					$r[$todo_type]['msg'].=($t==0?'':($t<$t1-1?', ':' and ').$this->response->items[$t]->metadata->name;
+//					$r[$todo_type]['items'][]=$this->response->items[$t]->metadata->name;
+				}
+			} else {
+				$r[$todo_type]['error']=true;
+				if ($this->response->status=='Failure') {
+					$r[$todo_type]['msg']='Error: Not found';
+				} else {
+					$r[$todo_type]['msg']='Error: '.var_export($this->response,true);
+				}
+			}
+		}
+		return $r;
 	}
 }
 

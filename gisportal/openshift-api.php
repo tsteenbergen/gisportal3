@@ -254,7 +254,7 @@ class openshift_api_ {
 				$r[$todo_type]['msg']=$t1.($t1==1?' item':' items').' found: ';
 //				$r[$todo_type]['items']=[];
 				for ($t=0;$t<$t1;$t++) {
-					$r[$todo_type]['msg'].=($t==0?'':($t<$t1-1?', ':' and ').$this->response->items[$t]->metadata->name;
+					$r[$todo_type]['msg'].=($t==0?'':($t<$t1-1?', ':' and ')).$this->response->items[$t]->metadata->name;
 //					$r[$todo_type]['items'][]=$this->response->items[$t]->metadata->name;
 				}
 			} else {

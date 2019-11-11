@@ -18,10 +18,10 @@ if ($loggedIn && $is_admin){
 			break;
 		case 'apicall':
 			if (isset($_GET['go'])) {$apicall=explode('|',$_GET['go']); $apisub=$apicall[1]; $apicall=$apicall[0];} else {$apicall='';}
-			$r.='<p>Api call: <input id="apicall" style="width: calc(100% - 250px);" value="'.$apicall.'"><select id="apisub"><option value="false"'.($apisub=='false'?' selected="selected"':'').'>(false)</option><option'.($apisub=='POST'?' selected="selected"':'').'>POST</option><option'.($apisub=='PUT'?' selected="selected"':'').'>PUT</option><option'.($apisub=='DELETE'?' selected="selected"':'').'>DELETE</option></select><a onclick="document.location=\'admin.php?func=apicall&go=\'+$(\'#api\').val()+\'|\'+$(\'#apicall\').val()+\'|\'+$(\'#apisub\').val();" class="small-button" style="margin-left: 12px;">Go</a></p>';
+			$r.='<p>Api call: <input id="apicall" style="width: calc(100% - 250px);" value="'.$apicall.'"><select id="apisub"><option value="false"'.($apisub=='false'?' selected="selected"':'').'>(false)</option><option'.($apisub=='POST'?' selected="selected"':'').'>POST</option><option'.($apisub=='PUT'?' selected="selected"':'').'>PUT</option><option'.($apisub=='DELETE'?' selected="selected"':'').'>DELETE</option></select><a onclick="document.location=\'admin.php?func=apicall&go=\'+$(\'#apicall\').val()+\'|\'+$(\'#apisub\').val();" class="small-button" style="margin-left: 12px;">Go</a></p>';
 			if ($apicall!='') {
 				require('openshift-api.php');
-				$result=$openshift_api->command($apisub==='false'?'GET':$apisub,false,['apiurl'=>$apicall);
+				$result=$openshift_api->command($apisub==='false'?'GET':$apisub,false,['apiurl'=>$apicall]);
 				$r.='<p>'.$openshift_api->responseToString().'</p>';
 			}
 			break;

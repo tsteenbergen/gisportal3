@@ -17,11 +17,11 @@ if ($loggedIn && $is_admin){
 			$r.=phpinfo();
 			break;
 		case 'apicall':
-			if (isset($_GET['go'])) {$apicall=explode('|',$_GET['go']); $api=$apicall[0]; $apisub=$apicall[2]; $apicall=$apicall[1];} else {$apicall='';}
-			$r.='<p>Api call: <select id="api"><option'.($api=='api'?' selected="selected"':'').'>api</option><option'.($api=='oapi'?' selected="selected"':'').'>oapi</option><option'.($api=='apis'?' selected="selected"':'').'>apis</option></select><input id="apicall" style="width: calc(100% - 250px);" value="'.$apicall.'"><select id="apisub"><option value="false"'.($apisub=='false'?' selected="selected"':'').'>(false)</option><option'.($apisub=='POST'?' selected="selected"':'').'>POST</option><option'.($apisub=='PUT'?' selected="selected"':'').'>PUT</option><option'.($apisub=='DELETE'?' selected="selected"':'').'>DELETE</option></select><a onclick="document.location=\'admin.php?func=apicall&go=\'+$(\'#api\').val()+\'|\'+$(\'#apicall\').val()+\'|\'+$(\'#apisub\').val();" class="small-button" style="margin-left: 12px;">Go</a></p>';
+			if (isset($_GET['go'])) {$apicall=explode('|',$_GET['go']); $apisub=$apicall[1]; $apicall=$apicall[0];} else {$apicall='';}
+			$r.='<p>Api call: <input id="apicall" style="width: calc(100% - 250px);" value="'.$apicall.'"><select id="apisub"><option value="false"'.($apisub=='false'?' selected="selected"':'').'>(false)</option><option'.($apisub=='POST'?' selected="selected"':'').'>POST</option><option'.($apisub=='PUT'?' selected="selected"':'').'>PUT</option><option'.($apisub=='DELETE'?' selected="selected"':'').'>DELETE</option></select><a onclick="document.location=\'admin.php?func=apicall&go=\'+$(\'#api\').val()+\'|\'+$(\'#apicall\').val()+\'|\'+$(\'#apisub\').val();" class="small-button" style="margin-left: 12px;">Go</a></p>';
 			if ($apicall!='') {
 				require('openshift-api.php');
-				$result=$openshift_api->command($apisub==='false'?'GET':$apisub,$api,$apicall);
+				$result=$openshift_api->command($apisub==='false'?'GET':$apisub,false,['apiurl'=>$apicall);
 				$r.='<p>'.$openshift_api->responseToString().'</p>';
 			}
 			break;

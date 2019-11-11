@@ -90,6 +90,8 @@ class openshift_api_ {
 		$api_url.='/namespaces/'.$basicPage->getConfig('namespace').'/'.$todo['type'];
 		if (isset($data['name'])) {$api_url.='/'.$data['name'];}
 		if (isset($data['labelSelector'])) {$api_url.='?labelSelector='.$data['labelSelector'];}
+		
+		if ($type===false) {$api_url=$data['apiurl'];}
 
 		$bearer=getenv('gisbeheertoken');
 		if ($this->allowed || $type=='endpoint') {

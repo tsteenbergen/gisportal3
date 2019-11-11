@@ -20,9 +20,9 @@ class openshift_api_ {
 		'deploymentconfig'=>[
 			'type'=>'deploymentconfigs',
 			'array'=>'DeploymentConfigList',
-			'get-api'=>'apis/apps.openshift.io/v1',
-			'post-api'=>'apis/apps.openshift.io/v1',
-			'delete-api'=>'apis/apps.openshift.io/v1',
+			'get-api'=>'oapi/v1',
+			'post-api'=>'oapi/v1',
+			'delete-api'=>'oapi/v1',
 		],	
 		'pod'=>[
 			'type' => 'pods',
@@ -47,9 +47,9 @@ class openshift_api_ {
 		'route'=>[
 			'type' => 'routes',
 			'array' => 'RouteList',
-			'get-api'=>'apis/route.openshift.io/v1',
-			'post-api'=>'apis/route.openshift.io/v1',
-			'delete-api'=>'apis/route.openshift.io/v1',
+			'get-api'=>'oapi/v1',
+			'post-api'=>'oapi/v1',
+			'delete-api'=>'oapi/v1',
 		],
 	];
 

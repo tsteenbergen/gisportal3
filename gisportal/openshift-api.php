@@ -192,7 +192,7 @@ class openshift_api_ {
 			if ($todo_type=='deploymentconfig') { // wacht tot deploymentconfig er is
 				$maxAant=28; // wacht maximaal 28 seconden
 				while ($maxAant>0) {
-					$this->command('GET',$todo_type,['name'=>'/gpid-'.$id]);
+					$this->command('GET',$todo_type,['name'=>'gpid-'.$id]);
 					if ($this->response->kind=='DeploymentConfig') {
 //						$todo2=$this->def['replicationcontroller'];
 //						$this->command('GET','replicationcontroller',['name'=>'gpid-'.$id]);

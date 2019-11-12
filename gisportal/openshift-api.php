@@ -255,7 +255,7 @@ class openshift_api_ {
 		$jsonParms='{"as":"Table"}';
 		foreach ($todo_types as $todo_type) {
 			$todo=$this->def[$todo_type];
-			$r[$todo_type]=['error'=>false,items=>[]];
+			$r[$todo_type]=['error'=>false,'items'=>[]];
 			$this->command('GET',$todo_type,['labelSelector'=>'name=gpid-'.$id,'parms'=>$jsonParmsList]);
 			if ($this->response->kind==$todo['array']) {
 				$t1=count($this->response->items);

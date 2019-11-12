@@ -366,7 +366,7 @@ $js='var indatarecs=[];var datarecs=[];';
 				if ($tab3) {$r.=$tab3;}
 				$r.='</div>';
 				$active=$_GET['tab']=='file'?1:0;
-				$basicPage->add_js_ready('$( "#tabs" ).tabs({heightStyle: \'auto\',active: '.$active.'});');
+				$basicPage->add_js_ready('$( "#tabs" ).tabs({active: '.$active.'});');
 			} else {
 				$basicPage->fout('Internal error','Geopackage niet gevonden.');
 			}

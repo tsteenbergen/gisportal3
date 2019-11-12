@@ -347,7 +347,7 @@ $js='var indatarecs=[];var datarecs=[];';
 					$tab2.='</div>';
 					
 					$tab3='<div id="tabs-3" style="vertical-align: top;">';
-					$tab3.='<div id="health-check-msg" style="margin-bottom: 20px;"></div><br><button onclick="health_check('.$g['id'].');" id="health-check-knop">Perform health-check</button><br>';
+					$tab3.='<div id="health-check-msg" class="msg"></div><br><button onclick="health_check('.$g['id'].');" id="health-check-knop">Perform health-check</button>';
 					$tab3.='<div id="health-check" style="padding-top: 40px;">';
 					$tab3.='</div>';
 					$tab3.='</div>';

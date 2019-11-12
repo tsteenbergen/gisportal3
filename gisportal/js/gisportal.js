@@ -500,7 +500,7 @@ function health_check(id) {
 
 	jQuery('#health-check-knop').hide();
 	jQuery('#health-check').html('');
-	jQuery('#health-check-error').html('').removeClass('error');
+	jQuery('#health-check-msg').html('Performing checks').removeClass('error').addClass('spinner');
 	form_data.append('id', id);
 	$.ajax({
 		url: '/geo/portal/health-check.php',
@@ -511,16 +511,17 @@ function health_check(id) {
 		processData:false,
 		success: function(data) {
 			jQuery('#health-check-knop').show();
+			jQuery('#health-check-msg').html('').removeClass('spinner');
 			var tabel='<table>';
 			for (k in data) if (data.hasOwnProperty(k)) {
 				tabel+='<tr><td>'+k+'</td><td>'+data[k]['msg']+'</td></tr>';
 			}
-			jQuery('#health-check').html(tabel+'/table>');
+			jQuery('#health-check').html(tabel+'</table>');
 		},
 		error: function(e) {
 			$('.error').html(e.responseText);
 			jQuery('#health-check-knop').show();
-			jQuery('#health-check-error').html('<b>Error:</b> '+e.responseText).addClass('error');
+			jQuery('#health-check-msg').html('<b>Error:</b> '+e.responseText).removeClass('spinner').addClass('error');
 		}          
 	});
 }

@@ -268,11 +268,11 @@ class openshift_api_ {
 						$this->command('GET',$todo_type,['name'=>$r[$todo_type]['items'][$t]['name']]);
 						switch($todo_type) {
 							case 'replicationcontroller':
-								$r[$todo_type]['items'][$t]['msg']='replicas'.$this->response->metadata->replicas.'<br>';
-								$r[$todo_type]['items'][$t]['msg'].='readyReplicas'.$this->response->metadata->readyReplicas.'<br>';
-								$r[$todo_type]['items'][$t]['msg'].='availableReplicas'.$this->response->metadata->availableReplicas.'<br>';
-								$r[$todo_type]['items'][$t]['msg'].='observedGeneration'.$this->response->metadata->observedGeneration.'<br>';
-								$r[$todo_type]['items'][$t]['msg'].=var_export($this->response,true);
+								$r[$todo_type]['items'][$t]['msg']='replicas'.$this->response->status->replicas.'<br>';
+								$r[$todo_type]['items'][$t]['msg'].='readyReplicas'.$this->response->status->readyReplicas.'<br>';
+								$r[$todo_type]['items'][$t]['msg'].='availableReplicas'.$this->response->status->availableReplicas.'<br>';
+								$r[$todo_type]['items'][$t]['msg'].='observedGeneration'.$this->response->status->observedGeneration.'<br>';
+//								$r[$todo_type]['items'][$t]['msg'].=var_export($this->response,true);
 								break;
 							default:
 								$r[$todo_type]['items'][$t]['msg']=var_export($this->response,true);

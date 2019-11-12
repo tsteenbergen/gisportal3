@@ -251,12 +251,11 @@ class openshift_api_ {
 	function healthChecks($id, $todo_types=['replicationcontroller','deploymentconfig','autoscaler','pod','service','route']) {
 		// Met -loglevel 10 werd meegegeven: Accept: application/json;as=Table;v=v1beta1;g=meta.ks8.io, application/json
 		$r=[];
-		$jsonParmsList='{"includeUninitialized":true}';
-		$jsonParms='{"Accept": "application/json", "as":"Table", "v": "v1beta1", "g": "meta.ks8.io, application/json"}';
+		$jsonParms='{"includeUninitialized":true}';
 		foreach ($todo_types as $todo_type) {
 			$todo=$this->def[$todo_type];
 			$r[$todo_type]=['error'=>false,'items'=>[]];
-			$this->command('GET',$todo_type,['labelSelector'=>'name=gpid-'.$id,'parms'=>$jsonParmsList]);
+			$this->command('GET',$todo_type,['labelSelector'=>'name=gpid-'.$id,'parms'=>$jsonParms]);
 			if ($this->response->kind==$todo['array']) {
 				$t1=count($this->response->items);
 				if ($t1>=1) {
@@ -266,8 +265,19 @@ class openshift_api_ {
 						$r[$todo_type]['items'][]=['name'=>$this->response->items[$t]->metadata->name,'msg'=>''];
 					}
 					for ($t=0;$t<$t1;$t++) {
-						$this->command('GET',$todo_type,['name'=>$r[$todo_type]['items'][$t]['name'],'parms'=>$jsonParms]);
-						$r[$todo_type]['items'][$t]['msg']=var_export($this->response,true);
+						$this->command('GET',$todo_type,['name'=>$r[$todo_type]['items'][$t]['name']]);
+						switch($todo_type) {
+							case 'replicationcontroller':
+								$r[$todo_type]['items'][$t]['msg']=$this->response->metadata->replicas.'<br>';
+								$r[$todo_type]['items'][$t]['msg']=$this->response->metadata->readyReplicas.'<br>';
+								$r[$todo_type]['items'][$t]['msg']=$this->response->metadata->availableReplicas.'<br>';
+								$r[$todo_type]['items'][$t]['msg']=$this->response->metadata->observedGeneration.'<br>';
+								$r[$todo_type]['items'][$t]['msg']+=var_export($this->response,true);
+								break;
+							default:
+								$r[$todo_type]['items'][$t]['msg']=var_export($this->response,true);
+								break;
+						}
 					}
 				} else {
 					switch($todo_type) {

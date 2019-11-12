@@ -249,20 +249,21 @@ class openshift_api_ {
 		}
 	}
 	function healthChecks($id, $todo_types=['replicationcontroller','deploymentconfig','autoscaler','pod','service','route']) {
-		$r=[];
-		//$jsonParms='{"includeUninitialized":true}';
 		// Met -loglevel 10 werd meegegeven: Accept: application/json;as=Table;v=v1beta1;g=meta.ks8.io, application/json
-		$jsonParms='{"includeUninitialized":true,"as":"Table"}';
+		$r=[];
+		$jsonParmsList='{"includeUninitialized":true}';
+		$jsonParms='{"as":"Table"}';
 		foreach ($todo_types as $todo_type) {
 			$todo=$this->def[$todo_type];
 			$r[$todo_type]=['error'=>false];
-			$this->command('GET',$todo_type,['labelSelector'=>'name=gpid-'.$id,'parms'=>$jsonParms]);
+			$this->command('GET',$todo_type,['labelSelector'=>'name=gpid-'.$id,'parms'=>$jsonParmsList]);
 			if ($this->response->kind==$todo['array']) {
 				$t1=count($this->response->items);
 				if ($t1>=1) {
 					$r[$todo_type]['msg']=$t1.($t1==1?' item':' items').' found: ';
 					for ($t=0;$t<$t1;$t++) {
 						$r[$todo_type]['msg'].=($t==0?'':($t<$t1-1?', ':' and ')).$this->response->items[$t]->metadata->name;
+						$this->command('GET',$todo_type,['name'=>$this->response->items[$t]->metadata->name,'parms'=>$jsonParms]);
 					}
 				} else {
 					switch($todo_type) {

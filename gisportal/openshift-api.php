@@ -268,10 +268,7 @@ class openshift_api_ {
 						$this->command('GET',$todo_type,['name'=>$r[$todo_type]['items'][$t]['name']]);
 						switch($todo_type) {
 							case 'replicationcontroller':
-								$r[$todo_type]['items'][$t]['msg']='replicas'.$this->response->status->replicas.'<br>';
-								$r[$todo_type]['items'][$t]['msg'].='availableReplicas'.$this->response->status->availableReplicas.'<br>';
-								$r[$todo_type]['items'][$t]['msg'].='readyReplicas'.$this->response->status->readyReplicas.'<br>';
-								$r[$todo_type]['items'][$t]['msg'].='observedGeneration'.$this->response->status->observedGeneration.'<br>';
+								$r[$todo_type]['items'][$t]['parms']=['replicas'=>$this->response->status->replicas, 'availableReplicas'=>$this->response->status->availableReplicas, 'readyReplicas'=>$this->response->status->readyReplicas, 'observedGeneration'=>$this->response->status->observedGeneration];
 								break;
 							case 'deploymentconfig':
 								/*stdClass::__set_state(array( 
@@ -307,12 +304,9 @@ class openshift_api_ {
 										'readyReplicas' => 1, 
 									)), 
 								))*/
-								$r[$todo_type]['items'][$t]['msg']='replicas'.$this->response->status->replicas.'<br>';
-								$r[$todo_type]['items'][$t]['msg'].='availableReplicas'.$this->response->status->availableReplicas.'<br>';
-								$r[$todo_type]['items'][$t]['msg'].='readyReplicas'.$this->response->status->readyReplicas.'<br>';
-								$r[$todo_type]['items'][$t]['msg'].='observedGeneration'.$this->response->status->observedGeneration.'<br>';
+								$r[$todo_type]['items'][$t]['parms']=['replicas'=>$this->response->status->replicas, 'availableReplicas'=>$this->response->status->availableReplicas, 'readyReplicas'=>$this->response->status->readyReplicas, 'observedGeneration'=>$this->response->status->observedGeneration];
 								foreach ($this->response->status->conditions as $c) {
-									$r[$todo_type]['items'][$t]['msg'].=$c->type.': '.$c->status.' ('.htmlspecialchars($c->message).')<br>';
+									$r[$todo_type]['items'][$t]['parms'][$c->type]=$c->status.' ('.htmlspecialchars($c->message).')';
 								}
 								break;
 							case 'pod':
@@ -363,7 +357,7 @@ class openshift_api_ {
 									)), 
 								)) */
 								foreach ($this->response->status->conditions as $c) {
-									$r[$todo_type]['items'][$t]['msg'].=$c->type.': '.$c->status.'<br>';
+									$r[$todo_type]['items'][$t]['parms'][$c->type]=$c->status;
 								}
 								break;
 							case 'service':

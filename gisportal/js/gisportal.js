@@ -189,6 +189,12 @@ function initFileuploads() {
 							data=JSON.parse(data);
 						}
 						fileuploadMessage(this,data['error'],data['msg'],100,JSON.stringify(data));
+						var parms=location.search, t, f=-1;
+						if (substr(parms,0,1)=='?') {parms=parms.substr(1);}
+						parms=parms.split('&');
+						for (t=0;t<parms.length;t++) if (parms[t].substr(0,4)=='tab=') {f=t;t=parms.length;}
+						if (f==-1) {parms[parms.length]='tab=file';} else {parms[f]='tab=file';}
+						location.replace(location.host+location.pathname+'?'+parms.join('&'));
 					},
 					uploadProgress: function(event, position, total, percentComplete) {
 						fileuploadMessage(this,false,'Uploading',percentComplete,false);

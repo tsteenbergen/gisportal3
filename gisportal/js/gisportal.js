@@ -520,7 +520,7 @@ function health_check(id) {
 					item=data[k]['items'][i];
 					pt=0;
 					for (p in item['parms']) if (item['parms'].hasOwnProperty(p)) {
-						tabel+='<tr><td style="white-space": nowrap;">'+(pt==0?item['name']:'')+'</td><td style="white-space": nowrap;">'+p+'</td><td>'+item['parms'][p]+'</td></tr>';
+						tabel+='<tr><td style="white-space: nowrap;">'+(pt==0?item['name']:'')+'</td><td style="white-space: nowrap;">'+p+'</td><td>'+item['parms'][p]+'</td></tr>';
 						pt++;
 					}
 				}

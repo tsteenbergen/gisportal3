@@ -269,16 +269,33 @@ class openshift_api_ {
 						switch($todo_type) {
 							case 'replicationcontroller':
 								$r[$todo_type]['items'][$t]['parms']=['replicas'=>$this->response->status->replicas, 'availableReplicas'=>$this->response->status->availableReplicas, 'readyReplicas'=>$this->response->status->readyReplicas];
-								//if ($this->response->status->replicas) {$r[$todo_type]['items'][$t]['parms']['replicas']=$this->response->status->replicas;}
-								//if ($this->response->status->availableReplicas) {$r[$todo_type]['items'][$t]['parms']['availableReplicas']=$this->response->status->availableReplicas;}
-								//if ($this->response->status->readyReplicas) {$r[$todo_type]['items'][$t]['parms']['readyReplicas']=$this->response->status->readyReplicas;}
 								break;
 							case 'deploymentconfig':
 								/*stdClass::__set_state(array( 
 									'kind' => 'DeploymentConfig', 
 									'apiVersion' => 'v1', 
 									'metadata' => stdClass::__set_state(array( 'name' => 'gpid-127', 'namespace' => 'sscc-geoweb-co', 'selfLink' => '/oapi/v1/namespaces/sscc-geoweb-co/deploymentconfigs/gpid-127', 'uid' => 'a0601c8e-0477-11ea-8013-0050569da694', 'resourceVersion' => '56939419', 'generation' => 3, 'creationTimestamp' => '2019-11-11T11:37:22Z', 'labels' => stdClass::__set_state(array( 'app' => 'gisportal-map', 'name' => 'gpid-127', )), )), 
-									'spec' => stdClass::__set_state(array( 'strategy' => stdClass::__set_state(array( 'type' => 'Rolling', 'rollingParams' => stdClass::__set_state(array( 'updatePeriodSeconds' => 1, 'intervalSeconds' => 1, 'timeoutSeconds' => 600, 'maxUnavailable' => '25%', 'maxSurge' => '25%', )), 'resources' => stdClass::__set_state(array( )), 'activeDeadlineSeconds' => 21600, )), 'triggers' => array ( 0 => stdClass::__set_state(array( 'type' => 'ConfigChange', )), 1 => stdClass::__set_state(array( 'type' => 'ImageChange', 'imageChangeParams' => stdClass::__set_state(array( 'automatic' => true, 'containerNames' => array ( 0 => 'gpid-127', ), 'from' => stdClass::__set_state(array( 'kind' => 'ImageStreamTag', 'namespace' => 'sscc-geoweb-co', 'name' => 'mapserver-sscc:latest', )), 'lastTriggeredImage' => 'docker-registry.default.svc:5000/sscc-geoweb-co/mapserver-sscc@sha256:e51d9ac704739fcf666b9a71a7f903d4cd5dc5ff9761322d5eaa12e8c30a1ec2', )), )), ), 'replicas' => 1, 'test' => false, 'selector' => stdClass::__set_state(array( 'name' => 'gpid-127', )), 'template' => stdClass::__set_state(array( 'metadata' => stdClass::__set_state(array( 'creationTimestamp' => NULL, 'labels' => stdClass::__set_state(array( 'name' => 'gpid-127', )), )), 'spec' => stdClass::__set_state(array( 'volumes' => array ( 0 => stdClass::__set_state(array( 'name' => 'geo-map', 'persistentVolumeClaim' => stdClass::__set_state(array( 'claimName' => 'geo-mappen', )), )), ), 'containers' => array ( 0 => stdClass::__set_state(array( 'name' => 'gpid-127', 'image' => 'docker-registry.default.svc:5000/sscc-geoweb-co/mapserver-sscc@sha256:e51d9ac704739fcf666b9a71a7f903d4cd5dc5ff9761322d5eaa12e8c30a1ec2', 'ports' => array ( 0 => stdClass::__set_state(array( 'containerPort' => 80, 'protocol' => 'TCP', )), ), 'resources' => stdClass::__set_state(array( 'limits' => stdClass::__set_state(array( 'cpu' => '800m', 'memory' => '1200Mi', )), 'requests' => stdClass::__set_state(array( 'cpu' => '80m', 'memory' => '120Mi', )), )), 'volumeMounts' => array ( 0 => stdClass::__set_state(array( 'name' => 'geo-map', 'mountPath' => '/geo-map', 'subPath' => 'geo-packages/gpid-127', )), ), 'terminationMessagePath' => '/dev/termination-log', 'terminationMessagePolicy' => 'File', 'imagePullPolicy' => 'Always', 'securityContext' => stdClass::__set_state(array( 'capabilities' => stdClass::__set_state(array( )), 'privileged' => false, )), )), ), 'restartPolicy' => 'Always', 'terminationGracePeriodSeconds' => 30, 'dnsPolicy' => 'ClusterFirst', 'securityContext' => stdClass::__set_state(array( )), 'schedulerName' => 'default-scheduler', )), )), )), 
+									'spec' => stdClass::__set_state(array( 
+										'strategy' => stdClass::__set_state(array( 'type' => 'Rolling', 'rollingParams' => stdClass::__set_state(array( 'updatePeriodSeconds' => 1, 'intervalSeconds' => 1, 'timeoutSeconds' => 600, 'maxUnavailable' => '25%', 'maxSurge' => '25%', )), 'resources' => stdClass::__set_state(array( )), 'activeDeadlineSeconds' => 21600, )), 
+										'triggers' => array ( 
+											0 => stdClass::__set_state(array( 
+												'type' => 'ConfigChange',
+											)), 
+											1 => stdClass::__set_state(array( 
+												'type' => 'ImageChange', 
+												'imageChangeParams' => stdClass::__set_state(array( 
+													'automatic' => true, 
+													'containerNames' => array ( 0 => 'gpid-127', ), 
+													'from' => stdClass::__set_state(array( 
+														'kind' => 'ImageStreamTag', 
+														'namespace' => 'sscc-geoweb-co', 
+														'name' => 'mapserver-sscc:latest', 
+													)), 
+													'lastTriggeredImage' => 'docker-registry.default.svc:5000/sscc-geoweb-co/mapserver-sscc@sha256:e51d9ac704739fcf666b9a71a7f903d4cd5dc5ff9761322d5eaa12e8c30a1ec2', 
+												)), 
+											)), 
+										), 
+										'replicas' => 1, 'test' => false, 'selector' => stdClass::__set_state(array( 'name' => 'gpid-127', )), 'template' => stdClass::__set_state(array( 'metadata' => stdClass::__set_state(array( 'creationTimestamp' => NULL, 'labels' => stdClass::__set_state(array( 'name' => 'gpid-127', )), )), 'spec' => stdClass::__set_state(array( 'volumes' => array ( 0 => stdClass::__set_state(array( 'name' => 'geo-map', 'persistentVolumeClaim' => stdClass::__set_state(array( 'claimName' => 'geo-mappen', )), )), ), 'containers' => array ( 0 => stdClass::__set_state(array( 'name' => 'gpid-127', 'image' => 'docker-registry.default.svc:5000/sscc-geoweb-co/mapserver-sscc@sha256:e51d9ac704739fcf666b9a71a7f903d4cd5dc5ff9761322d5eaa12e8c30a1ec2', 'ports' => array ( 0 => stdClass::__set_state(array( 'containerPort' => 80, 'protocol' => 'TCP', )), ), 'resources' => stdClass::__set_state(array( 'limits' => stdClass::__set_state(array( 'cpu' => '800m', 'memory' => '1200Mi', )), 'requests' => stdClass::__set_state(array( 'cpu' => '80m', 'memory' => '120Mi', )), )), 'volumeMounts' => array ( 0 => stdClass::__set_state(array( 'name' => 'geo-map', 'mountPath' => '/geo-map', 'subPath' => 'geo-packages/gpid-127', )), ), 'terminationMessagePath' => '/dev/termination-log', 'terminationMessagePolicy' => 'File', 'imagePullPolicy' => 'Always', 'securityContext' => stdClass::__set_state(array( 'capabilities' => stdClass::__set_state(array( )), 'privileged' => false, )), )), ), 'restartPolicy' => 'Always', 'terminationGracePeriodSeconds' => 30, 'dnsPolicy' => 'ClusterFirst', 'securityContext' => stdClass::__set_state(array( )), 'schedulerName' => 'default-scheduler', )), )), )), 
 									'status' => stdClass::__set_state(array( 
 										'latestVersion' => 2, 
 										'observedGeneration' => 3, 
@@ -308,9 +325,9 @@ class openshift_api_ {
 									)), 
 								))*/
 								$r[$todo_type]['items'][$t]['parms']=['replicas'=>$this->response->status->replicas, 'availableReplicas'=>$this->response->status->availableReplicas, 'readyReplicas'=>$this->response->status->readyReplicas];
-								//if ($this->response->status->replicas) {$r[$todo_type]['items'][$t]['parms']['replicas']=$this->response->status->replicas;}
-								//if ($this->response->status->availableReplicas) {$r[$todo_type]['items'][$t]['parms']['availableReplicas']=$this->response->status->availableReplicas;}
-								//if ($this->response->status->readyReplicas) {$r[$todo_type]['items'][$t]['parms']['readyReplicas']=$this->response->status->readyReplicas;}
+								foreach ($this->response->spec->triggers as $trigger) if ($trigger->type=='ImageChange'){
+									$r[$todo_type]['items'][$t]['parms']['image']=$trigger->imageChangeParams->from->name;
+								}
 								foreach ($this->response->status->conditions as $c) {
 									$r[$todo_type]['items'][$t]['parms'][$c->type]=$c->status.' ('.htmlspecialchars($c->message).')';
 								}

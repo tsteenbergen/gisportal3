@@ -372,7 +372,6 @@ function admin_reset(func) {
 		cache: false,
 		processData:false,
 		success: function(data) {
-			console.log(data);
 			if (data.indexOf('<b>Warning</b>')>=1) {
 				data={msg:data,error:true};
 			} else {
@@ -402,7 +401,6 @@ function admin_reset(func) {
 		error: function(e) {
 			$('.error').html(e.responseText);
 			$('.aknop').prop('disabled',false);
-			console.log(e);
 		}          
 	});
 }
@@ -497,3 +495,37 @@ function copyKaart() {
 	copyTextToClipboard(jQuery('#kaart-url').html());
 }
 
+function health_check(id) {
+	var form_data=new FormData();
+	
+	form_data.append('id', id);
+	$.ajax({
+		url: '/geo/portal/health-check.php',
+		type: "POST",
+		data:  form_data,
+		contentType: false,
+		cache: false,
+		processData:false,
+		success: function(data) {
+			if (data.indexOf('<b>Warning</b>')>=1) {
+				data={msg:data,error:true};
+			} else {
+				data=JSON.parse(data);
+			}
+			if (data.error===false) {
+				startGpidReset(no+1);
+				el.html('Reset done');
+			} else {
+				$('.error').html(data.msg);
+				$('.aknop').prop('disabled',false);
+				el.html('Error; aborted');
+			}
+		},
+		error: function(e) {
+			$('.error').html(e.responseText);
+			$('.aknop').prop('disabled',false);
+			el.html('Error; aborted');
+			console.log(e);
+		}          
+	});
+}

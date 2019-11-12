@@ -346,12 +346,11 @@ $js='var indatarecs=[];var datarecs=[];';
 					
 					$tab2.='</div>';
 					
-					$checks=$openshift_api->healthChecks($g['id']);
-					$tab3='<div id="tabs-3" style="vertical-align: top;"><table>';
-					foreach ($checks as $todo_type => $check) {
-						$tab3.='<tr><td>'.$todo_type.'</td><td>'.$check['msg'].'</td></tr>';
-					}
-					$tab3.='</table></div>';
+					$tab3='<div id="tabs-3" style="vertical-align: top;">';
+					$tab3.='<button onclick="health_check('.$g['id'].');">Perform health-check</button>';
+					$tab3.='<div id="health-check">';
+					$tab3.='</div>';
+					$tab3.='</div>';
 				} else {
 					$tab2=false;
 					$tab3=false;

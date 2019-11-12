@@ -270,8 +270,8 @@ class openshift_api_ {
 							case 'replicationcontroller':
 								//$r[$todo_type]['items'][$t]['parms']=['replicas'=>$this->response->status->replicas, 'availableReplicas'=>$this->response->status->availableReplicas, 'readyReplicas'=>$this->response->status->readyReplicas];
 								if ($this->response->status->replicas) {$r[$todo_type]['items'][$t]['parms']['replicas']=$this->response->status->replicas;}
-								if ($this->response->status->replicas) {$r[$todo_type]['items'][$t]['parms']['availableReplicas']=$this->response->status->availableReplicas;}
-								if ($this->response->status->replicas) {$r[$todo_type]['items'][$t]['parms']['readyReplicas']=$this->response->status->readyReplicas;}
+								if ($this->response->status->availableReplicas) {$r[$todo_type]['items'][$t]['parms']['availableReplicas']=$this->response->status->availableReplicas;}
+								if ($this->response->status->readyReplicas) {$r[$todo_type]['items'][$t]['parms']['readyReplicas']=$this->response->status->readyReplicas;}
 								break;
 							case 'deploymentconfig':
 								/*stdClass::__set_state(array( 
@@ -309,8 +309,8 @@ class openshift_api_ {
 								))*/
 								//$r[$todo_type]['items'][$t]['parms']=['replicas'=>$this->response->status->replicas, 'availableReplicas'=>$this->response->status->availableReplicas, 'readyReplicas'=>$this->response->status->readyReplicas];
 								if ($this->response->status->replicas) {$r[$todo_type]['items'][$t]['parms']['replicas']=$this->response->status->replicas;}
-								if ($this->response->status->replicas) {$r[$todo_type]['items'][$t]['parms']['availableReplicas']=$this->response->status->availableReplicas;}
-								if ($this->response->status->replicas) {$r[$todo_type]['items'][$t]['parms']['readyReplicas']=$this->response->status->readyReplicas;}
+								if ($this->response->status->availableReplicas) {$r[$todo_type]['items'][$t]['parms']['availableReplicas']=$this->response->status->availableReplicas;}
+								if ($this->response->status->readyReplicas) {$r[$todo_type]['items'][$t]['parms']['readyReplicas']=$this->response->status->readyReplicas;}
 								foreach ($this->response->status->conditions as $c) {
 									$r[$todo_type]['items'][$t]['parms'][$c->type]=$c->status.' ('.htmlspecialchars($c->message).')';
 								}

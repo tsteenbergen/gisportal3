@@ -255,7 +255,7 @@ class openshift_api_ {
 		$jsonParms='{"as":"Table"}';
 		foreach ($todo_types as $todo_type) {
 			$todo=$this->def[$todo_type];
-			$r[$todo_type]=['error'=>false];
+			$r[$todo_type]=['error'=>false,items=>[]];
 			$this->command('GET',$todo_type,['labelSelector'=>'name=gpid-'.$id,'parms'=>$jsonParmsList]);
 			if ($this->response->kind==$todo['array']) {
 				$t1=count($this->response->items);
@@ -263,7 +263,11 @@ class openshift_api_ {
 					$r[$todo_type]['msg']=$t1.($t1==1?' item':' items').' found: ';
 					for ($t=0;$t<$t1;$t++) {
 						$r[$todo_type]['msg'].=($t==0?'':($t<$t1-1?', ':' and ')).$this->response->items[$t]->metadata->name;
-						$this->command('GET',$todo_type,['name'=>$this->response->items[$t]->metadata->name,'parms'=>$jsonParms]);
+						$r[$todo_type]['items'][]=['name'=>$this->response->items[$t]->metadata->name,'msg'=>''];
+					}
+					for ($t=0;$t<$t1;$t++) {
+						$this->command('GET',$todo_type,['name'=>$r[$todo_type]['items'][$t]['name'],'parms'=>$jsonParms]);
+						$r[$todo_type]['items'][$t]['name']['msg']=var_export($this->response,true);
 					}
 				} else {
 					switch($todo_type) {

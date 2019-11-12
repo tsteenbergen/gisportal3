@@ -190,7 +190,7 @@ function initFileuploads() {
 						}
 						fileuploadMessage(this,data['error'],data['msg'],100,JSON.stringify(data));
 						var parms=location.search, t, f=-1;
-						if (substr(parms,0,1)=='?') {parms=parms.substr(1);}
+						if (parms.substr(0,1)=='?') {parms=parms.substr(1);}
 						parms=parms.split('&');
 						for (t=0;t<parms.length;t++) if (parms[t].substr(0,4)=='tab=') {f=t;t=parms.length;}
 						if (f==-1) {parms[parms.length]='tab=file';} else {parms[f]='tab=file';}

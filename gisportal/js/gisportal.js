@@ -517,12 +517,8 @@ function health_check(id) {
 				tabel+='<tr><td>'+k+'</td><td colspan="3">'+data[k]['msg']+'</td></tr>';
 				for (i=0;i<data[k]['items'].length; i++) {
 					item=data[k]['items'][i];
-					if (item['parms'].length>=1) {
-						for (p in item['parms']) if (item['parms'].hasOwnProperty(p)) {
-							tabel+='<tr><td></td><td>'+p+'</td><td>'+item['parms'][p]+'</td></tr>';
-						}
-					} else {
-						tabel+='<tr><td></td><td>'+item['name']+'</td></tr>';
+					for (p in item['parms']) if (item['parms'].hasOwnProperty(p)) {
+						tabel+='<tr><td></td><td>'+p+'</td><td>'+item['parms'][p]+'</td></tr>';
 					}
 				}
 			}

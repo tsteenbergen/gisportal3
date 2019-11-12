@@ -254,12 +254,12 @@ class openshift_api_ {
 		$jsonParms='{"includeUninitialized":true}';
 		foreach ($todo_types as $todo_type) {
 			$todo=$this->def[$todo_type];
-			$r[$todo_type]=['error'=>false,'items'=>[]];
+			$r[$todo_type]=['error'=>false,'warning'=>false,'items'=>[]];
 			$this->command('GET',$todo_type,['labelSelector'=>'name=gpid-'.$id,'parms'=>$jsonParms]);
 			if ($this->response->kind==$todo['array']) {
 				$t1=count($this->response->items);
 				if ($t1>=1) {
-					$r[$todo_type]['msg']=$t1.($t1==1?' item':' items').' found: ';
+					$r[$todo_type]['msg']=$t1.' '.$todo_type.($t1==1?'':'s').' found: ';
 					for ($t=0;$t<$t1;$t++) {
 						$r[$todo_type]['msg'].=($t==0?'':($t<$t1-1?', ':' and ')).$this->response->items[$t]->metadata->name;
 						$r[$todo_type]['items'][]=['name'=>$this->response->items[$t]->metadata->name,'parms'=>[]];
@@ -268,7 +268,10 @@ class openshift_api_ {
 						$this->command('GET',$todo_type,['name'=>$r[$todo_type]['items'][$t]['name']]);
 						switch($todo_type) {
 							case 'replicationcontroller':
-								$r[$todo_type]['items'][$t]['parms']=['replicas'=>$this->response->status->replicas, 'availableReplicas'=>$this->response->status->availableReplicas, 'readyReplicas'=>$this->response->status->readyReplicas, 'observedGeneration'=>$this->response->status->observedGeneration];
+								//$r[$todo_type]['items'][$t]['parms']=['replicas'=>$this->response->status->replicas, 'availableReplicas'=>$this->response->status->availableReplicas, 'readyReplicas'=>$this->response->status->readyReplicas];
+								if ($this->response->status->replicas) {$r[$todo_type]['items'][$t]['parms']['replicas']=$this->response->status->replicas;}
+								if ($this->response->status->replicas) {$r[$todo_type]['items'][$t]['parms']['availableReplicas']=$this->response->status->availableReplicas;}
+								if ($this->response->status->replicas) {$r[$todo_type]['items'][$t]['parms']['readyReplicas']=$this->response->status->readyReplicas;}
 								break;
 							case 'deploymentconfig':
 								/*stdClass::__set_state(array( 
@@ -304,7 +307,10 @@ class openshift_api_ {
 										'readyReplicas' => 1, 
 									)), 
 								))*/
-								$r[$todo_type]['items'][$t]['parms']=['replicas'=>$this->response->status->replicas, 'availableReplicas'=>$this->response->status->availableReplicas, 'readyReplicas'=>$this->response->status->readyReplicas, 'observedGeneration'=>$this->response->status->observedGeneration];
+								//$r[$todo_type]['items'][$t]['parms']=['replicas'=>$this->response->status->replicas, 'availableReplicas'=>$this->response->status->availableReplicas, 'readyReplicas'=>$this->response->status->readyReplicas];
+								if ($this->response->status->replicas) {$r[$todo_type]['items'][$t]['parms']['replicas']=$this->response->status->replicas;}
+								if ($this->response->status->replicas) {$r[$todo_type]['items'][$t]['parms']['availableReplicas']=$this->response->status->availableReplicas;}
+								if ($this->response->status->replicas) {$r[$todo_type]['items'][$t]['parms']['readyReplicas']=$this->response->status->readyReplicas;}
 								foreach ($this->response->status->conditions as $c) {
 									$r[$todo_type]['items'][$t]['parms'][$c->type]=$c->status.' ('.htmlspecialchars($c->message).')';
 								}
@@ -356,8 +362,13 @@ class openshift_api_ {
 										'qosClass' => 'Burstable',
 									)), 
 								)) */
+								$r[$todo_type]['items'][$t]['parms']['phase']=$this->response->status->phase;
 								foreach ($this->response->status->conditions as $c) {
 									$r[$todo_type]['items'][$t]['parms'][$c->type]=$c->status;
+								}
+								foreach ($this->response->status->containerStatuses as $c) {
+									$r[$todo_type]['items'][$t]['parms']['Container '.$c->name.' ready']=$c->ready;
+									$r[$todo_type]['items'][$t]['parms']['Container '.$c->name.' image']=$c->image;
 								}
 								break;
 							case 'service':
@@ -390,21 +401,27 @@ class openshift_api_ {
 				} else {
 					switch($todo_type) {
 						case 'replicationcontroller':
+							$r[$todo_type]['error']=true;
 							$r[$todo_type]['msg']='Error: At least 1 replicationcontroller should be present.<br>This may be coused by a missing/incorrect image name.';
 							break;
 						case 'deploymentconfig':
+							$r[$todo_type]['error']=true;
 							$r[$todo_type]['msg']='Error: At least 1 deploymentconfig should be present.';
 							break;
 						case 'autoscaler':
+							$r[$todo_type]['error']=true;
 							$r[$todo_type]['msg']='Error: At least 1 autoscaler should be present.';
 							break;
 						case 'pod':
+							$r[$todo_type]['warning']=true;
 							$r[$todo_type]['msg']='Possible error: No pods found. Pods can be scaled down to 0 to free resources for other pods.';
 							break;
 						case 'service':
+							$r[$todo_type]['error']=true;
 							$r[$todo_type]['msg']='Error: No service found.';
 							break;
 						case 'route':
+							$r[$todo_type]['error']=true;
 							$r[$todo_type]['msg']='Error: No route found.';
 							break;
 					}

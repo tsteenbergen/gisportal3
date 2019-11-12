@@ -252,7 +252,7 @@ class openshift_api_ {
 		// Met -loglevel 10 werd meegegeven: Accept: application/json;as=Table;v=v1beta1;g=meta.ks8.io, application/json
 		$r=[];
 		$jsonParmsList='{"includeUninitialized":true}';
-		$jsonParms='{"as":"Table"}';
+		$jsonParms='{"Accept": "application/json", "as":"Table", "v": "v1beta1", "g": "meta.ks8.io, application/json"}';
 		foreach ($todo_types as $todo_type) {
 			$todo=$this->def[$todo_type];
 			$r[$todo_type]=['error'=>false,'items'=>[]];

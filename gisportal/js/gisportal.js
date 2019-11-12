@@ -194,7 +194,7 @@ function initFileuploads() {
 						parms=parms.split('&');
 						for (t=0;t<parms.length;t++) if (parms[t].substr(0,4)=='tab=') {f=t;t=parms.length;}
 						if (f==-1) {parms[parms.length]='tab=file';} else {parms[f]='tab=file';}
-						location.replace(location.host+location.pathname+'?'+parms.join('&'));
+						location.replace(location.protocol+'//'+location.host+location.pathname+'?'+parms.join('&'));
 					},
 					uploadProgress: function(event, position, total, percentComplete) {
 						fileuploadMessage(this,false,'Uploading',percentComplete,false);

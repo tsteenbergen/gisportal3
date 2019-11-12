@@ -272,7 +272,7 @@ class openshift_api_ {
 								$r[$todo_type]['items'][$t]['msg']=$this->response->metadata->readyReplicas.'<br>';
 								$r[$todo_type]['items'][$t]['msg']=$this->response->metadata->availableReplicas.'<br>';
 								$r[$todo_type]['items'][$t]['msg']=$this->response->metadata->observedGeneration.'<br>';
-								$r[$todo_type]['items'][$t]['msg']+=var_export($this->response,true);
+								$r[$todo_type]['items'][$t]['msg'].=var_export($this->response,true);
 								break;
 							default:
 								$r[$todo_type]['items'][$t]['msg']=var_export($this->response,true);

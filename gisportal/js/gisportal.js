@@ -497,7 +497,10 @@ function copyKaart() {
 
 function health_check(id) {
 	var form_data=new FormData();
-	
+
+	jQuery('#health-check-knop').hide();
+	jQuery('#health-check').html('');
+	jQuery('#health-check-error').html('').removeClass('error');
 	form_data.append('id', id);
 	$.ajax({
 		url: '/geo/portal/health-check.php',
@@ -507,25 +510,17 @@ function health_check(id) {
 		cache: false,
 		processData:false,
 		success: function(data) {
-			if (data.indexOf('<b>Warning</b>')>=1) {
-				data={msg:data,error:true};
-			} else {
-				data=JSON.parse(data);
+			jQuery('#health-check-knop').show();
+			var tabel='<table>';
+			for (k in data) if (data.hasOwnProperty(k)) {
+				tabel+='<tr><td>'+k+'</td><td>'+data[k]['msg']+'</td></tr>';
 			}
-			if (data.error===false) {
-				startGpidReset(no+1);
-				el.html('Reset done');
-			} else {
-				$('.error').html(data.msg);
-				$('.aknop').prop('disabled',false);
-				el.html('Error; aborted');
-			}
+			jQuery('#health-check').html(tabel+'/table>');
 		},
 		error: function(e) {
 			$('.error').html(e.responseText);
-			$('.aknop').prop('disabled',false);
-			el.html('Error; aborted');
-			console.log(e);
+			jQuery('#health-check-knop').show();
+			jQuery('#health-check-error').html('<b>Error:</b> '+e.responseText).addClass('error');
 		}          
 	});
 }

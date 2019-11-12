@@ -267,7 +267,7 @@ class openshift_api_ {
 					}
 					for ($t=0;$t<$t1;$t++) {
 						$this->command('GET',$todo_type,['name'=>$r[$todo_type]['items'][$t]['name'],'parms'=>$jsonParms]);
-						$r[$todo_type]['items'][$t]['name']['msg']=var_export($this->response,true);
+						$r[$todo_type]['items'][$t]['msg']=var_export($this->response,true);
 					}
 				} else {
 					switch($todo_type) {

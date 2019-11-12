@@ -250,10 +250,13 @@ class openshift_api_ {
 	}
 	function healthChecks($id, $todo_types=['replicationcontroller','deploymentconfig','autoscaler','pod','service','route']) {
 		$r=[];
+		//$jsonParms='{"includeUninitialized":true}';
+		// Met -loglevel 10 werd meegegeven: Accept: application/json;as=Table;v=v1beta1;g=meta.ks8.io, application/json
+		$jsonParms='{"includeUninitialized":true,"as":"Table"}';
 		foreach ($todo_types as $todo_type) {
 			$todo=$this->def[$todo_type];
 			$r[$todo_type]=['error'=>false];
-			$this->command('GET',$todo_type,['labelSelector'=>'name=gpid-'.$id,'parms'=>'{"includeUninitialized":true}']);
+			$this->command('GET',$todo_type,['labelSelector'=>'name=gpid-'.$id,'parms'=>$jsonParms]);
 			if ($this->response->kind==$todo['array']) {
 				$t1=count($this->response->items);
 				if ($t1>=1) {

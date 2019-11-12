@@ -512,9 +512,12 @@ function health_check(id) {
 		success: function(data) {
 			jQuery('#health-check-knop').show();
 			jQuery('#health-check-msg').html('').removeClass('spinner');
-			var tabel='<table>';
+			var tabel='<table>', k, i;
 			for (k in data) if (data.hasOwnProperty(k)) {
-				tabel+='<tr><td>'+k+'</td><td>'+data[k]['msg']+'</td></tr>';
+				tabel+='<tr><td>'+k+'</td><td colspan="2">'+data[k]['msg']+'</td></tr>';
+				for (i=0;i<data[k]['items'].length; i++) {
+					tabel+='<tr><td></td><td>'+data[k]['items'][i]['name']+'</td><td>'+data[k]['items'][i]['msg']+'</td></tr>';
+				}
 			}
 			jQuery('#health-check').html(tabel+'</table>');
 		},

@@ -273,7 +273,7 @@ class openshift_api_ {
 								$r[$todo_type]['items'][$t]['msg'].='readyReplicas'.$this->response->status->readyReplicas.'<br>';
 								$r[$todo_type]['items'][$t]['msg'].='observedGeneration'.$this->response->status->observedGeneration.'<br>';
 								break;
-							case '':
+							case 'deploymentconfig':
 								/*stdClass::__set_state(array( 
 									'kind' => 'DeploymentConfig', 
 									'apiVersion' => 'v1', 
@@ -314,6 +314,79 @@ class openshift_api_ {
 								foreach ($this->response->status->conditions as $c) {
 									$r[$todo_type]['items'][$t]['msg'].=$c->type.': '.$c->status.' ('.htmlspecialchars($c->message).')<br>';
 								}
+								break;
+							case 'pod':
+								/* stdClass::__set_state(array( 
+									'kind' => 'Pod', 
+									'apiVersion' => 'v1', 
+									'metadata' => stdClass::__set_state(array( 'name' => 'gpid-127-2-bhvhd', 'generateName' => 'gpid-127-2-', 'namespace' => 'sscc-geoweb-co', 'selfLink' => '/api/v1/namespaces/sscc-geoweb-co/pods/gpid-127-2-bhvhd', 'uid' => 'a85e2ddc-0528-11ea-a70b-0050569d5aa0', 'resourceVersion' => '56939382', 'creationTimestamp' => '2019-11-12T08:44:36Z', 'labels' => stdClass::__set_state(array( 'deployment' => 'gpid-127-2', 'deploymentconfig' => 'gpid-127', 'name' => 'gpid-127', )), 'annotations' => stdClass::__set_state(array( 'openshift.io/deployment-config.latest-version' => '2', 'openshift.io/deployment-config.name' => 'gpid-127', 'openshift.io/deployment.name' => 'gpid-127-2', 'openshift.io/scc' => 'anyuid', )), 'ownerReferences' => array ( 0 => stdClass::__set_state(array( 'apiVersion' => 'v1', 'kind' => 'ReplicationController', 'name' => 'gpid-127-2', 'uid' => 'a548a998-0528-11ea-a70b-0050569d5aa0', 'controller' => true, 'blockOwnerDeletion' => true, )), ), )), 
+									'spec' => stdClass::__set_state(array( 'volumes' => array ( 0 => stdClass::__set_state(array( 'name' => 'geo-map', 'persistentVolumeClaim' => stdClass::__set_state(array( 'claimName' => 'geo-mappen', )), )), 1 => stdClass::__set_state(array( 'name' => 'default-token-p4drb', 'secret' => stdClass::__set_state(array( 'secretName' => 'default-token-p4drb', 'defaultMode' => 420, )), )), ), 'containers' => array ( 0 => stdClass::__set_state(array( 'name' => 'gpid-127', 'image' => 'docker-registry.default.svc:5000/sscc-geoweb-co/mapserver-sscc@sha256:e51d9ac704739fcf666b9a71a7f903d4cd5dc5ff9761322d5eaa12e8c30a1ec2', 'ports' => array ( 0 => stdClass::__set_state(array( 'containerPort' => 80, 'protocol' => 'TCP', )), ), 'resources' => stdClass::__set_state(array( 'limits' => stdClass::__set_state(array( 'cpu' => '800m', 'memory' => '1200Mi', )), 'requests' => stdClass::__set_state(array( 'cpu' => '80m', 'memory' => '120Mi', )), )), 'volumeMounts' => array ( 0 => stdClass::__set_state(array( 'name' => 'geo-map', 'mountPath' => '/geo-map', 'subPath' => 'geo-packages/gpid-127', )), 1 => stdClass::__set_state(array( 'name' => 'default-token-p4drb', 'readOnly' => true, 'mountPath' => '/var/run/secrets/kubernetes.io/serviceaccount', )), ), 'terminationMessagePath' => '/dev/termination-log', 'terminationMessagePolicy' => 'File', 'imagePullPolicy' => 'Always', 'securityContext' => stdClass::__set_state(array( 'capabilities' => stdClass::__set_state(array( 'drop' => array ( 0 => 'MKNOD', ), )), 'privileged' => false, )), )), ), 'restartPolicy' => 'Always', 'terminationGracePeriodSeconds' => 30, 'dnsPolicy' => 'ClusterFirst', 'nodeSelector' => stdClass::__set_state(array( 'node-role.kubernetes.io/compute' => 'true', )), 'serviceAccountName' => 'default', 'serviceAccount' => 'default', 'nodeName' => 'sscc-chhst-l05p.int.ssc-campus.nl', 'securityContext' => stdClass::__set_state(array( 'seLinuxOptions' => stdClass::__set_state(array( 'level' => 's0:c8,c2', )), )), 'imagePullSecrets' => array ( 0 => stdClass::__set_state(array( 'name' => 'default-dockercfg-qj9jg', )), ), 'schedulerName' => 'default-scheduler', 'tolerations' => array ( 0 => stdClass::__set_state(array( 'key' => 'node.kubernetes.io/memory-pressure', 'operator' => 'Exists', 'effect' => 'NoSchedule', )), ), 'priority' => 0, )), 
+									'status' => stdClass::__set_state(array( 
+										'phase' => 'Running', 
+										'conditions' => array ( 
+											0 => stdClass::__set_state(array( 
+												'type' => 'Initialized', 
+												'status' => 'True', 
+												'lastProbeTime' => NULL, 'lastTransitionTime' => '2019-11-12T08:44:36Z', 
+											)), 
+											1 => stdClass::__set_state(array( 
+												'type' => 'Ready', 
+												'status' => 'True', 
+												'lastProbeTime' => NULL, 'lastTransitionTime' => '2019-11-12T08:44:40Z', 
+											)), 
+											2 => stdClass::__set_state(array( 
+												'type' => 'ContainersReady', 
+												'status' => 'True', 
+												'lastProbeTime' => NULL, 'lastTransitionTime' => NULL,
+											)), 
+											3 => stdClass::__set_state(array( 
+												'type' => 'PodScheduled', 
+												'status' => 'True', 
+												'lastProbeTime' => NULL, 'lastTransitionTime' => '2019-11-12T08:44:36Z', 
+											)), 
+										), 
+										'hostIP' => '131.224.53.65', 
+										'podIP' => '10.131.0.137', 
+										'startTime' => '2019-11-12T08:44:36Z', 
+										'containerStatuses' => array ( 
+											0 => stdClass::__set_state(array( 
+												'name' => 'gpid-127', 
+												'state' => stdClass::__set_state(array( 'running' => stdClass::__set_state(array( 'startedAt' => '2019-11-12T08:44:39Z', )), )), 
+												'lastState' => stdClass::__set_state(array( )), 
+												'ready' => true, 'restartCount' => 0, 
+												'image' => 'docker-registry.default.svc:5000/sscc-geoweb-co/mapserver-sscc@sha256:e51d9ac704739fcf666b9a71a7f903d4cd5dc5ff9761322d5eaa12e8c30a1ec2', 
+												'imageID' => 'docker-pullable://docker-registry.default.svc:5000/sscc-geoweb-co/mapserver-sscc@sha256:e51d9ac704739fcf666b9a71a7f903d4cd5dc5ff9761322d5eaa12e8c30a1ec2', 
+												'containerID' => 'docker://b75d9580e39c5712670886f71207d5042d177893b711284e3ac7ccc6e658d422',
+											)), 
+										), 
+										'qosClass' => 'Burstable',
+									)), 
+								)) */
+								foreach ($this->response->status->conditions as $c) {
+									$r[$todo_type]['items'][$t]['msg'].=$c->type.': '.$c->status.'<br>';
+								}
+								break;
+							case 'service':
+								/* stdClass::__set_state(array( 
+									'kind' => 'Service', 
+									'apiVersion' => 'v1', 
+									'metadata' => stdClass::__set_state(array( 'name' => 'gpid-127', 'namespace' => 'sscc-geoweb-co', 'selfLink' => '/api/v1/namespaces/sscc-geoweb-co/services/gpid-127', 'uid' => 'a06cef63-0477-11ea-8013-0050569da694', 'resourceVersion' => '56652162', 'creationTimestamp' => '2019-11-11T11:37:22Z', 'labels' => stdClass::__set_state(array( 'name' => 'gpid-127', )), )), 
+									'spec' => stdClass::__set_state(array( 'ports' => array ( 0 => stdClass::__set_state(array( 'name' => 'gpid-127', 'protocol' => 'TCP', 'port' => 80, 'targetPort' => 80, )), ), 'selector' => stdClass::__set_state(array( 'name' => 'gpid-127', )), 'clusterIP' => '172.30.24.74', 'type' => 'ClusterIP', 'sessionAffinity' => 'None', )), 
+									'status' => stdClass::__set_state(array( 'loadBalancer' => stdClass::__set_state(array( )), )), 
+								)) */
+								break;
+							case 'route':
+								/* stdClass::__set_state(array( 
+									'kind' => 'Route', 
+									'apiVersion' => 'v1', 
+									'metadata' => stdClass::__set_state(array( 'name' => 'gpid-127', 'namespace' => 'sscc-geoweb-co', 'selfLink' => '/oapi/v1/namespaces/sscc-geoweb-co/routes/gpid-127', 'uid' => 'a0719218-0477-11ea-8013-0050569da694', 'resourceVersion' => '56652165', 'creationTimestamp' => '2019-11-11T11:37:22Z', 'labels' => stdClass::__set_state(array( 'name' => 'gpid-127', )), )), 
+									'spec' => stdClass::__set_state(array( 'host' => 'acceptatie.data.rivm.nl', 'path' => '/geo/uuuuuu12/abc', 'to' => stdClass::__set_state(array( 'kind' => 'Service', 'name' => 'gpid-127', 'weight' => 100, )), 'port' => stdClass::__set_state(array( 'targetPort' => 'gpid-127', )), 'wildcardPolicy' => 'None', )), 
+									'status' => stdClass::__set_state(array( 
+										'ingress' => array ( 
+											0 => stdClass::__set_state(array( 'host' => 'acceptatie.data.rivm.nl', 'routerName' => 'router-shard-dmz', 'conditions' => array ( 0 => stdClass::__set_state(array( 'type' => 'Admitted', 'status' => 'True', 'lastTransitionTime' => '2019-11-11T11:37:22Z', )), ), 'wildcardPolicy' => 'None', )), 
+										), 
+									)),
+								)) */
 								break;
 							default:
 								$r[$todo_type]['items'][$t]['msg']=var_export($this->response,true);

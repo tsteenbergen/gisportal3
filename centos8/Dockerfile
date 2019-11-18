@@ -49,5 +49,5 @@ COPY etc/php.httpd.user.ini /var/www/html/geo/portal/.user.ini
 # Het starten van de lighttpd service gebeurt via het umask-geo-mappen.sh script; Deze zet de rechten
 # op geo-mappen goed en start vervolgens de lighttpd service.
 RUN chmod +x /etc/umask-geo-mappen.sh
-CMD /etc/umask-geo-mappen.sh
-#CMD while true; do sleep 60; done
+#CMD /etc/umask-geo-mappen.sh
+CMD while true; do sleep 60; done

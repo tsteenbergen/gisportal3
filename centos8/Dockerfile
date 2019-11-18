@@ -10,12 +10,12 @@ ENV TZ Europe/Amsterdam
 
 # Instaleren van php 7.2 en Mysql
 # Onderstaande regels zijn nodig voor installatie obv CENTOS
-#RUN yum install -y epel-release
+RUN yum install -y epel-release
 #RUN yum install -y http://rpms.remirepo.net/enterprise/remi-release-7.rpm
 #RUN yum install -y yum-utils
 #RUN yum-config-manager --enable remi-php72
-#RUN yum update -y
-#RUN yum install -y php72 php72-php-fpm php72-php-mysqlnd php72-php-xml php72-php-json
+RUN yum update -y
+RUN yum install -y php
 # Onderstaande regels zijn nodig voor installatie obv RHEL
 # ...
 
@@ -25,8 +25,8 @@ COPY etc/ontwikkel.sh /var/ontwikkel.sh
 RUN chmod a+x /var/ontwikkel.sh
 
 # Instaleren van lighttpd
-#RUN yum install -y lighttpd
-#RUN yum install -y lighttpd-fastcgi
+RUN yum install -y lighttpd
+RUN yum install -y lighttpd-fastcgi
 
 # lighttpd werkt op poort 8080 (zie ook lighttpd.conf)
 EXPOSE 8080

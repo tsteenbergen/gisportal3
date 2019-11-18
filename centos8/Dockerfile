@@ -26,7 +26,7 @@ RUN chmod a+x /var/ontwikkel.sh
 
 # Instaleren van lighttpd
 RUN yum install -y lighttpd
-RUN yum install -y lighttpd-fastcgi
+# RUN yum install -y lighttpd-fastcgi
 
 # lighttpd werkt op poort 8080 (zie ook lighttpd.conf)
 EXPOSE 8080

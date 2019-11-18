@@ -38,9 +38,9 @@ COPY gisportal/. /var/www/html/geo/portal
 # de files uit de map etc moeten naar verschillende mappen worden gekopieerd (soms met andere naam!)
 COPY etc/umask-geo-mappen.sh /etc/umask-geo-mappen.sh
 COPY etc/lighttpd.conf /etc/lighttpd.conf
-#COPY etc/php.ini /etc/opt/remi/php72/php.ini
-#COPY etc/fpm.conf /etc/php-fpm.d/www.conf
-#COPY etc/php.httpd.user.ini /var/www/html/geo/portal/.user.ini
+COPY etc/php.ini /etc/php.ini
+COPY etc/fpm.conf /etc/php-fpm.d/www.conf
+COPY etc/php.httpd.user.ini /var/www/html/geo/portal/.user.ini
 
 # ******************  Onderstaande regels zijn nodig voor installatie obv RHEL *******************
 # COPY etc/modules.conf /etc/lighttpd/modules.conf
@@ -49,5 +49,5 @@ COPY etc/lighttpd.conf /etc/lighttpd.conf
 # Het starten van de lighttpd service gebeurt via het umask-geo-mappen.sh script; Deze zet de rechten
 # op geo-mappen goed en start vervolgens de lighttpd service.
 RUN chmod +x /etc/umask-geo-mappen.sh
-#CMD /etc/umask-geo-mappen.sh
-CMD while true; do sleep 60; done
+CMD /etc/umask-geo-mappen.sh
+#CMD while true; do sleep 60; done

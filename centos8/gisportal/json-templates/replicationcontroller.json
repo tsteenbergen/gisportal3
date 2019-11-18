@@ -1,0 +1,20 @@
+{
+    "kind": "ReplicationController",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "$name",
+        "namespace": "$namespace",
+        "labels": {
+			"name": "$name"
+        },
+		"ownerReferences" : {
+			"kind": "DeploymentConfig", 
+			"name": "$name" 
+		}
+    },
+    "spec": {
+		"deployment": "$name",
+		"deploymentconfig": "$name",
+		"name": "$name"
+    }
+}

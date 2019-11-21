@@ -63,7 +63,7 @@ class memory  {
 		return $r;
 	}
 	function uploadAllowed() {
-		if ($this->available>=1*10000000000) { // 100 Gb
+		if ($this->available>=1*1000000000) { // 1 Gb
 			return true;
 		}
 		return false;

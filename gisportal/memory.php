@@ -64,6 +64,7 @@ class memory  {
 		return $r;
 	}
 	function uploadAllowed() {
+		return true;
 		if ($this->available>=$this->max_uploads*$this->max_upload_size_gb*1024*1024*1024) { // 1 Gb
 			return true;
 		}

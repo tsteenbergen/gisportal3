@@ -11,6 +11,8 @@ class memory  {
 	var $used_mb='';
 	var $available_mb='';
 	var $total_mb='';
+	var $max_upload_size_gb=20;
+	var $max_uploads=5;
 	
 	function __construct() {
 		global $openshift_api;
@@ -51,6 +53,8 @@ class memory  {
 		if ($this->used>=1) {$this->used_mb=number_format($this->used/1000000,0,',','.').' Mb';}
 		if ($this->available>=1) {$this->available_mb=number_format($this->available/1000000,0,',','.').' Mb';}
 		if ($this->total>=1) {$this->total_mb=number_format($this->total/1000000,0,',','.').' Mb';}
+		$tmp=$basicPage->getConfig('max_upload_size_gb'); if ($tmp!='') {$this->max_upload_size_gb=(int)$tmp;}
+		$tmp=$basicPage->getConfig('max_uploads'); if ($tmp!='') {$this->max_uploads=(int)$tmp;}
 	}
 	function maxUploadsize() {
 		$r=$this->available;
@@ -63,7 +67,7 @@ class memory  {
 		return $r;
 	}
 	function uploadAllowed() {
-		if ($this->available>=10*1000000000) { // 1 Gb
+		if ($this->available>=$this->max_upload_size_gb*1000000000) { // 1 Gb
 			return true;
 		}
 		return false;

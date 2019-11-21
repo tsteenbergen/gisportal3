@@ -34,7 +34,7 @@ EXPOSE 8080
 # KOPIEREN VAN FILES
 # de files uit de map gisportal moeten naar de root van lighttpd worden gekopieerd
 RUN mkdir -p /var/www/html/geo/portal
-COPY gisportal/. /var/www/html/geo/portal
+COPY /gisportal/. /var/www/html/geo/portal
 # de files uit de map etc moeten naar verschillende mappen worden gekopieerd (soms met andere naam!)
 COPY etc/umask-geo-mappen.sh /etc/umask-geo-mappen.sh
 COPY etc/lighttpd.conf /etc/lighttpd.conf

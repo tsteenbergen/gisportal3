@@ -1,1 +1,0 @@
-ALTER TABLE `images` ADD `extensions` varchar(4096) NOT NULL;

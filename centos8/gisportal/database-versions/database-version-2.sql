@@ -1,1 +1,0 @@
-ALTER TABLE `geopackages` ADD `kaartnaam` varchar(64) NOT NULL;

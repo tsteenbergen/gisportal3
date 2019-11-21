@@ -57,14 +57,14 @@ class memory  {
 		$tmp=$basicPage->getConfig('max_uploads'); if ($tmp!='') {$this->max_uploads=(int)$tmp;}
 	}
 	function maxUploadsize() {
-		$r=$this->available-$this->max_uploads*$this->max_upload_size_gb;
+		$r=$this->available-$this->max_uploads*$this->max_uploads; // Laat altijd ruimte voor concurrent uploads!!!!
 		if ($r<0) {
 			$r=0;
 		}
 		return $r;
 	}
 	function uploadAllowed() {
-		if ($this->available>=$this->max_upload_size_gb*1024*1024*1024) { // 1 Gb
+		if ($this->available>=$this->max_uploads*$this->max_upload_size_gb*1024*1024*1024) { // 1 Gb
 			return true;
 		}
 		return false;

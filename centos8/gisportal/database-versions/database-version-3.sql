@@ -1,0 +1,3 @@
+ALTER TABLE `geopackages` ADD `version` int NOT NULL;
+CREATE TABLE `images` (`id` int NOT NULL AUTO_INCREMENT, `image` varchar(32) NOT NULL, `repo` varchar(128) NOT NULL, `deflt` char(1) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+CREATE TABLE `versions` (`id` int NOT NULL AUTO_INCREMENT, `image` int NOT NULL, `version` varchar(32) NOT NULL, `deflt` char(1) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;

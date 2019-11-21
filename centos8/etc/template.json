@@ -1,0 +1,55 @@
+{
+  "kind": "Template",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "gisportal"
+  },
+  "labels": {
+      "template": "gisportal",
+      "app": "gisportal"
+  },
+  "objects": [
+	{
+		"kind": "Service",
+		"apiVersion": "v1",
+		"metadata": {
+			"name": "service-gisportal"
+		},
+		"spec": {
+			"selector": {
+				"app": "gisportal"
+			},
+			"sessionAffinity": "None",
+			"type": "ClusterIP",
+			"ports": [
+				{
+					"name": "gisportal",
+					"port": 8080,
+					"protocol": "TCP",
+					"targetPort": 8080
+				}
+			]
+		},
+		"status": {
+			"loadBalancer": {}
+		}
+	},
+	{
+		"kind": "Route",
+		"apiVersion": "v1",
+		"metadata": {
+			"name": "route-gisportal"
+		},
+		"spec": {
+			"port": {
+				"targetPort": "gisportal"
+			},
+			"to": {
+				"kind": "Service",
+				"name": "service-gisportal"
+			},
+			"wildcardPolicy": "None"
+		}
+	}
+  ]
+}

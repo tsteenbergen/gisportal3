@@ -48,8 +48,12 @@ if ($loggedIn && ($is_admin || $is_afd_admin)){
 		$tabA.='<tr><td>Openshift:</td><td style="text-align: right;">'.$memory->persistent.' b</td><td style="text-align: right;">'.$memory->persistent_mb.'</td></tr>';
 		$tabA.='<tr><td>&nbsp;</td></tr>';
 		$tabA.='<tr><td colspan="3">Instellingen:</td></tr>';
-		$tabA.='<tr><td>Max file upload size:</td><td></td><td style="text-align: right;">'.$memory->max_upload_size_gb.'</td></tr>';
+		$tabA.='<tr><td>Max file upload size:</td><td></td><td style="text-align: right;">'.$memory->max_upload_size_gb.' Gb</td></tr>';
 		$tabA.='<tr><td>Max # concurrent uploads:</td><td></td><td style="text-align: right;">'.$memory->max_uploads.'</td></tr>';
+		$tabA.='<tr><td>&nbsp;</td></tr>';
+		$tabA.='<tr><td colspan="3">Instellingen php.ini:</td></tr>';
+		$tabA.='<tr><td>Max file upload size:</td><td></td><td style="text-align: right;">'.number_format(ini_get('upload_max_filesize')/1000000000,0,',','.').' Gb</td></tr>';
+		$tabA.='<tr><td>Max # concurrent uploads:</td><td></td><td style="text-align: right;">'.ini_get('max_file_uploads').'</td></tr>';
 		$tabA.='<tr><td>&nbsp;</td></tr>';
 		$tabA.='<tr><td colspan="3">Linux meldt:</td></tr>';
 		$tabA.='<tr><td>Geheugen in gebruik:</td><td style="text-align: right;">'.$memory->used.' b</td></><td style="text-align: right;">'.$memory->used_mb.'</td></tr>';

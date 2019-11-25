@@ -40,6 +40,8 @@ class db_ {
 		if (mysqli_connect_errno()) {
 		  $this->mysqli=false;
 		  //die('Database connect failed: '.mysqli_connect_error().'<br>$dbhost: '.$dbhost.'<br>$dbname: '.$dbname.'<br>$dbuser: '.$dbuser.'<br>$dbpassword: '.$dbpassword.'<br>$this->host: '.$this->dbhost.'<br>$this->port: '.$this->dbport.'<br>$this->dbname: '.$this->dbname.'<br>$this->dbuser: '.$this->dbuser.'<br>$this->dbpassword: '.$this->dbpassword);
+global $basicPage;
+$basicPage->writeLog('Database connection:<br>$dbhost: '.$dbhost.'<br>$dbname: '.$dbname.'<br>$dbuser: '.$dbuser.'<br>$dbpassword: '.$dbpassword.'<br>$this->host: '.$this->dbhost.'<br>$this->port: '.$this->dbport.'<br>$this->dbname: '.$this->dbname.'<br>$this->dbuser: '.$this->dbuser.'<br>$this->dbpassword: '.$this->dbpassword);
 		  die('Database connect failed.');
 		} else {
 			$this->query('USE '.$this->dbname);

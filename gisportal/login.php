@@ -53,7 +53,9 @@ if (isset($_POST['username']) and isset($_POST['password'])){
 	$user=$db->selectOne('personen','id,naam,afdeling,password,afd_admin,admin','email=\''.$username.'\'');
 	if ($user && md5($password)==$user['password']) { // ook in basicPage.php
 		// controleer of geo-mappen bestaat en valide is
-		if (file_exists($basicPage->getConfig('geo-mappen'))) {
+		$geomappen=$basicPage->getConfig('geo-mappen');
+		if (file_exists($geomappen)) {
+			if (!file_exists($geomappen.'/upload_tmp')) {mkdir($geomappen.'/upload_tmp');}
 			$_SESSION['username'] = $username;
 			$_SESSION['user'] = $user['id'];
 			$_SESSION['afdeling'] = $user['afdeling'];

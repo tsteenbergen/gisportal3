@@ -1,5 +1,5 @@
 # ******************  Onderstaande regel is nodig voor installatie obv Centos ********************
-FROM centos
+FROM centos:7
 # ************************************************************************************************
 # ******************  Onderstaande regel is nodig voor installatie obv RHEL **********************
 # FROM rhel

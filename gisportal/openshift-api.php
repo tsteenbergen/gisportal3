@@ -189,6 +189,9 @@ class openshift_api_ {
 			if ($doExtraVolumes) {
 				$jsonString = str_replace('$extraVolumeMounts',',{"name": "geo-log","mountPath": "/geo-log","subPath": "logs/gpid-'.$id.'"}',$jsonString);
 				$jsonString = str_replace('$extraVolumes',',{"name": "geo-log","persistentVolumeClaim": {"claimName": "'.$persistent_storage_logs.'"}}',$jsonString);
+			} else {
+				$jsonString = str_replace('$extraVolumeMounts','',$jsonString);
+				$jsonString = str_replace('$extraVolumes','',$jsonString);
 			}
 			// aanvullende replacements
 			foreach ($variables as $variable=>$value) {

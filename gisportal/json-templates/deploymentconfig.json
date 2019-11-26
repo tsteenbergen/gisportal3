@@ -52,6 +52,7 @@
                                 "mountPath": "/geo-map",
                                 "subPath": "geo-packages/$name"
                             }
+							$extraVolumeMounts
                         ]
                     }
                 ],
@@ -62,6 +63,7 @@
                             "claimName": "$storage"
                         }
                     }
+					$extraVolumes
                 ],
                 "restartPolicy": "Always",
                 "serviceAccount": ""

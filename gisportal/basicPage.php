@@ -317,6 +317,9 @@ class basicPage {
 			case 'geo-mappen': // De root, waarin alle geo-packages worden opgeslagen
 				return '/geo-mappen';
 				break; 						 
+			case 'geo-logs': // De root, waarin alle logss worden opgeslagen
+				return '/geo-logs';
+				break; 						 
 			case 'logfile': // De path/filename van de logfile waarin alle API-calls worden geschreven
 				if ($_SESSION['user']>=1) {
 					$r=$this->getConfig('geo-mappen').'/api_command_'.$_SESSION['user'].'.html';

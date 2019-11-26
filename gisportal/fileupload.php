@@ -6,7 +6,7 @@ require($basedir.'beheer/extention.php');
 
 $r=array('error'=>true,'msg'=>'Unauthorised action');
 
-set_time_limit(300);
+set_time_limit(500);
 
 if ($loggedIn){
 	if ($_FILES['uploadfile']) {

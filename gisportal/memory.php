@@ -20,7 +20,8 @@ class memory  {
 		global $basicPage;
 		
 		$openshift_api->command('GET','persistentvolumeclaim',['name'=>$basicPage->getConfig('persistent_storage')]);
-		$this->persistent_afk=$openshift_api->response->spec->resources->requests->storage;
+		//$this->persistent_afk=$openshift_api->response->spec->resources->requests->storage;
+		$this->persistent_afk=$openshift_api->response->phase->storage;
 		foreach (['T','Ti','G','Gi','M','Mi','K','Ki'] as $b) if (substr($this->persistent_afk,-strlen($b))==$b) {
 			$this->error=false;
 			$this->persistent=intval(substr($this->persistent_afk,0,strlen($this->persistent_afk)-strlen($b)));

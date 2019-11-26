@@ -5,6 +5,8 @@ require('memory.php');
 
 $errors=0;
 function wrapError($txt) {
+	global $errors;
+	
 	$errors++;
 	return '<div class="test-error">'.$txt.'</div>';
 }

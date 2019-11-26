@@ -67,8 +67,8 @@ $test1.='</table>';
 $test2.='<h2>Perisisent storage</h2>Persistent storage is nodig om alle bestanden (kaarten) op te slaan.';
 $test2.='<table style="margin-bottom: 32px;"><tr><th>Test</th><th></th><th style="text-align: right;">Resultaat</th></tr>';
 $test2.='<tr><td>Root map /geo-mappen:</td><td></td><td style="text-align: right;">'.(file_exists('/geo-mappen')?'Exists':wrapError('Does not exist')).'</td></tr>';
-$test2.='<tr><td>Persistent storage vlgs Openshift:</td><td></td><td style="text-align: right;">'.($memory->persistent==0?wrapError('Not retrieved'):$memory->persistent_afk).'</td></tr>';
-if ($memory->persistent!=0) {
+$test2.='<tr><td>Persistent storage vlgs Openshift:</td><td></td><td style="text-align: right;">'.($memory->error?wrapError('Not retrieved'):$memory->persistent_afk).'</td></tr>';
+if (!$memory->error) {
 	$test2.='<tr><td>'.$memory->persistent_afk.':</td><td style="text-align: right;">'.$memory->persistent.' b</td><td style="text-align: right;">'.$memory->persistent_mb.'</td></tr>';
 }
 $test2.='<tr><td>Root map /geo-logs:</td><td></td><td style="text-align: right;">'.(file_exists($basicPage->getConfig('geo-logs'))?'Exists':wrapError('Does not exist')).'</td></tr>';

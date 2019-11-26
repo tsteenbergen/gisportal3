@@ -56,6 +56,11 @@ if (isset($_POST['username']) and isset($_POST['password'])){
 		$geomappen=$basicPage->getConfig('geo-mappen');
 		if (file_exists($geomappen)) {
 			if (!file_exists($geomappen.'/upload_tmp')) {mkdir($geomappen.'/upload_tmp');}
+			$fname=$basicPage->getConfig('geo-logs');
+			if (file_exists($fname)) {
+				$fname.='/logs';
+				if (!file_exists($fname)) {mkdir($fname);}
+			}
 			$_SESSION['username'] = $username;
 			$_SESSION['user'] = $user['id'];
 			$_SESSION['afdeling'] = $user['afdeling'];

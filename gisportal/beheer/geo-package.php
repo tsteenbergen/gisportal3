@@ -113,9 +113,9 @@ if ($loggedIn){
 							}
 						}
 						if ($func=='opslaan') {
-							$fname=$basicPage->getConfig('geo-logs');
+							$fname=$basicPage->getConfig('geo-logs').'logs/';
 							if (file_exists($fname)) {
-								$fname.='/gpid-'.$g['id'];
+								$fname.='gpid-'.$g['id'];
 								if (!file_exists($fname)) {mkdir($fname);}
 							}
 							if ($toFileTab) {

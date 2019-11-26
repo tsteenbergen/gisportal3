@@ -20,8 +20,41 @@ class memory  {
 		global $basicPage;
 		
 		$openshift_api->command('GET','persistentvolumeclaim',['name'=>$basicPage->getConfig('persistent_storage')]);
+			/*
+			stdClass::__set_state(array( 
+				'kind' => 'PersistentVolumeClaim', 
+				'apiVersion' => 'v1', 
+				'metadata' => stdClass::__set_state(array( 
+					'name' => 'geo-mappen-test', 
+					'namespace' => 'sscc-geoweb-co', 
+					'selfLink' => '/api/v1/namespaces/sscc-geoweb-co/persistentvolumeclaims/geo-mappen-test', 
+					'uid' => '98939506-0f8b-11ea-8013-0050569da694', 
+					'resourceVersion' => '61173211', 
+					'creationTimestamp' => '2019-11-25T13:58:02Z', 
+					'annotations' => stdClass::__set_state(array( 'pv.kubernetes.io/bind-completed' => 'yes', 'pv.kubernetes.io/bound-by-controller' => 'yes', 'volume.beta.kubernetes.io/storage-provisioner' => 'kubernetes.io/glusterfs', )), 
+					'finalizers' => array ( 0 => 'kubernetes.io/pvc-protection', ), 
+				)), 
+				'spec' => stdClass::__set_state(array( 
+					'accessModes' => array ( 0 => 'ReadWriteMany', ), 
+					'resources' => stdClass::__set_state(array( 
+						'requests' => stdClass::__set_state(array( 
+							'storage' => '12Gi', 
+						)),
+					)), 
+					'volumeName' => 'pvc-98939506-0f8b-11ea-8013-0050569da694', 
+					'storageClassName' => 'glusterfs-storage-expandable', 
+				)), 
+				'status' => stdClass::__set_state(array( 
+					'phase' => 'Bound', 
+					'accessModes' => array ( 0 => 'ReadWriteMany', ), 
+					'capacity' => stdClass::__set_state(array( 
+						'storage' => '12Gi',
+					)), 
+				)), 
+			))
+			*/
 		//$this->persistent_afk=$openshift_api->response->spec->resources->requests->storage;
-		$this->persistent_afk=var_export($openshift_api->response,true);//->phase->storage;
+		$this->persistent_afk=$openshift_api->response->status->capacity->storage;
 		foreach (['T','Ti','G','Gi','M','Mi','K','Ki'] as $b) if (substr($this->persistent_afk,-strlen($b))==$b) {
 			$this->error=false;
 			$this->persistent=intval(substr($this->persistent_afk,0,strlen($this->persistent_afk)-strlen($b)));

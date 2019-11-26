@@ -83,7 +83,7 @@ if ($loggedIn && $is_admin) {
 			if ($k) {
 				$fname=$basicPage->getConfig('geo-logs');
 				if (file_exists($fname)) {
-					$fname.='/gpid-'.$id];
+					$fname.='/gpid-'.$id;
 					if (!file_exists($fname)) {mkdir($fname);}
 				}
 				require('openshift-api.php');

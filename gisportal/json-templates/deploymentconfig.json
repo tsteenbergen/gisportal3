@@ -51,6 +51,11 @@
                                 "name": "geo-map",
                                 "mountPath": "/geo-map",
                                 "subPath": "geo-packages/$name"
+                            },
+                            {
+                                "name": "geo-log",
+                                "mountPath": "/geo-log",
+                                "subPath": "$name"
                             }
                         ]
                     }

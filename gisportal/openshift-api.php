@@ -184,7 +184,8 @@ class openshift_api_ {
 			$jsonString = str_replace('$host',$_SERVER['HTTP_HOST'],$jsonString);
 			$jsonString = str_replace('$namespace',$basicPage->getConfig('namespace'),$jsonString);
 			$jsonString = str_replace('$storage',$persistent_storage,$jsonString);
-			$jsonString = str_replace('$log',$persistent_storage_logs,$jsonString);
+			$jsonString = str_replace('$extraVolumeMounts',',{"name": "geo-log","mountPath": "/geo-log","subPath": "gpid-'.$id.'"}',$jsonString);
+			$jsonString = str_replace('$extraVolumes',',{"name": "geo-log","persistentVolumeClaim": {"claimName": "'.$persistent_storage_logs.'"}}',$jsonString);
 			$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
 			// aanvullende replacements
 			foreach ($variables as $variable=>$value) {

@@ -51,11 +51,6 @@
                                 "name": "geo-map",
                                 "mountPath": "/geo-map",
                                 "subPath": "geo-packages/$name"
-                            },
-                            {
-                                "name": "geo-log",
-                                "mountPath": "/geo-log",
-                                "subPath": "$name"
                             }
                         ]
                     }
@@ -65,12 +60,6 @@
                         "name": "geo-map",
                         "persistentVolumeClaim": {
                             "claimName": "$storage"
-                        }
-                    },
-                    {
-                        "name": "geo-log",
-                        "persistentVolumeClaim": {
-                            "claimName": "$log"
                         }
                     }
                 ],

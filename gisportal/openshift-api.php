@@ -176,6 +176,7 @@ class openshift_api_ {
 		
 		if ($todo_types=='all') {$todo_types=['deploymentconfig','autoscaler','service','route'];}
 		$persistent_storage=$basicPage->getConfig('persistent_storage');
+		$persistent_storage_logs=$basicPage->getConfig('persistent_storage_logs');
 		foreach ($todo_types as $todo_type) {
 			$todo=$this->def[$todo_type];
 			$jsonString = file_get_contents($basedir.'json-templates/'.$todo_type.'.json');
@@ -183,6 +184,7 @@ class openshift_api_ {
 			$jsonString = str_replace('$host',$_SERVER['HTTP_HOST'],$jsonString);
 			$jsonString = str_replace('$namespace',$basicPage->getConfig('namespace'),$jsonString);
 			$jsonString = str_replace('$storage',$persistent_storage,$jsonString);
+			$jsonString = str_replace('$log',$persistent_storage_logs,$jsonString);
 			$jsonString = str_replace('$name','gpid-'.$id,$jsonString);
 			// aanvullende replacements
 			foreach ($variables as $variable=>$value) {

@@ -61,6 +61,12 @@
                         "persistentVolumeClaim": {
                             "claimName": "$storage"
                         }
+                    },
+                    {
+                        "name": "geo-log",
+                        "persistentVolumeClaim": {
+                            "claimName": "$log"
+                        }
                     }
                 ],
                 "restartPolicy": "Always",
